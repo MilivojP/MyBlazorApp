@@ -13,6 +13,7 @@ builder.Services.AddDbContext<DatabaseContext>
 
 builder.Services.AddTransient<IUserService, UserService>();
 
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
@@ -36,6 +37,8 @@ app.UseBlazorFrameworkFiles();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapRazorPages();
 app.MapControllers();

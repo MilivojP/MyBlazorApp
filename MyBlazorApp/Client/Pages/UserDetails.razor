@@ -8,7 +8,7 @@
     <div class="col-md-6">
         <a href='/user/add' class="btn btn-primary" role="button">
             <i class="fas fa-user-plus"></i>
-            Add User
+            AddUser
         </a>
     </div>
     <div class="input-group col">
@@ -82,7 +82,7 @@ else
         if (!string.IsNullOrEmpty(SearchString))
         {
             userList = searchUserData
-                .Where(x => x.UserName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+                .Where(u => u.UserName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
                 .ToList();
         }
         else

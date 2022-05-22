@@ -29,12 +29,12 @@
         </div>
         <ValidationMessage For="@(() => user.Email)" />
     </div>
-        <div class="mb-3">
+    <div class="mb-3">
         <label for="IsAdmin" class="form-label">IsAdmin</label>
         <div class="col-md-4">
             <input type="checkbox" @bind="user.IsAdmin">
-                <option value="true"></option>
-                <option value="false"></option>
+                  <option value="true"></option>
+                  <option value="false"></option>
             </input>
         </div>
         <ValidationMessage For="@(() => user.IsAdmin)" />

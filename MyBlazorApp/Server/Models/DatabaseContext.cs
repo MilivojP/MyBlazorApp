@@ -5,14 +5,14 @@ namespace MyBlazorApp.Server.Models
 {
     public partial class DatabaseContext : DbContext
     {
-        public DatabaseContext()
+         public DatabaseContext()
         {
         }
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
         }
-        public virtual DbSet<User> Users { get; set; } = null!;
+        public virtual DbSet<User> Users { get ; set ; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>(entity =>

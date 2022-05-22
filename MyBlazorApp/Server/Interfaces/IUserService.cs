@@ -1,12 +1,16 @@
 ﻿using MyBlazorApp.Shared.Models;
 namespace MyBlazorApp.Server.Interfaces
 {
-    public interface IUser
+    public interface IUserService
     {
         public List<User> GetUserDetails();
+
         public void AddUser(User user);
+
         public void UpdateUserDetails(User user);
+
         public User GetUserData(int id);
+
         public void DeleteUser(int id);
     }
 }

@@ -1,7 +1,6 @@
-﻿using MyBlazorApp.Server.Interfaces;
+﻿using Microsoft.AspNetCore.Mvc;
+using MyBlazorApp.Server.Interfaces;
 using MyBlazorApp.Shared.Models;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 
 namespace MyBlazorApp.Server.Controllers
 {
@@ -9,40 +8,49 @@ namespace MyBlazorApp.Server.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUser _IUser;
-        public UserController(IUser iUser)
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
         {
-            _IUser = iUser;
+            _userService = userService;
         }
+
         [HttpGet]
         public async Task<List<User>> Get()
         {
-            return await Task.FromResult(_IUser.GetUserDetails());
+            return await Task.FromResult(_userService.GetUserDetails());
         }
+
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            User user = _IUser.GetUserData(id);
+            User user = _userService.GetUserData(id);
             if (user != null)
             {
                 return Ok(user);
             }
-            return NotFound();
+            else
+            {
+                return NotFound();
+            }
         }
+
         [HttpPost]
-        public void Post(User user)
+        public void Post([FromBody] User user)
         {
-            _IUser.AddUser(user);
+            _userService.AddUser(user);
         }
+
         [HttpPut]
         public void Put(User user)
         {
-            _IUser.UpdateUserDetails(user);
+            _userService.UpdateUserDetails(user);
         }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _IUser.DeleteUser(id);
+            _userService.DeleteUser(id);
             return Ok();
         }
     }

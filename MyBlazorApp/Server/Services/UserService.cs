@@ -5,14 +5,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MyBlazorApp.Server.Services
 {
- 
-    public class UserManager : IUser
+    public class UserService : IUserService
     {
         readonly DatabaseContext _dbContext = new();
-        public UserManager(DatabaseContext dbContext)
+
+        public UserService(DatabaseContext dbContext)
         {
             _dbContext = dbContext;
         }
+
         //To Get all user details
         public List<User> GetUserDetails()
         {
@@ -25,6 +26,7 @@ namespace MyBlazorApp.Server.Services
                 throw;
             }
         }
+
         //To Add new user record
         public void AddUser(User user)
         {
@@ -38,6 +40,7 @@ namespace MyBlazorApp.Server.Services
                 throw;
             }
         }
+
         //To Update the records of a particluar user
         public void UpdateUserDetails(User user)
         {
@@ -51,6 +54,7 @@ namespace MyBlazorApp.Server.Services
                 throw;
             }
         }
+
         //Get the details of a particular user
         public User GetUserData(int id)
         {
@@ -71,6 +75,7 @@ namespace MyBlazorApp.Server.Services
                 throw;
             }
         }
+
         //To Delete the record of a particular user
         public void DeleteUser(int id)
         {

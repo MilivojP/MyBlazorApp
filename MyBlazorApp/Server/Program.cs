@@ -2,6 +2,15 @@ using Microsoft.EntityFrameworkCore;
 using MyBlazorApp.Server.Interfaces;
 using MyBlazorApp.Server.Models;
 using MyBlazorApp.Server.Services;
+<<<<<<<<< Temporary merge branch 1
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.ResponseCompression;
+using MyBlazorApp.Shared.Models;
+=========
+>>>>>>>>> Temporary merge branch 2
 
 var builder = WebApplication.CreateBuilder(args);
 

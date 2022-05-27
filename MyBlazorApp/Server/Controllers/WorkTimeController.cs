@@ -15,7 +15,7 @@ namespace MyBlazorApp.Server.Controllers
         }
         
         [HttpGet]
-        public async Task<List<WorkTime>> Get()
+        public async Task<List<WorkTimeDto>> Get()
         {
             return await Task.FromResult(_workTimeServices.GetWorkTimeDetails());
         }
@@ -23,7 +23,7 @@ namespace MyBlazorApp.Server.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            WorkTime UserId= _workTimeServices.GetWorkTimeData(id);
+            WorkTimeDto UserId = _workTimeServices.GetWorkTimeData(id);
             if (UserId != null)
             {
                 return Ok(UserId);
@@ -35,15 +35,15 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] WorkTime UserName)
+        public void Post([FromBody] WorkTimeDto workTime)
         {
-            _workTimeServices.AddWorkTime(UserName);
+            _workTimeServices.AddWorkTime(workTime);
         }
 
         [HttpPut]
-        public void Put(WorkTime UserName)
+        public void Put(WorkTimeDto workTime)
         {
-            _workTimeServices.UpdateWorkTimeDetails(UserName);
+            _workTimeServices.UpdateWorkTimeDetails(workTime);
         }
 
         [HttpDelete("{id}")]

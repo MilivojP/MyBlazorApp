@@ -1,13 +1,13 @@
 ﻿using MyBlazorApp.Server.Interfaces;
-using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using MyBlazorApp.Server.Data;
 
 namespace MyBlazorApp.Server.Services
 {
     public class UserService : IUserService
     {
-        readonly DatabaseContext _dbContext = new();
+        readonly DatabaseContext _dbContext;
 
         public UserService(DatabaseContext dbContext)
         {

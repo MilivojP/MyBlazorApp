@@ -1,27 +1,31 @@
 ﻿using MyBlazorApp.Server.Interfaces;
-using MyBlazorApp.Server.Models;
 using MyBlazorApp.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using MyBlazorApp.Server.Data;
+using AutoMapper;
+using MyBlazorApp.Server.Entities;
 
 namespace MyBlazorApp.Server.Services
 {
     public class WorkTimeServices : IWorkTimeServices
-
     {
-        readonly DatabaseContext _dbContextWork = new();
+        private readonly IMapper _mapper;
+        readonly DatabaseContext _dbContextWork;
 
-        public WorkTimeServices(DatabaseContext dbContextWork)
+        public WorkTimeServices(IMapper mapper, DatabaseContext dbContextWork)
         {
+            _mapper = mapper;
             _dbContextWork = dbContextWork;
         }
 
         //To Get all user details
-        public List<WorkTime> GetWorkTimeDetails()
+        public List<WorkTimeDto> GetWorkTimeDetails()
         {
             try
             {
-                return _dbContextWork.WorkTimes.ToList();
-                //_dbContext.WorkTime.ToList();
+                var data = _dbContextWork.WorkTimes.ToList();
+
+                return _mapper.Map<List<WorkTimeDto>>(data);
             }
             catch
             {
@@ -30,11 +34,14 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Add new user record
-        public void AddWorkTime(WorkTime UserName)
+        public void AddWorkTime(WorkTimeDto workTime)
         {
             try
             {
-                _dbContextWork.WorkTimes.Add(UserName);
+                var data = _mapper.Map<WorkTime>(workTime);
+
+                _dbContextWork.WorkTimes.Add(data);
+
                 _dbContextWork.SaveChanges();
             }
             catch
@@ -48,6 +55,8 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
+                // TODO: get worktime from data store and then update
+
                 _dbContextWork.Entry(UserName).State = EntityState.Modified;
                 _dbContextWork.SaveChanges();
             }
@@ -58,14 +67,15 @@ namespace MyBlazorApp.Server.Services
         }
 
         //Get the details of a particular user
-        public WorkTime GetWorkTimeData(int id)
+        public WorkTimeDto GetWorkTimeData(int id)
         {
             try
             {
-                WorkTime? UserId = _dbContextWork.WorkTimes.Find(id);
-                if (UserId != null)
+                var data = _dbContextWork.WorkTimes.Find(id);
+
+                if (data != null)
                 {
-                    return UserId;
+                    return _mapper.Map<WorkTimeDto>(data);
                 }
                 else
                 {
@@ -83,10 +93,11 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                WorkTime? UserId = _dbContextWork.WorkTimes.Find(id);
-                if (UserId != null)
+                var data = _dbContextWork.WorkTimes.Find(id);
+                if (data != null)
                 {
-                    _dbContextWork.WorkTimes.Remove(UserId);
+                    _dbContextWork.WorkTimes.Remove(data);
+
                     _dbContextWork.SaveChanges();
                 }
                 else
@@ -100,7 +111,12 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        WorkTime IWorkTimeServices.GetWorkTimeData(int UserId)
+        WorkTimeDto IWorkTimeServices.GetWorkTimeData(int UserId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void UpdateWorkTimeDetails(WorkTimeDto UserName)
         {
             throw new NotImplementedException();
         }

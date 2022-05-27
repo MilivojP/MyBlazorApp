@@ -12,6 +12,7 @@ builder.Services.AddDbContext<DatabaseContext>
     //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddTransient<IUserService, UserService>();
+builder.Services.AddTransient<IWorkTimeServices, WorkTimeServices>();
 
 
 builder.Services.AddControllersWithViews();

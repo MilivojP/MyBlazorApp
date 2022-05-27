@@ -1,4 +1,4 @@
-﻿@page "/fetchworktime"
+﻿@page "/fetchworktimedetails"
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 
@@ -6,12 +6,26 @@
 <p>My Work operation</p>
 <div class="row">
     <div class="col-md-6">
-        <a href='/WorkTime/add' class="btn btn-primary" role="button">
+        <a href='/worktime/add' class="btn btn-primary" role="button">
             <i class="fas fa-user-plus"></i>
             AddWorkTime
         </a>
     </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search user by name"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
 </div>
+
+<br />
 
 @if (workList == null)
 {
@@ -24,6 +38,7 @@ else
             <tr>
                 <th>UserId</th>
                 <th>UserName</th>
+                <th>Day</th>
                 <th>StartTime</th>
                 <th>EndTime</th>
                 <th>Work</th>
@@ -37,6 +52,7 @@ else
                 <tr>
                     <td>@WorkTime.UserId</td>
                     <td>@WorkTime.UserName</td>
+                    <td>@WorkTime.Day</td>
                     <td>@WorkTime.StartTime</td>
                     <td>@WorkTime.EndTime</td>
                     <td>@WorkTime.Work=@WorkTime.EndTime-@WorkTime.StartTime</td>
@@ -64,11 +80,11 @@ else
     protected string SearchString { get; set; } = string.Empty;
     protected override async Task OnInitializedAsync()
     {
-        await GetUser();
+        await GetWorkTime();
     }
-    protected async Task GetUser()
+    protected async Task GetWorkTime()
     {
-        workList = await Http.GetFromJsonAsync<List<WorkTime>>("api/Work");
+        workList = await Http.GetFromJsonAsync<List<WorkTime>>("api/worktime");
         searchUserData = workList;
     }
     protected void FilterUser()

@@ -6,7 +6,7 @@ namespace MyBlazorApp.Server.Data
 {
     public partial class DatabaseContext : DbContext
     {
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserDto> Users { get; set; }
         public virtual DbSet<WorkTime> WorkTimes { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
@@ -16,7 +16,7 @@ namespace MyBlazorApp.Server.Data
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity =>
+            modelBuilder.Entity<UserDto>(entity =>
             {
                 entity.ToTable("userdetails");
                 entity.Property(e => e.Id).HasColumnName("Userid");

@@ -64,9 +64,9 @@ else
 }
 
 @code {
-    protected List<User> userList = new();
-    protected List<User> searchUserData = new();
-    protected User user = new();
+    protected List<UserDto> userList = new();
+    protected List<UserDto> searchUserData = new();
+    protected UserDto user = new();
     protected string SearchString { get; set; } = string.Empty;
     protected override async Task OnInitializedAsync()
     {
@@ -74,7 +74,7 @@ else
     }
     protected async Task GetUser()
     {
-        userList = await Http.GetFromJsonAsync<List<User>>("api/User");
+        userList = await Http.GetFromJsonAsync<List<UserDto>>("api/User");
         searchUserData = userList;
     }
     protected void FilterUser()

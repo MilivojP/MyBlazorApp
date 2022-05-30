@@ -51,13 +51,13 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Update the records of a particluar user
-        public void UpdateWorkTimeDetails(WorkTime UserName)
+        public void UpdateWorkTimeDetails(WorkTime UserId)
         {
             try
             {
                 // TODO: get worktime from data store and then update
 
-                _dbContextWork.Entry(UserName).State = EntityState.Modified;
+                _dbContextWork.Entry(UserId).State = EntityState.Modified;
                 _dbContextWork.SaveChanges();
             }
             catch
@@ -116,7 +116,7 @@ namespace MyBlazorApp.Server.Services
             throw new NotImplementedException();
         }
 
-        public void UpdateWorkTimeDetails(WorkTimeDto UserName)
+        public void UpdateWorkTimeDetails(WorkTimeDto UserId)
         {
             throw new NotImplementedException();
         }

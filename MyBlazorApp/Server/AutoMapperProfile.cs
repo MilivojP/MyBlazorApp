@@ -14,6 +14,9 @@ namespace MyBlazorApp.Server
 
             CreateMap<List<WorkTimeDto>, List<WorkTime>>();
 
+            CreateMap<User, UserDto>();
+            CreateMap<List<User>, List<UserDto>>();
+            CreateMap<List<UserDto>, List<User>>();
         }
     }
 }

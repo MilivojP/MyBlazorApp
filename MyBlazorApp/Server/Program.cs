@@ -15,6 +15,7 @@ builder.Services.AddDbContext<DatabaseContext>
 builder.Services.AddTransient<IUserService, UserService>();
 builder.Services.AddTransient<IWorkTimeServices, WorkTimeServices>();
 
+builder.Services.AddScoped<UserDto>();
 builder.Services.AddScoped<WorkTimeDto>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());

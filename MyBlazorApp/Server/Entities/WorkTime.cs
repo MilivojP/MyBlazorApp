@@ -1,7 +1,10 @@
-﻿namespace MyBlazorApp.Server.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MyBlazorApp.Server.Entities
 {
     public class WorkTime
     {
+        [Key]
         public int UserId { get; set; }
         public DateOnly Day { get; set; }
         public TimeOnly StartTime { get; set; }

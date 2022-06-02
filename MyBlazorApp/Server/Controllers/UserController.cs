@@ -16,7 +16,7 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<List<UserDto>> Get()
+        public async Task<List<UserDto>> GetAll()
         {
             return await Task.FromResult(_userService.GetUserDetails());
         }

@@ -7,12 +7,12 @@ using MyBlazorApp.Server.Entities;
 
 namespace MyBlazorApp.Server.Services
 {
-    public class WorkTimeServices : IWorkTimeServices
+    public class WorkTimeService : IWorkTimeService
     {
         private readonly IMapper _mapper;
         readonly DatabaseContext _dbContextWork;
 
-        public WorkTimeServices(IMapper mapper, DatabaseContext dbContextWork)
+        public WorkTimeService(IMapper mapper, DatabaseContext dbContextWork)
         {
             _mapper = mapper;
             _dbContextWork = dbContextWork;
@@ -111,7 +111,7 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        WorkTimeDto IWorkTimeServices.GetWorkTimeData(int UserId)
+        WorkTimeDto IWorkTimeService.GetWorkTimeData(int UserId)
         {
             throw new NotImplementedException();
         }

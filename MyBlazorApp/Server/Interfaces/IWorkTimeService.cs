@@ -2,7 +2,7 @@
 
 namespace MyBlazorApp.Server.Interfaces
 {
-    public interface IWorkTimeServices
+    public interface IWorkTimeService
     {
         public List<WorkTimeDto> GetWorkTimeDetails();
 

@@ -12,11 +12,11 @@ builder.Services.AddDbContext<DatabaseContext>
         options.UseInMemoryDatabase("Journal"));
     //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IWorkTimeServices, WorkTimeServices>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IWorkTimeService, WorkTimeService>();
 
-builder.Services.AddScoped<UserDto>();
-builder.Services.AddScoped<WorkTimeDto>();
+//builder.Services.AddScoped<UserDto>();
+//builder.Services.AddScoped<WorkTimeDto>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

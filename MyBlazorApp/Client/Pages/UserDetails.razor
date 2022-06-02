@@ -68,11 +68,12 @@ else
     protected List<UserDto> searchUserData = new();
     protected UserDto user = new();
     protected string SearchString { get; set; } = string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
-        await GetUser();
+        await GetAllUsers();
     }
-    protected async Task GetUser()
+    protected async Task GetAllUsers()
     {
         userList = await Http.GetFromJsonAsync<List<UserDto>>("api/User");
         searchUserData = userList;

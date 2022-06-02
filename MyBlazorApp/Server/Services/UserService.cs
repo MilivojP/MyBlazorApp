@@ -2,15 +2,19 @@
 using MyBlazorApp.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 using MyBlazorApp.Server.Data;
+using AutoMapper;
+using MyBlazorApp.Server.Entities;
 
 namespace MyBlazorApp.Server.Services
 {
     public class UserService : IUserService
     {
+        private readonly IMapper _mapper;
         readonly DatabaseContext _dbContext;
 
-        public UserService(DatabaseContext dbContext)
+        public UserService(IMapper mapper, DatabaseContext dbContext)
         {
+            _mapper = mapper;
             _dbContext = dbContext;
         }
 
@@ -19,11 +23,13 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                return _dbContext.Users.ToList();
+                var data = _dbContext.Users.ToList();
+                return _mapper.Map<List<UserDto>>(data);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
@@ -32,12 +38,16 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                _dbContext.Users.Add(user);
+                var data = _mapper.Map<User>(user);
+
+                _dbContext.Users.Add(data);
+
                 _dbContext.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
@@ -60,19 +70,20 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                UserDto? user = _dbContext.Users.Find(id);
-                if (user != null)
+                var data = _dbContext.Users.Find(id);
+                if (data != null)
                 {
-                    return user;
+                    return _mapper.Map<UserDto>(data);
                 }
                 else
                 {
                     throw new ArgumentNullException();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
@@ -81,10 +92,11 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                UserDto? user = _dbContext.Users.Find(id);
-                if (user != null)
+                var data = _dbContext.Users.Find(id);
+                if (data != null)
                 {
-                    _dbContext.Users.Remove(user);
+                    _dbContext.Users.Remove(data);
+
                     _dbContext.SaveChanges();
                 }
                 else
@@ -92,9 +104,10 @@ namespace MyBlazorApp.Server.Services
                     throw new ArgumentNullException();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
     }

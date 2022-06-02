@@ -9,14 +9,18 @@ namespace MyBlazorApp.Server
         public AutoMapperProfile()
         {
             // TODO: map calculated field "Work"
-            CreateMap<WorkTime, WorkTimeDto>();
-            CreateMap<List<WorkTime>, List<WorkTimeDto>>();
+            //CreateMap<WorkTime, WorkTimeDto>();
+            //CreateMap<List<WorkTime>, List<WorkTimeDto>>();
 
-            CreateMap<List<WorkTimeDto>, List<WorkTime>>();
+            //CreateMap<List<WorkTimeDto>, List<WorkTime>>();
 
-            CreateMap<User, UserDto>();
-            CreateMap<List<User>, List<UserDto>>();
-            CreateMap<List<UserDto>, List<User>>();
+            CreateMap<User, UserDto>()
+                .ForMember(x => x.Id, o => o.Ignore());
+
+            CreateMap<UserDto, User>();
+
+            //CreateMap<List<User>, List<UserDto>>();
+            //CreateMap<List<UserDto>, List<User>>();
         }
     }
 }

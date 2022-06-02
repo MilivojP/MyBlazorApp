@@ -8,8 +8,8 @@ namespace MyBlazorApp.Server.Controllers
     [ApiController]
     public class WorkTimeController : ControllerBase
     {
-        private readonly IWorkTimeServices _workTimeServices;
-        public WorkTimeController(IWorkTimeServices workTimeServices)
+        private readonly IWorkTimeService _workTimeServices;
+        public WorkTimeController(IWorkTimeService workTimeServices)
         {
             _workTimeServices = workTimeServices;
         }

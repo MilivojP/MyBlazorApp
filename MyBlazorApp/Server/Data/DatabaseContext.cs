@@ -6,7 +6,7 @@ namespace MyBlazorApp.Server.Data
 {
     public partial class DatabaseContext : DbContext
     {
-        public virtual DbSet<UserDto> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkTime> WorkTimes { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
@@ -16,9 +16,9 @@ namespace MyBlazorApp.Server.Data
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserDto>(entity =>
+            modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("userdetails");
+                entity.ToTable("Users");
                 entity.Property(e => e.Id).HasColumnName("Userid");
                 entity.Property(e => e.UserName)
                     .HasMaxLength(100)
@@ -28,9 +28,9 @@ namespace MyBlazorApp.Server.Data
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<WorkTimeDto>(entity =>
+            modelBuilder.Entity<WorkTime>(entity =>
             {
-                entity.ToTable("worktimedetails");
+                entity.ToTable("WorkTimes");
                 entity.Property(e => e.UserId).HasColumnName("Userid");
                 entity.Property(e => e.StartTime)
                     .HasMaxLength(50)

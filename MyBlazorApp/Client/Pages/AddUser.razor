@@ -59,7 +59,7 @@
         }
     }
     protected async Task SaveUser()
-    {
+        {
         if (user.Id != 0)
         {
             await Http.PutAsJsonAsync("api/User", user);

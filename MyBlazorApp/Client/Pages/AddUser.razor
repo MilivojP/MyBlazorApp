@@ -8,6 +8,7 @@
 <hr />
 <EditForm Model="@user" OnValidSubmit="SaveUser">
     <DataAnnotationsValidator />
+    <ValidationSummary/>
     <div class="mb-3">
         <label for="Name" class="form-label">Name</label>
         <div class="col-md-4">
@@ -21,6 +22,13 @@
             <InputText type="password" placeholder="Password" @bind-Value="user.Password" />
         </div>
         <ValidationMessage For="@(() => user.Password)" />
+    </div>
+    <div class="mb-3">
+        <label for="ConfirmPassword" class="form-label">ConfirmPassword</label>
+        <div class="col-md-4">
+            <InputText type="password" placeholder="ConfirmPassword" @bind-Value="user.ConfirmPassword" />
+        </div>
+        <ValidationMessage For="@(() => user.ConfirmPassword)" />
     </div>
     <div class="mb-3">
         <label for="Emailid" class="form-label">E-mail</label>

@@ -17,7 +17,8 @@ namespace MyBlazorApp.Server
             CreateMap<User, UserDto>()
                 .ForMember(x => x.Id, o => o.Ignore());
 
-            CreateMap<UserDto, User>();
+            CreateMap<UserDto, User>()
+                .ForMember(x => x.Id, o => o.Ignore());
 
             //CreateMap<List<User>, List<UserDto>>();
             //CreateMap<List<UserDto>, List<User>>();

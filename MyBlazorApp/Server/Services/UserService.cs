@@ -1,6 +1,5 @@
 ﻿using MyBlazorApp.Server.Interfaces;
 using MyBlazorApp.Shared.Models;
-using Microsoft.EntityFrameworkCore;
 using MyBlazorApp.Server.Data;
 using AutoMapper;
 using MyBlazorApp.Server.Entities;
@@ -56,7 +55,11 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                _dbContext.Entry(user).State = EntityState.Modified;
+                var data = _mapper.Map<User>(user);
+
+                _dbContext.Users.Update(data);
+
+                //_dbContext.Entry(user).State = EntityState.Modified;
                 _dbContext.SaveChanges();
             }
             catch
@@ -66,11 +69,15 @@ namespace MyBlazorApp.Server.Services
         }
 
         //Get the details of a particular user
+
         public UserDto GetUserData(int id)
+
         {
             try
             {
-                var data = _dbContext.Users.Find(id);
+                //var data = _dbContext.Users.Find(id);
+                var data = _mapper.Map<User>(id);
+
                 if (data != null)
                 {
                     return _mapper.Map<UserDto>(data);
@@ -92,7 +99,8 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                var data = _dbContext.Users.Find(id);
+                //var data = _dbContext.Users.Find(id);
+                var data = _mapper.Map<User>(id);
                 if (data != null)
                 {
                     _dbContext.Users.Remove(data);

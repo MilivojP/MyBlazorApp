@@ -1,4 +1,4 @@
-﻿@page "/fetchuserdetails"
+﻿@page "/userlist"
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 
@@ -66,18 +66,19 @@ else
 @code {
     protected List<UserDto> userList = new();
     protected List<UserDto> searchUserData = new();
-    protected UserDto user = new();
     protected string SearchString { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
         await GetAllUsers();
     }
+
     protected async Task GetAllUsers()
     {
         userList = await Http.GetFromJsonAsync<List<UserDto>>("api/User");
         searchUserData = userList;
     }
+
     protected void FilterUser()
     {
         if (!string.IsNullOrEmpty(SearchString))
@@ -91,10 +92,7 @@ else
             userList = searchUserData;
         }
     }
-    protected void DeleteConfirm(int Id)
-    {
-        user = userList.FirstOrDefault(x => x.Id == Id);
-    }
+
     public void ResetSearch()
     {
         SearchString = string.Empty;

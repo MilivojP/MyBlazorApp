@@ -16,15 +16,15 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<List<UserDto>> GetAll()
+        public ActionResult<List<UserDto>> GetAll()
         {
-            return await Task.FromResult(_userService.GetUserDetails());
+            return Ok(_userService.GetUsers());
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public ActionResult<ExistingUserDto> Get(int id)
         {
-            ExistingUserDto user = _userService.GetUserData(id);
+            var user = _userService.GetUser(id);
             if (user != null)
             {
                 return Ok(user);
@@ -36,7 +36,7 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] UserDto user)
+        public void Post([FromBody] NewUserDto user)
         {
             _userService.AddUser(user);
         }
@@ -44,7 +44,7 @@ namespace MyBlazorApp.Server.Controllers
         [HttpPut]
         public void Put(ExistingUserDto user)
         {
-            _userService.UpdateUserDetails(user);
+            _userService.UpdateUser(user);
         }
 
         [HttpDelete("{id}")]

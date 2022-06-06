@@ -14,28 +14,13 @@ namespace MyBlazorApp.Server
 
             //CreateMap<List<WorkTimeDto>, List<WorkTime>>();
 
+            // Users:
             CreateMap<User, UserDto>();
-            //.ForMember(x => x.Id, o => o.Ignore());
-
-            CreateMap<UserDto, User>()
+            CreateMap<NewUserDto, User>()
                 .ForMember(x => x.Id, o => o.Ignore());
-
-            CreateMap<User, DeleteUserDto>();
-              //  .ForMember(x => x.Id, o => o.Ignore());
-
-            CreateMap<DeleteUserDto, User>()
-                .ForMember(x => x.Id, o => o.Ignore())
-                .ForMember(x => x.Password, o => o.Ignore());
-
-            CreateMap<User, ExistingUserDto>();
-                
-
             CreateMap<ExistingUserDto, User>()
-                .ForMember(x => x.Id, o => o.Ignore())
-                .ForMember(x=> x.Password, o=>o.Ignore());
-
-            //CreateMap<List<User>, List<UserDto>>();
-            //CreateMap<List<UserDto>, List<User>>();
+                 .ForMember(x => x.Password, o => o.Ignore());
+            CreateMap<User, ExistingUserDto>();
         }
     }
 }

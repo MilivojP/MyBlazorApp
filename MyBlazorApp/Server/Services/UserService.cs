@@ -18,7 +18,7 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Get all user details
-        public List<UserDto> GetUserDetails()
+        public List<UserDto> GetUsers()
         {
             try
             {
@@ -33,7 +33,7 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Add new user record
-        public void AddUser(UserDto user)
+        public void AddUser(NewUserDto user)
         {
             try
             {
@@ -51,7 +51,7 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Update the records of a particluar user
-        public void UpdateUserDetails(ExistingUserDto user)
+        public void UpdateUser(ExistingUserDto user)
         {
             try
             {
@@ -71,13 +71,11 @@ namespace MyBlazorApp.Server.Services
 
         //Get the details of a particular user
 
-        public ExistingUserDto GetUserData(int id)
-
+        public ExistingUserDto GetUser(int id)
         {
             try
             {
-                //var data = _dbContext.Users.Find(id);
-                var data = _mapper.Map<User>(id);
+                var data = _dbContext.Users.Find(id);
 
                 if (data != null)
                 {
@@ -100,8 +98,7 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                //var data = _dbContext.Users.Find(id);
-                var data = _mapper.Map<User>(id);
+                var data = _dbContext.Users.Find(id);
                 if (data != null)
                 {
                     _dbContext.Users.Remove(data);

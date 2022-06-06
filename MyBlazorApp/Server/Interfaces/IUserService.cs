@@ -7,9 +7,9 @@ namespace MyBlazorApp.Server.Interfaces
 
         public void AddUser(UserDto user);
 
-        public void UpdateUserDetails(UserDto user);
+        public void UpdateUserDetails(ExistingUserDto user);
 
-        public UserDto GetUserData(int id);
+        public ExistingUserDto GetUserData(int id);
 
         public void DeleteUser(int id);
     }

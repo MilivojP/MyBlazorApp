@@ -51,7 +51,7 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Update the records of a particluar user
-        public void UpdateUserDetails(UserDto user)
+        public void UpdateUserDetails(ExistingUserDto user)
         {
             try
             {
@@ -62,15 +62,16 @@ namespace MyBlazorApp.Server.Services
                 //_dbContext.Entry(user).State = EntityState.Modified;
                 _dbContext.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
         //Get the details of a particular user
 
-        public UserDto GetUserData(int id)
+        public ExistingUserDto GetUserData(int id)
 
         {
             try
@@ -80,7 +81,7 @@ namespace MyBlazorApp.Server.Services
 
                 if (data != null)
                 {
-                    return _mapper.Map<UserDto>(data);
+                    return _mapper.Map<ExistingUserDto>(data);
                 }
                 else
                 {

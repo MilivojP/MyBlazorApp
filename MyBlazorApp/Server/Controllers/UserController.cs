@@ -24,7 +24,7 @@ namespace MyBlazorApp.Server.Controllers
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            UserDto user = _userService.GetUserData(id);
+            ExistingUserDto user = _userService.GetUserData(id);
             if (user != null)
             {
                 return Ok(user);
@@ -42,7 +42,7 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPut]
-        public void Put(UserDto user)
+        public void Put(ExistingUserDto user)
         {
             _userService.UpdateUserDetails(user);
         }

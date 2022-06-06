@@ -33,10 +33,10 @@
 @code {
     [Parameter]
     public int Id { get; set; }
-    UserDto user = new UserDto();
+    DeleteUserDto user = new DeleteUserDto();
     protected override async Task OnInitializedAsync()
     {
-        user = await Http.GetFromJsonAsync<UserDto>("/api/User/" + Convert.ToInt32(Id));
+        user = await Http.GetFromJsonAsync<DeleteUserDto>("/api/User/" +Convert.ToInt32(Id));
     }
     protected async Task RemoveUser(int Id)
     {

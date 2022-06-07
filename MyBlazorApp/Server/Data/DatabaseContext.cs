@@ -1,15 +1,14 @@
 ﻿using MyBlazorApp.Shared.Models;
 using Microsoft.EntityFrameworkCore;
+using MyBlazorApp.Server.Entities;
 
-namespace MyBlazorApp.Server.Models
+namespace MyBlazorApp.Server.Data
 {
     public partial class DatabaseContext : DbContext
     {
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkTime> WorkTimes { get; set; }
-        public DatabaseContext()
-        {
-        }
+
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
         {
@@ -19,7 +18,7 @@ namespace MyBlazorApp.Server.Models
         {
             modelBuilder.Entity<User>(entity =>
             {
-                entity.ToTable("userdetails");
+                entity.ToTable("Users");
                 entity.Property(e => e.Id).HasColumnName("Userid");
                 entity.Property(e => e.UserName)
                     .HasMaxLength(100)
@@ -31,11 +30,8 @@ namespace MyBlazorApp.Server.Models
 
             modelBuilder.Entity<WorkTime>(entity =>
             {
-                entity.ToTable("worktimedetails");
+                entity.ToTable("WorkTimes");
                 entity.Property(e => e.UserId).HasColumnName("Userid");
-                entity.Property(e => e.UserName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
                 entity.Property(e => e.StartTime)
                     .HasMaxLength(50)
                     .IsUnicode(false);
@@ -50,9 +46,6 @@ namespace MyBlazorApp.Server.Models
                     .IsUnicode(false);
 
              });
-                OnModelCreatingPartial(modelBuilder);
         }
-        partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
-
     }
 }

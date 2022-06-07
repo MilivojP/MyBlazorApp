@@ -9,13 +9,6 @@
 <EditForm Model="@work" OnValidSubmit="SaveWork">
     <DataAnnotationsValidator />
     <div class="mb-3">
-        <label for="Name" class="form-label">Name</label>
-        <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="work.UserName" />
-        </div>
-        <ValidationMessage For="@(() => work.UserName)" />
-    </div>
-    <div class="mb-3">
         <label for="Day" class="form-label">Day</label>
         <div class="col-md-4">
             <InputDate @bind-Value="work.Day"/>
@@ -54,13 +47,13 @@
     [Parameter]
     public int UserId { get; set; }
     protected string Title = "Add";
-    protected WorkTime work = new();
+    protected WorkTimeDto work = new();
     protected override async Task OnParametersSetAsync()
     {
         if (UserId != 0)
         {
             Title = "Edit";
-            work = await Http.GetFromJsonAsync<WorkTime>("api/worktime/" + UserId);
+            work = await Http.GetFromJsonAsync<WorkTimeDto>("api/worktime/" + UserId);
         }
     }
     protected async Task SaveWork()

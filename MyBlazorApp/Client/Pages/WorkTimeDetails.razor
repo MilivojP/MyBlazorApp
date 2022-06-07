@@ -37,7 +37,6 @@ else
         <thead class="table-success">
             <tr>
                 <th>UserId</th>
-                <th>UserName</th>
                 <th>Day</th>
                 <th>StartTime</th>
                 <th>EndTime</th>
@@ -51,7 +50,6 @@ else
             {
                 <tr>
                     <td>@WorkTime.UserId</td>
-                    <td>@WorkTime.UserName</td>
                     <td>@WorkTime.Day</td>
                     <td>@WorkTime.StartTime</td>
                     <td>@WorkTime.EndTime</td>
@@ -74,9 +72,9 @@ else
 }
 
 @code {
-    protected List<WorkTime> workList = new();
-    protected List<WorkTime> searchUserData = new();
-    protected WorkTime work = new();
+    protected List<WorkTimeDto> workList = new();
+    protected List<WorkTimeDto> searchUserData = new();
+    protected WorkTimeDto work = new();
     protected string SearchString { get; set; } = string.Empty;
     protected override async Task OnInitializedAsync()
     {
@@ -84,21 +82,21 @@ else
     }
     protected async Task GetWorkTime()
     {
-        workList = await Http.GetFromJsonAsync<List<WorkTime>>("api/worktime");
+        workList = await Http.GetFromJsonAsync<List<WorkTimeDto>>("api/worktime");
         searchUserData = workList;
     }
     protected void FilterUser()
     {
-        if (!string.IsNullOrEmpty(SearchString))
-        {
-            workList = searchUserData
-                .Where(w => w.UserName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
-                .ToList();
-        }
-        else
-        {
-            workList = searchUserData;
-        }
+        //if (!string.IsNullOrEmpty(SearchString))
+        //{
+        //    workList = searchUserData
+        //        .Where(w => w.UserName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+        //        .ToList();
+        //}
+        //else
+        //{
+        //    workList = searchUserData;
+        //}
     }
     protected void DeleteConfirm(int Id)
     {

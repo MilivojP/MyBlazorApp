@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using MyBlazorApp.Server.Data;
 using MyBlazorApp.Server.Interfaces;
-using MyBlazorApp.Server.Models;
 using MyBlazorApp.Server.Services;
+using MyBlazorApp.Shared.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,13 @@ builder.Services.AddDbContext<DatabaseContext>
         options.UseInMemoryDatabase("Journal"));
     //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddTransient<IUserService, UserService>();
-builder.Services.AddTransient<IWorkTimeServices, WorkTimeServices>();
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IWorkTimeService, WorkTimeService>();
 
+//builder.Services.AddScoped<UserDto>();
+//builder.Services.AddScoped<WorkTimeDto>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();

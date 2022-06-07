@@ -1,9 +1,9 @@
-﻿@page "/user/add"
+﻿@page "/user/edit/{Id:int}"
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<h1>Add User</h1>
+<h1>Edit User</h1>
 <hr />
 <EditForm Model="@user" OnValidSubmit="SaveUser">
     <DataAnnotationsValidator />
@@ -16,23 +16,9 @@
         <ValidationMessage For="@(() => user.UserName)" />
     </div>
     <div class="mb-3">
-        <label for="Password" class="form-label">Password</label>
-        <div class="col-md-4">
-            <InputText type="password" placeholder="Password" @bind-Value="user.Password" />
-        </div>
-        <ValidationMessage For="@(() => user.Password)" />
-    </div>
-    <div class="mb-3">
-        <label for="ConfirmPassword" class="form-label">ConfirmPassword</label>
-        <div class="col-md-4">
-            <InputText type="password" placeholder="ConfirmPassword" @bind-Value="user.ConfirmPassword" />
-        </div>
-        <ValidationMessage For="@(() => user.ConfirmPassword)" />
-    </div>
-    <div class="mb-3">
         <label for="Emailid" class="form-label">E-mail</label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="user.Email" />
+            <label class="form-control">@user.Email</label>
         </div>
         <ValidationMessage For="@(() => user.Email)" />
     </div>
@@ -53,11 +39,19 @@
 </EditForm>
 
 @code {
-    protected NewUserDto user = new();
+    [Parameter]
+    public int Id { get; set; }
+
+    protected ExistingUserDto user = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        user = await Http.GetFromJsonAsync<ExistingUserDto>("api/User/" + Id);
+    }
 
     protected async Task SaveUser()
     {
-        await Http.PostAsJsonAsync("api/User", user);
+        await Http.PutAsJsonAsync("api/User", user);
         Cancel();
     }
 

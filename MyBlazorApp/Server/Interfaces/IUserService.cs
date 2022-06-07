@@ -3,13 +3,13 @@ namespace MyBlazorApp.Server.Interfaces
 {
     public interface IUserService
     {
-        public List<User> GetUserDetails();
+        public List<UserDto> GetUsers();
 
-        public void AddUser(User user);
+        public void AddUser(NewUserDto user);
 
-        public void UpdateUserDetails(User user);
+        public void UpdateUser(ExistingUserDto user);
 
-        public User GetUserData(int id);
+        public ExistingUserDto GetUser(int id);
 
         public void DeleteUser(int id);
     }

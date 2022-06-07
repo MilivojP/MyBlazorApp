@@ -33,19 +33,23 @@
 @code {
     [Parameter]
     public int Id { get; set; }
-    User user = new User();
+
+    ExistingUserDto user = new ExistingUserDto();
+
     protected override async Task OnInitializedAsync()
     {
-        user = await Http.GetFromJsonAsync<User>("/api/User/" + Convert.ToInt32(Id));
+        user = await Http.GetFromJsonAsync<ExistingUserDto>("/api/User/" +Convert.ToInt32(Id));
     }
+
     protected async Task RemoveUser(int Id)
     {
         await Http.DeleteAsync("api/User/" + Id);
-        NavigationManager.NavigateTo("/fetchuserdetails");
+        NavigationManager.NavigateTo("/userlist");
     }
+
     void Cancel()
     {
-        NavigationManager.NavigateTo("/fetchuserdetails");
+        NavigationManager.NavigateTo("/userlist");
     }
 }
 

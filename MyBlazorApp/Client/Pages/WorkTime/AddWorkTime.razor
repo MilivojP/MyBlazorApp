@@ -1,10 +1,9 @@
 ﻿@page "/worktime/add"
-@page "/worktime/edit/{UserId:int}"
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<h1>@Title WorkTime</h1>
+<h1>Add WorkTime</h1>
 <hr />
 <EditForm Model="@work" OnValidSubmit="SaveWork">
     <DataAnnotationsValidator />
@@ -44,32 +43,20 @@
 
 @code {
 
-    [Parameter]
-    public int UserId { get; set; }
-    protected string Title = "Add";
-    protected WorkTimeDto work = new();
-    protected override async Task OnParametersSetAsync()
-    {
-        if (UserId != 0)
-        {
-            Title = "Edit";
-            work = await Http.GetFromJsonAsync<WorkTimeDto>("api/worktime/" + UserId);
-        }
-    }
+      //public int UserId { get; set; }
+    protected NewWorkTimeDto work = new();
+    //protected override async Task OnParametersSetAsync()
+    //{
+
+    //}
     protected async Task SaveWork()
     {
-        if (work.UserId != 0)
-        {
-            await Http.PutAsJsonAsync("api/worktime", work);
-        }
-        else
-        {
-            await Http.PostAsJsonAsync("api/worktime", work);
-        }
+                
+        await Http.PostAsJsonAsync("api/worktime", work);        
         Cancel();
     }
     public void Cancel()
     {
-        NavigationManager.NavigateTo("/fetchworktimedetails");
+        NavigationManager.NavigateTo("/worktimelist");
     }
 }

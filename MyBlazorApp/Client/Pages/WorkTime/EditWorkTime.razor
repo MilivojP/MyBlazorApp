@@ -1,0 +1,66 @@
+﻿@page "/worktime/edit/{UserId:int}"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Edit WorkTime</h1>
+<hr />
+<EditForm Model="@work" OnValidSubmit="SaveWork">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Day" class="form-label">Day</label>
+        <div class="col-md-4">
+            <InputDate @bind-Value="work.Day"/>
+        </div>
+    </div>
+        <div class="mb-3">
+        <label for="StartTime" class="form-label">StartTime</label>
+        <div class="col-md-4">
+            <input type="time" @bind="work.StartTime"></input>
+        </div>
+        <ValidationMessage For="@(() => work.StartTime)" />
+    </div>
+    <div class="mb-3">
+        <label for="EndTime" class="form-label">EndTime</label>
+        <div class="col-md-4">
+            <input type="time" @bind="work.EndTime"></input>
+        </div>
+        <ValidationMessage For="@(() => work.EndTime)" />
+    </div>
+    <div class="mb-3">
+        <label for="BreakTime" class="form-label">BreakTime</label>
+        <div class="col-md-4">
+            <input type="timekind" @bind="work.BreakTime"></input>
+        </div>
+        <ValidationMessage For="@(() => work.BreakTime)" />   
+   
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+
+     protected ExistingWorkTimeDto work = new();
+    protected override async Task OnParametersSetAsync()
+    {
+    }
+    protected async Task SaveWork()
+    {
+        if (work.UserId != 0)
+        {
+            await Http.PutAsJsonAsync("api/worktime", work);
+        }
+        else
+        {
+            await Http.PostAsJsonAsync("api/worktime", work);
+        }
+        Cancel();
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/worktimelist");
+    }
+}

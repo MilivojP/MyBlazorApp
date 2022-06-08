@@ -10,81 +10,87 @@ namespace MyBlazorApp.Server.Services
     public class WorkTimeService : IWorkTimeService
     {
         private readonly IMapper _mapper;
-        readonly DatabaseContext _dbContextWork;
+        readonly DatabaseContext _dbContext;
 
-        public WorkTimeService(IMapper mapper, DatabaseContext dbContextWork)
+        public WorkTimeService(IMapper mapper, DatabaseContext dbContext)
         {
             _mapper = mapper;
-            _dbContextWork = dbContextWork;
+            _dbContext = dbContext;
         }
 
-        //To Get all user details
-        public List<WorkTimeDto> GetWorkTimeDetails()
+        //To Get all worktime details
+        public List<WorkTimeDto> GetWorkTimes()
         {
             try
             {
-                var data = _dbContextWork.WorkTimes.ToList();
+                var data = _dbContext.WorkTimes.ToList();
 
                 return _mapper.Map<List<WorkTimeDto>>(data);
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
-        //To Add new user record
-        public void AddWorkTime(WorkTimeDto workTime)
+        //To Add new worktime record
+        public void AddWorkTime(NewWorkTimeDto workTime)
         {
             try
             {
                 var data = _mapper.Map<WorkTime>(workTime);
 
-                _dbContextWork.WorkTimes.Add(data);
+                _dbContext.WorkTimes.Add(data);
 
-                _dbContextWork.SaveChanges();
+                _dbContext.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
-        //To Update the records of a particluar user
-        public void UpdateWorkTimeDetails(WorkTime UserId)
+        //To Update the records workTime
+        public void UpdateWorkTime(ExistingWorkTimeDto UserId)
         {
             try
             {
                 // TODO: get worktime from data store and then update
+                var data = _mapper.Map<WorkTime>(UserId);
 
-                _dbContextWork.Entry(UserId).State = EntityState.Modified;
-                _dbContextWork.SaveChanges();
+                _dbContext.WorkTimes.Update(data);
+
+                _dbContext.SaveChanges();
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
         //Get the details of a particular user
-        public WorkTimeDto GetWorkTimeData(int id)
+        public ExistingWorkTimeDto GetWorkTime(int id)
         {
             try
             {
-                var data = _dbContextWork.WorkTimes.Find(id);
+                var data = _dbContext.WorkTimes.Find(id);
 
                 if (data != null)
                 {
-                    return _mapper.Map<WorkTimeDto>(data);
+                    return _mapper.Map<ExistingWorkTimeDto>(data);
                 }
                 else
                 {
                     throw new ArgumentNullException();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
@@ -93,33 +99,34 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                var data = _dbContextWork.WorkTimes.Find(id);
+                var data = _dbContext.WorkTimes.Find(id);
                 if (data != null)
                 {
-                    _dbContextWork.WorkTimes.Remove(data);
+                    _dbContext.WorkTimes.Remove(data);
 
-                    _dbContextWork.SaveChanges();
+                    _dbContext.SaveChanges();
                 }
                 else
                 {
                     throw new ArgumentNullException();
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                Console.WriteLine(ex);
+                throw ex;
             }
         }
 
-        WorkTimeDto IWorkTimeService.GetWorkTimeData(int UserId)
+        ExistingWorkTimeDto IWorkTimeService.GetWorkTime(int UserId)
         {
             throw new NotImplementedException();
         }
 
-        public void UpdateWorkTimeDetails(WorkTimeDto UserId)
-        {
-            throw new NotImplementedException();
-        }
+        //public void IWorkTimeService.UpdateWorkTime(ExistingWorkTimeDto UserId)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }
 

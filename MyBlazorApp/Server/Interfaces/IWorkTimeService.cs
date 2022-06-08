@@ -4,13 +4,13 @@ namespace MyBlazorApp.Server.Interfaces
 {
     public interface IWorkTimeService
     {
-        public List<WorkTimeDto> GetWorkTimeDetails();
+        public List<WorkTimeDto> GetWorkTimes();
 
-        public void AddWorkTime(WorkTimeDto UserId);
+        public void AddWorkTime(NewWorkTimeDto UserId);
 
-        public void UpdateWorkTimeDetails(WorkTimeDto UserId);
+        public void UpdateWorkTime(ExistingWorkTimeDto UserId);
 
-        public WorkTimeDto GetWorkTimeData(int UserId);
+        public ExistingWorkTimeDto GetWorkTime(int UserId);
 
         public void DeleteWorkTime(int UserId);
     }

@@ -1,4 +1,4 @@
-﻿@page "/fetchworktimedetails"
+﻿@page "/worktimelist"
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 
@@ -50,10 +50,10 @@ else
             {
                 <tr>
                     <td>@WorkTime.UserId</td>
-                    <td>@WorkTime.Day</td>
-                    <td>@WorkTime.StartTime</td>
-                    <td>@WorkTime.EndTime</td>
-                    <td>@WorkTime.Work=@WorkTime.EndTime-@WorkTime.StartTime</td>
+                    <td>@WorkTime.Day.ToString("d",System.Globalization.CultureInfo.GetCultureInfo("en-GB")) </td>
+                    <td>@WorkTime.StartTime.ToString("hh:mm:tt")</td>
+                    <td>@WorkTime.EndTime.ToString("hh:mm:tt")</td>
+                    <td>@WorkTime.Work=@WorkTime.EndTime.Subtract(@WorkTime.StartTime)</td>
                     <td>@WorkTime.BreakTime</td>
                     <td>@WorkTime.Notes</td>
                     <td>
@@ -74,8 +74,8 @@ else
 @code {
     protected List<WorkTimeDto> workList = new();
     protected List<WorkTimeDto> searchUserData = new();
-    protected WorkTimeDto work = new();
     protected string SearchString { get; set; } = string.Empty;
+
     protected override async Task OnInitializedAsync()
     {
         await GetWorkTime();
@@ -87,21 +87,18 @@ else
     }
     protected void FilterUser()
     {
-        //if (!string.IsNullOrEmpty(SearchString))
-        //{
-        //    workList = searchUserData
-        //        .Where(w => w.UserName.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
-        //        .ToList();
-        //}
-        //else
-        //{
-        //    workList = searchUserData;
-        //}
+    //    if (!string.IsNullOrEmpty(SearchString))
+    //    {
+    //        workList = searchUserData
+    //            .Where(w => w.UserId.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+    //            .ToList();
+    //    }
+    //    else
+    //    {
+    //        workList = searchUserData;
+    //    }
     }
-    protected void DeleteConfirm(int Id)
-    {
-        work = workList.FirstOrDefault(x => x.UserId == Id);
-    }
+
     public void ResetSearch()
     {
         SearchString = string.Empty;

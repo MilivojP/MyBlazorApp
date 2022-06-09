@@ -8,7 +8,7 @@ namespace MyBlazorApp.Server.Interfaces
 
         public void AddWorkTime(NewWorkTimeDto UserId);
 
-        public void UpdateWorkTime(ExistingWorkTimeDto UserId);
+        public void UpdateWorkTime(ExistingWorkTimeDto Day);
 
         public ExistingWorkTimeDto GetWorkTime(int UserId);
 

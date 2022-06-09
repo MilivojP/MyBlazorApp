@@ -78,9 +78,9 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await GetWorkTime();
+        await GetWorkTimes();
     }
-    protected async Task GetWorkTime()
+    protected async Task GetWorkTimes()
     {
         workList = await Http.GetFromJsonAsync<List<WorkTimeDto>>("api/worktime");
         searchUserData = workList;
@@ -90,7 +90,7 @@ else
     //    if (!string.IsNullOrEmpty(SearchString))
     //    {
     //        workList = searchUserData
-    //            .Where(w => w.UserId.IndexOf(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
+    //            .Where(w => w.UserId.IndexOf.(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
     //            .ToList();
     //    }
     //    else

@@ -52,13 +52,13 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //To Update the records workTime
-        public void UpdateWorkTime(ExistingWorkTimeDto UserId)
+        //To Update the records worktime
+        public void UpdateWorkTime(ExistingWorkTimeDto Day)
         {
             try
             {
                 // TODO: get worktime from data store and then update
-                var data = _mapper.Map<WorkTime>(UserId);
+                var data = _mapper.Map<WorkTime>(Day);
 
                 _dbContext.WorkTimes.Update(data);
 
@@ -71,12 +71,12 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //Get the details of a particular user
-        public ExistingWorkTimeDto GetWorkTime(int id)
+        //Get the details of a particular worktime
+        public ExistingWorkTimeDto GetWorkTime(int Userid)
         {
             try
             {
-                var data = _dbContext.WorkTimes.Find(id);
+                var data = _dbContext.WorkTimes.Find(Userid);
 
                 if (data != null)
                 {
@@ -94,12 +94,12 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //To Delete the record of a particular user
-        public void DeleteWorkTime(int id)
+        //To Delete the record of a particular WorkTime
+        public void DeleteWorkTime (int Userid)
         {
             try
             {
-                var data = _dbContext.WorkTimes.Find(id);
+                var data = _dbContext.WorkTimes.Find(Userid);
                 if (data != null)
                 {
                     _dbContext.WorkTimes.Remove(data);
@@ -118,10 +118,10 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        ExistingWorkTimeDto IWorkTimeService.GetWorkTime(int UserId)
-        {
-            throw new NotImplementedException();
-        }
+        //ExistingWorkTimeDto IWorkTimeService.GetWorkTime(int UserId)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         //public void IWorkTimeService.UpdateWorkTime(ExistingWorkTimeDto UserId)
         //{

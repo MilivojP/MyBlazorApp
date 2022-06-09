@@ -6,7 +6,7 @@
     public class WorkTimeDto
     {
         public int UserId { get; set; }
-        public DateTime Day { get; set; }
+        public DateTime Day { get; set; } 
         public DateTime StartTime { get; set; }
         public DateTime EndTime { get; set; }
         public TimeSpan BreakTime { get; set; }
@@ -20,8 +20,9 @@
     public class NewWorkTimeDto
     {
         public int UserId { get; set; }
-        public DateTime Day { get; set; }
-        public DateTime StartTime { get; set; }
+        public DateTime Day { get; set; } = DateTime.Now;
+        public DateTime StartTime { get; set; } 
+
         public DateTime EndTime { get; set; }
         public TimeSpan BreakTime { get; set; }
         public TimeSpan? Work { get; private set; }
@@ -41,4 +42,5 @@
         public TimeSpan? Work { get; private set; }
         public string? Notes { get; set; }
     }
+
 }

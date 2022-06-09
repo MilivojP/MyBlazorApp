@@ -42,22 +42,20 @@
 </EditForm>
 
 @code {
-
-     protected ExistingWorkTimeDto work = new();
+    [Parameter]
+    public int UserId { get; set; }
+    protected ExistingWorkTimeDto work = new();
     protected override async Task OnParametersSetAsync()
     {
+        work = await Http.GetFromJsonAsync<ExistingWorkTimeDto>("api/worktime/" + UserId);
     }
     protected async Task SaveWork()
     {
-        if (work.UserId != 0)
         {
             await Http.PutAsJsonAsync("api/worktime", work);
+            Cancel();
         }
-        else
-        {
-            await Http.PostAsJsonAsync("api/worktime", work);
-        }
-        Cancel();
+        
     }
     public void Cancel()
     {

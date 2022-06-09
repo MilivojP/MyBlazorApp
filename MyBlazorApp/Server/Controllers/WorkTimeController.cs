@@ -24,11 +24,11 @@ namespace MyBlazorApp.Server.Controllers
         //    return await Task.FromResult(_workTimeServices.GetWorkTimes());
         //}
 
-        [HttpGet("{id}")]
+        [HttpGet("{Userid}")]
 
-        public ActionResult<ExistingWorkTimeDto> Get(int id)
+        public ActionResult<ExistingWorkTimeDto> Get(int Userid)
         {
-            var UserId = _workTimeServices.GetWorkTime(id);
+            var UserId = _workTimeServices.GetWorkTime(Userid);
             if (UserId != null)
             {
                 return Ok(UserId);
@@ -52,7 +52,7 @@ namespace MyBlazorApp.Server.Controllers
             _workTimeServices.UpdateWorkTime(workTime);
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{Userid}")]
         public IActionResult Delete(int UserId)
         {
             _workTimeServices.DeleteWorkTime(UserId);

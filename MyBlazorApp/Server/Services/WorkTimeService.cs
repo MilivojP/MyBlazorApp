@@ -117,16 +117,6 @@ namespace MyBlazorApp.Server.Services
                 throw ex;
             }
         }
-
-        //ExistingWorkTimeDto IWorkTimeService.GetWorkTime(int UserId)
-        //{
-        //    throw new NotImplementedException();
-        //}
-
-        //public void IWorkTimeService.UpdateWorkTime(ExistingWorkTimeDto UserId)
-        //{
-        //    throw new NotImplementedException();
-        //}
     }
 }
 

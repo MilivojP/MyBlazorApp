@@ -18,7 +18,6 @@ namespace MyBlazorApp.Server
             CreateMap<NewWorkTimeDto, WorkTime>()
                 .ForMember(x => x.UserId, o => o.Ignore());
             CreateMap<ExistingWorkTimeDto, WorkTime>();
-                //.ForMember(x => x.UserId, o => o.Ignore());
             CreateMap<WorkTime, ExistingWorkTimeDto>();
 
             // Users:

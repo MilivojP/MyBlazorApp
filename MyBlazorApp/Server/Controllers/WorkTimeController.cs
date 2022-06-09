@@ -19,10 +19,7 @@ namespace MyBlazorApp.Server.Controllers
         {
             return Ok(_workTimeServices.GetWorkTimes());
         }
-        //public async Task<List<WorkTimeDto>> Get()
-        //{
-        //    return await Task.FromResult(_workTimeServices.GetWorkTimes());
-        //}
+
 
         [HttpGet("{Userid}")]
 

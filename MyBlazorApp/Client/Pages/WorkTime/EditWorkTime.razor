@@ -1,9 +1,9 @@
-﻿@page "/worktime/edit/{UserId:int}"
+﻿@page "/worktime/edit/{Id:int}"
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<h1>Edit WorkTime</h1>
+<h1>Edit Work Time</h1>
 <hr />
 <EditForm Model="@work" OnValidSubmit="SaveWork">
     <DataAnnotationsValidator />
@@ -43,11 +43,11 @@
 
 @code {
     [Parameter]
-    public int UserId { get; set; }
+    public int Id { get; set; }
     protected ExistingWorkTimeDto work = new();
     protected override async Task OnParametersSetAsync()
     {
-        work = await Http.GetFromJsonAsync<ExistingWorkTimeDto>("api/worktime/" + UserId);
+        work = await Http.GetFromJsonAsync<ExistingWorkTimeDto>("api/worktime/" + Id);
     }
     protected async Task SaveWork()
     {

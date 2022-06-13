@@ -2,13 +2,13 @@
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 
-<h1>User Data</h1>
-<p>My CRUD operation</p>
+<h1>Users</h1>
+<p></p>
 <div class="row">
     <div class="col-md-6">
         <a href='/user/add' class="btn btn-primary" role="button">
             <i class="fas fa-user-plus"></i>
-            AddUser
+            Add User
         </a>
     </div>
     <div class="input-group col">
@@ -34,8 +34,7 @@ else
     <table class="table table-striped align-middle table-bordered">
         <thead class="table-success">
             <tr>
-                <th>Id</th>
-                <th>UserName</th>
+                <th>User Name</th>
                 <th>Email</th>
                 <th>IsAdmin</th>
             </tr>
@@ -44,7 +43,6 @@ else
             @foreach (var user in userList)
             {
                 <tr>
-                    <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>@user.Email</td>
                     <td>@user.IsAdmin</td>

@@ -21,14 +21,14 @@ namespace MyBlazorApp.Server.Controllers
         }
 
 
-        [HttpGet("{Userid}")]
+        [HttpGet("{Id}")]
 
-        public ActionResult<ExistingWorkTimeDto> Get(int Userid)
+        public ActionResult<ExistingWorkTimeDto> Get(int id)
         {
-            var UserId = _workTimeServices.GetWorkTime(Userid);
-            if (UserId != null)
+            var Id = _workTimeServices.GetWorkTime(id);
+            if (Id != null)
             {
-                return Ok(UserId);
+                return Ok(Id);
             }
             else
             {
@@ -49,10 +49,10 @@ namespace MyBlazorApp.Server.Controllers
             _workTimeServices.UpdateWorkTime(workTime);
         }
 
-        [HttpDelete("{Userid}")]
-        public IActionResult Delete(int UserId)
+        [HttpDelete("{Id}")]
+        public IActionResult Delete(int Id)
         {
-            _workTimeServices.DeleteWorkTime(UserId);
+            _workTimeServices.DeleteWorkTime(Id);
             return Ok();
         }
     }

@@ -3,7 +3,7 @@
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<h1>Add WorkTime</h1>
+<h1>Add Work Time</h1>
 <hr />
 <EditForm Model="@work" OnValidSubmit="SaveWork">
     <DataAnnotationsValidator />
@@ -50,11 +50,12 @@
 
     //}
     protected async Task SaveWork()
+     
     {
-                
         await Http.PostAsJsonAsync("api/worktime", work);        
         Cancel();
     }
+   
     public void Cancel()
     {
         NavigationManager.NavigateTo("/worktimelist");

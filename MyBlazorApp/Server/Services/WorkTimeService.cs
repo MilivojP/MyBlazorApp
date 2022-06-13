@@ -37,6 +37,7 @@ namespace MyBlazorApp.Server.Services
         //To Add new worktime record
         public void AddWorkTime(NewWorkTimeDto workTime)
         {
+            
             try
             {
                 var data = _mapper.Map<WorkTime>(workTime);
@@ -72,11 +73,11 @@ namespace MyBlazorApp.Server.Services
         }
 
         //Get the details of a particular worktime
-        public ExistingWorkTimeDto GetWorkTime(int Userid)
+        public ExistingWorkTimeDto GetWorkTime(int id)
         {
             try
             {
-                var data = _dbContext.WorkTimes.Find(Userid);
+                var data = _dbContext.WorkTimes.Find(id);
 
                 if (data != null)
                 {
@@ -95,11 +96,11 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Delete the record of a particular WorkTime
-        public void DeleteWorkTime (int Userid)
+        public void DeleteWorkTime (int id)
         {
             try
             {
-                var data = _dbContext.WorkTimes.Find(Userid);
+                var data = _dbContext.WorkTimes.Find(id);
                 if (data != null)
                 {
                     _dbContext.WorkTimes.Remove(data);

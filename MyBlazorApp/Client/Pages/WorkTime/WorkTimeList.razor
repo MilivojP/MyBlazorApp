@@ -2,17 +2,17 @@
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 
-<h1>WorkTime</h1>
-<p>My Work operation</p>
+<h1>Work Time</h1>
+<p></p>
 <div class="row">
     <div class="col-md-6">
         <a href='/worktime/add' class="btn btn-primary" role="button">
             <i class="fas fa-user-plus"></i>
-            AddWorkTime
+            Add Work Time
         </a>
     </div>
     <div class="input-group col">
-        <input type="text" class="form-control" placeholder="Search user by name"
+        <input type="text" class="form-control" placeholder="Search by day"
                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
         @if (SearchString.Length > 0)
         {
@@ -36,7 +36,6 @@ else
     <table class="table table-striped align-middle table-bordered">
         <thead class="table-success">
             <tr>
-                <th>UserId</th>
                 <th>Day</th>
                 <th>StartTime</th>
                 <th>EndTime</th>
@@ -49,18 +48,17 @@ else
             @foreach (var WorkTime in workList)
             {
                 <tr>
-                    <td>@WorkTime.UserId</td>
                     <td>@WorkTime.Day.ToString("d",System.Globalization.CultureInfo.GetCultureInfo("en-GB")) </td>
-                    <td>@WorkTime.StartTime.ToString("hh:mm:tt")</td>
-                    <td>@WorkTime.EndTime.ToString("hh:mm:tt")</td>
+                    <td>@WorkTime.StartTime.ToShortTimeString()</td>
+                    <td>@WorkTime.EndTime.ToShortTimeString()</td>
                     <td>@WorkTime.Work=@WorkTime.EndTime.Subtract(@WorkTime.StartTime)</td>
                     <td>@WorkTime.BreakTime</td>
                     <td>@WorkTime.Notes</td>
                     <td>
-                        <a href='/worktime/edit/@WorkTime.UserId' class="btn btn-outline-dark" role="button">
+                        <a href='/worktime/edit/@WorkTime.Id' class="btn btn-outline-dark" role="button">
                             Edit
                         </a>
-                        <a href='/worktime/delete/@WorkTime.UserId' class="btn btn-outline-danger" role="button">
+                        <a href='/worktime/delete/@WorkTime.Id' class="btn btn-outline-danger" role="button">
                             Delete
                         </a>
                     </td>

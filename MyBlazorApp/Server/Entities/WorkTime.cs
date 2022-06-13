@@ -5,6 +5,7 @@ namespace MyBlazorApp.Server.Entities
     public class WorkTime
     {
         [Key]
+        public int Id { get; set; }
         public int UserId { get; set; }
         public DateOnly Day { get; set; }
         public TimeOnly StartTime { get; set; }

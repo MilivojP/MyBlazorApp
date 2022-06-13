@@ -19,19 +19,26 @@ namespace MyBlazorApp.Server.Data
             modelBuilder.Entity<User>(entity =>
             {
                 entity.ToTable("Users");
-                entity.Property(e => e.Id).HasColumnName("Userid");
+                entity.Property(e => e.Id);
                 entity.Property(e => e.UserName)
+                    .HasColumnOrder(0)
                     .HasMaxLength(100)
                     .IsUnicode(false);
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
                     .IsUnicode(false);
+                entity.Property(e => e.IsAdmin);
+
             });
 
             modelBuilder.Entity<WorkTime>(entity =>
             {
                 entity.ToTable("WorkTimes");
-                entity.Property(e => e.UserId).HasColumnName("Userid");
+                entity.Property(e => e.Id);
+                entity.Property(e => e.UserId)
+                    .HasColumnOrder(0);
+                entity.Property(e =>e.Day)
+                    .HasColumnOrder(1);
                 entity.Property(e => e.StartTime)
                     .HasMaxLength(50)
                     .IsUnicode(false);

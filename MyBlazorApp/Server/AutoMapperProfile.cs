@@ -13,11 +13,15 @@ namespace MyBlazorApp.Server
 
             CreateMap<TimeOnly, DateTime>().ConvertUsing<TimeOnlyToDateTimeConverter>();
             CreateMap<DateTime, TimeOnly>().ConvertUsing<DateTimeToTimeOnlyConverter>();
+           
             // WorkTime
             CreateMap<WorkTime, WorkTimeDto>();
             CreateMap<NewWorkTimeDto, WorkTime>()
+                .ForMember(x => x.Id, o => o.Ignore())
                 .ForMember(x => x.UserId, o => o.Ignore());
             CreateMap<ExistingWorkTimeDto, WorkTime>();
+                //.ForMember(x => x.Id, o => o.Ignore());
+                //.ForMember(x => x.UserId, o => o.Ignore()); 
             CreateMap<WorkTime, ExistingWorkTimeDto>();
 
             // Users:

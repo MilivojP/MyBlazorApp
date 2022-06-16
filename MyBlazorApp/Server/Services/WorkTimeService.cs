@@ -23,7 +23,7 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                var data = _dbContext.WorkTimes.ToList();
+                var data = _dbContext.WorkTimes.OrderBy(x=>x.UserId).ThenByDescending(x=>x.Day).ToList();
 
                 return _mapper.Map<List<WorkTimeDto>>(data);
             }

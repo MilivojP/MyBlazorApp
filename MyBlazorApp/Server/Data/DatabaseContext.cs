@@ -21,7 +21,6 @@ namespace MyBlazorApp.Server.Data
                 entity.ToTable("Users");
                 entity.Property(e => e.Id);
                 entity.Property(e => e.UserName)
-                    .HasColumnOrder(0)
                     .HasMaxLength(100)
                     .IsUnicode(false);
                 entity.Property(e => e.Email)
@@ -35,10 +34,8 @@ namespace MyBlazorApp.Server.Data
             {
                 entity.ToTable("WorkTimes");
                 entity.Property(e => e.Id);
-                entity.Property(e => e.UserId)
-                    .HasColumnOrder(0);
-                entity.Property(e =>e.Day)
-                    .HasColumnOrder(1);
+                entity.Property(e => e.UserId);
+                entity.Property(e => e.Day);
                 entity.Property(e => e.StartTime)
                     .HasMaxLength(50)
                     .IsUnicode(false);

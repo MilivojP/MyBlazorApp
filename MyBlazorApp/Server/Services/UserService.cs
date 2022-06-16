@@ -20,9 +20,11 @@ namespace MyBlazorApp.Server.Services
         //To Get all user details
         public List<UserDto> GetUsers()
         {
+            //_dbContext.Users.OrderBy(e => e.UserName);
             try
             {
-                var data = _dbContext.Users.ToList();
+                var data = _dbContext.Users.OrderBy(x=>x.UserName).ToList();
+
                 return _mapper.Map<List<UserDto>>(data);
             }
             catch (Exception ex)

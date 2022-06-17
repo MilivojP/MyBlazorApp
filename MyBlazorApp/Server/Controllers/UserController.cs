@@ -36,9 +36,18 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost]
-        public void Post([FromBody] NewUserDto user)
+        public ActionResult Post([FromBody] NewUserDto user)
         {
-            _userService.AddUser(user);
+            try
+            {
+                _userService.AddUser(user);
+                return Ok(ModelState);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("email", ex.Message);
+                return BadRequest(ModelState);
+            }
         }
 
         [HttpPut]

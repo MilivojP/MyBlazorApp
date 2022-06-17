@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBlazorApp.Shared.Models
 {
@@ -28,6 +29,8 @@ namespace MyBlazorApp.Shared.Models
     /// <summary>
     /// DTO for adding a new user.
     /// </summary>
+    /// 
+    [Index(nameof(Email), IsUnique = true)]
     public class NewUserDto
     {
         [Required]

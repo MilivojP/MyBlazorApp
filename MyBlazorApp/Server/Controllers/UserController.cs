@@ -53,6 +53,8 @@ namespace MyBlazorApp.Server.Controllers
             _userService.DeleteUser(id);
             return Ok();
         }
+
+    
     }
 }
 

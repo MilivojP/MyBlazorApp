@@ -37,19 +37,24 @@ namespace MyBlazorApp.Server.Services
         //To Add new user record
         public void AddUser(NewUserDto user)
         {
+
             try
-            {
+            { var eMail = _dbContext.Users.Any(x => x.Email == user.Email);
+                if (eMail == null)
+                {
+                    throw new Exception();
+                }
                 var data = _mapper.Map<User>(user);
-
                 _dbContext.Users.Add(data);
-
                 _dbContext.SaveChanges();
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex);
+                Console.WriteLine("Email is alredy exists! Please input new email!");
+                //Console.WriteLine(ex);
                 throw ex;
             }
+                                   
         }
 
         //To Update the records of a particluar user
@@ -118,5 +123,6 @@ namespace MyBlazorApp.Server.Services
                 throw ex;
             }
         }
+       
     }
 }

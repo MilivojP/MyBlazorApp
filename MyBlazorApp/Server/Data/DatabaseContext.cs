@@ -25,7 +25,9 @@ namespace MyBlazorApp.Server.Data
                     .IsUnicode(false);
                 entity.Property(e => e.Email)
                     .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .IsUnicode(false);                                   
+                entity.HasIndex(e => e.Email)    
+                    .IsUnique();
                 entity.Property(e => e.IsAdmin);
 
             });

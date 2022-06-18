@@ -1,9 +1,8 @@
-﻿using MyBlazorApp.Server.Interfaces;
-using MyBlazorApp.Shared.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
 using MyBlazorApp.Server.Data;
-using AutoMapper;
 using MyBlazorApp.Server.Entities;
+using MyBlazorApp.Server.Interfaces;
+using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.Server.Services
 {

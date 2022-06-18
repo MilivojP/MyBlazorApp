@@ -1,5 +1,7 @@
 ﻿@page "/user/add"
+@using MyBlazorApp.Client.Validation
 @using MyBlazorApp.Shared.Models
+@using System.Net
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
@@ -7,6 +9,7 @@
 <hr />
 <EditForm Model="@user" OnValidSubmit="SaveUser">
     <DataAnnotationsValidator />
+    <CustomValidation @ref="customValidation" />
     <ValidationSummary/>
     <div class="mb-3">
         <label for="Name" class="form-label">Name</label>
@@ -54,11 +57,25 @@
 
 @code {
     protected NewUserDto user = new();
+    private CustomValidation? customValidation;
 
     protected async Task SaveUser()
     {
-        await Http.PostAsJsonAsync("api/User", user);
-        Cancel();
+        customValidation?.ClearErrors();
+
+        var response = await Http.PostAsJsonAsync("api/User", user);
+
+        var content = await response.Content
+                .ReadFromJsonAsync<Dictionary<string, List<string>>>();
+
+        if (response.StatusCode == HttpStatusCode.BadRequest && content.Any())
+        {
+            customValidation?.DisplayErrors(content);
+        }
+        else
+        {
+            Cancel();
+        }
     }
 
     public void Cancel()

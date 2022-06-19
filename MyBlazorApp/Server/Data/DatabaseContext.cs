@@ -37,7 +37,11 @@ namespace MyBlazorApp.Server.Data
                 entity.ToTable("WorkTimes");
                 entity.Property(e => e.Id);
                 entity.Property(e => e.UserId);
+                entity.HasIndex(e => e.UserId)
+                    .IsUnique();   
                 entity.Property(e => e.Day);
+                entity.HasIndex(e => e.Day)
+                    .IsUnique();
                 entity.Property(e => e.StartTime)
                     .HasMaxLength(50)
                     .IsUnicode(false);

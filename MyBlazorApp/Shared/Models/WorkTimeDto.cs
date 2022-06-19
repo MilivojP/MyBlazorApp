@@ -11,6 +11,9 @@ namespace MyBlazorApp.Shared.Models
         public int Id { get; set; }
                 
         public int UserId { get; set; }
+
+       
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime Day { get; set; }
 
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:hh/mm}", ApplyFormatInEditMode = true)]
@@ -18,8 +21,11 @@ namespace MyBlazorApp.Shared.Models
 
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:hh/mm}", ApplyFormatInEditMode = true)]
         public DateTime EndTime { get; set; }
+      
         public TimeSpan BreakTime { get; set; }
+        
         public DateTime? Work { get; private set; }
+        
         public string? Notes { get; set; }
     }
 
@@ -30,17 +36,17 @@ namespace MyBlazorApp.Shared.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public DateTime Day { get; set; } = DateTime.Now;
+        public DateTime Day { get; set; } = DateTime.UtcNow.Date;
 
         [Required(ErrorMessage = "The Start Time field is Required")]
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:hh/mm}", ApplyFormatInEditMode = true)]
-        public DateTime StartTime { get; set; }
+        public DateTime StartTime { get; set; } = new DateTime(1, 1, 1, 8, 0, 0, 0);
 
         [Required(ErrorMessage = "The End Time field is Required")]
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:hh/mm}", ApplyFormatInEditMode = true)]
         //[DateGreaterThanAttribute(otherPropertyName = "StartTime", ErrorMessage = "End time must be greater than start time")]
-        public DateTime EndTime { get; set; }
-        public TimeSpan BreakTime { get; set; }
+        public DateTime EndTime { get; set; }= new DateTime(1, 1, 1, 16, 0, 0, 0);
+        public TimeSpan BreakTime { get; set; } = TimeSpan.FromMinutes(30.0);
         public TimeSpan? Work { get; private set; }
         public string? Notes { get; set; }
     }
@@ -52,8 +58,10 @@ namespace MyBlazorApp.Shared.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public DateTime Day { get; set; }
-        
+
+        [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime Day { get; set; } 
+
         [DataType(DataType.Time), DisplayFormat(DataFormatString = "{0:hh/mm}", ApplyFormatInEditMode = true)]
         public DateTime StartTime { get; set; }
      

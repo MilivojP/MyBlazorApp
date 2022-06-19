@@ -13,7 +13,7 @@
     </div>
     <div class="input-group col">
         <input type="text" class="form-control" placeholder="Search by day"
-               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterUser" />
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterDay" />
         @if (SearchString.Length > 0)
         {
             <div class="input-group-append">
@@ -71,8 +71,8 @@ else
 
 @code {
     protected List<WorkTimeDto> workList = new();
-    protected List<WorkTimeDto> searchUserData = new();
-    protected string SearchString { get; set; } = string.Empty;
+    protected List<WorkTimeDto> searchDay = new();
+    protected string SearchString { get; set; }= string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,26 +81,25 @@ else
     protected async Task GetWorkTimes()
     {
         workList = await Http.GetFromJsonAsync<List<WorkTimeDto>>("api/worktime");
-        searchUserData = workList;
+        searchDay = workList;
     }
-    protected void FilterUser()
+    protected void FilterDay()
     {
-    //    if (!string.IsNullOrEmpty(SearchString))
-    //    {
-    //        workList = searchUserData
-    //            .Where(w => w.UserId.IndexOf.(SearchString, StringComparison.OrdinalIgnoreCase) != -1)
-    //            .ToList();
-    //    }
-    //    else
-    //    {
-    //        workList = searchUserData;
-    //    }
+        //if (!string.IsNullOrEmpty(SearchString))
+        //{
+        //    workList = searchDay
+        //   .Where(w => w.Day.ToShortDateString == searchDay).ToList;
+
+        //else
+        //{
+        //    workList = searchDay;
+        //}
     }
 
     public void ResetSearch()
     {
         SearchString = string.Empty;
-        workList = searchUserData;
+        workList = searchDay;
     }
 
 }

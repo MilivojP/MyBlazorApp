@@ -12,7 +12,7 @@
         </a>
     </div>
     <div class="input-group col">
-        <input type="text" class="form-control" placeholder="Search by day"
+        <input type="date" class="form-control" placeholder="Search by day"
                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterDay" />
         @if (SearchString.Length > 0)
         {

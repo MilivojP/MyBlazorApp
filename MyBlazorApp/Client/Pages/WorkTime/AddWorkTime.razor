@@ -1,5 +1,7 @@
 ﻿@page "/worktime/add"
+@using MyBlazorApp.Client.Validation
 @using MyBlazorApp.Shared.Models
+@using System.Net
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
@@ -7,10 +9,13 @@
 <hr />
 <EditForm Model="@work" OnValidSubmit="SaveWork">
     <DataAnnotationsValidator />
+    <CustomValidation @ref="customValidation" />
+    <ValidationSummary/>
     <div class="mb-3">
         <label for="Day" class="form-label">Day</label>
         <div class="col-md-4">
             <InputDate @bind-Value="work.Day"/>
+        <ValidationMessage For="@(() => work.Day)" />
         </div>
     </div>
         <div class="mb-3">
@@ -42,17 +47,25 @@
 </EditForm>
 
 @code {
-
-      //public int UserId { get; set; }
+  
     protected NewWorkTimeDto work = new();
+    private CustomValidation? customValidation;
+    
     //protected override async Task OnParametersSetAsync()
     //{
 
     //}
     protected async Task SaveWork()
-     
+
+    customValidation?.ClearErrors();
+    var response=await Http.PostAsJsonAsync("api/worktime", work);
+    var request = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
+    if (response.StatusCode==HttpStatusCode.BadRequest && content.Any())
     {
-        await Http.PostAsJsonAsync("api/worktime", work);        
+         customValidation?.DisplayErrors(content);
+    }
+    else
+    {
         Cancel();
     }
    

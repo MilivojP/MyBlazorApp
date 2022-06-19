@@ -36,7 +36,12 @@ namespace MyBlazorApp.Server.Services
         //To Add new worktime record
         public void AddWorkTime(NewWorkTimeDto workTime)
         {
-            
+            //if (_dbContext.WorkTimes.Any(x => x.UserId == workTime.UserId && x => x.Day == workTime.Day))
+            //if (_dbContext.WorkTimes.Any(x => x.UserId == workTime.UserId, x=> x.Day == workTime.Day) )
+
+            //{
+            //    throw new Exception("WorkTime with this UserId and tihs Day already exists!");
+            //}
             try
             {
                 var data = _mapper.Map<WorkTime>(workTime);

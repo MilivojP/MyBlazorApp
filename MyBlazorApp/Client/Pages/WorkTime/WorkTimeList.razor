@@ -12,7 +12,7 @@
         </a>
     </div>
     <div class="input-group col">
-        <input type="date" class="form-control" placeholder="Search by day"
+        <input type="text" class="form-control" placeholder="Search by day"
                @bind="SearchString" @bind:event="oninput" @onkeyup="FilterDay" />
         @if (SearchString.Length > 0)
         {
@@ -85,15 +85,16 @@ else
     }
     protected void FilterDay()
     {
-        //if (!string.IsNullOrEmpty(SearchString))
-        //{
-        //    workList = searchDay
-        //   .Where(w => w.Day.ToShortDateString == searchDay).ToList;
-
-        //else
-        //{
-        //    workList = searchDay;
-        //}
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            workList = searchDay
+                .Where(w => w.Day.ToShortDateString() == SearchString)
+                .ToList();
+        }
+        else
+        {
+            workList = searchDay;
+        }
     }
 
     public void ResetSearch()

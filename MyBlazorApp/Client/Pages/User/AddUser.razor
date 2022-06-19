@@ -65,8 +65,7 @@
 
         var response = await Http.PostAsJsonAsync("api/User", user);
 
-        var content = await response.Content
-                .ReadFromJsonAsync<Dictionary<string, List<string>>>();
+        var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
 
         if (response.StatusCode == HttpStatusCode.BadRequest && content.Any())
         {

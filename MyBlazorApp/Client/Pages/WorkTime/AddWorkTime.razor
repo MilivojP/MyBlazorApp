@@ -55,20 +55,25 @@
     //{
 
     //}
-    protected async Task SaveWork()
 
-    customValidation?.ClearErrors();
-    var response=await Http.PostAsJsonAsync("api/worktime", work);
-    var request = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
-    if (response.StatusCode==HttpStatusCode.BadRequest && content.Any())
+    protected async Task SaveWork()
     {
-         customValidation?.DisplayErrors(content);
+        customValidation?.ClearErrors();
+
+        var response = await Http.PostAsJsonAsync("api/worktime", work);
+
+        var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
+
+        if (response.StatusCode == HttpStatusCode.BadRequest && content.Any())
+        {
+            customValidation?.DisplayErrors(content);
+        }
+        else
+        {
+            Cancel();
+        }
     }
-    else
-    {
-        Cancel();
-    }
-   
+
     public void Cancel()
     {
         NavigationManager.NavigateTo("/worktimelist");

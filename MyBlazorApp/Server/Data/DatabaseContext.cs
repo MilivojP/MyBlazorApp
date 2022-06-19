@@ -37,11 +37,14 @@ namespace MyBlazorApp.Server.Data
                 entity.ToTable("WorkTimes");
                 entity.Property(e => e.Id);
                 entity.Property(e => e.UserId);
-                entity.Property(e => e.Day);
+                entity.Property(e => e.Day)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
                 entity.Property(e => e.StartTime)
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>()
                     .HasMaxLength(50)
                     .IsUnicode(false);
                 entity.Property(e => e.EndTime)
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>()
                     .HasMaxLength(50)
                     .IsUnicode(false);
                 entity.Property(e => e.BreakTime)

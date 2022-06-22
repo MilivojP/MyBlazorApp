@@ -25,9 +25,32 @@ namespace MyBlazorApp.Server.Data
 
             modelBuilder.Entity<WorkTime>(entity =>
             {
+<<<<<<< HEAD
+                entity.ToTable("WorkTimes");
+                entity.Property(e => e.Id);
+                entity.Property(e => e.UserId);
+                entity.Property(e => e.Day)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+                entity.Property(e => e.StartTime)
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.EndTime)
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.BreakTime)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+                entity.Property(e => e.Notes)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+=======
                 //entity.ToTable("WorkTimes");
                 entity.HasIndex(e => new { e.UserId, e.Day })
                     .IsUnique();   
+>>>>>>> origin/master
              });
         }
     }

@@ -16,24 +16,16 @@ namespace MyBlazorApp.Server.Data
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("Users");
-                entity.Property(e => e.Id);
-                entity.Property(e => e.UserName)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);                                   
-                entity.HasIndex(e => e.Email)    
-                    .IsUnique();
-                entity.Property(e => e.IsAdmin);
-
-            });
+            //modelBuilder.Entity<User>(entity =>
+            //{
+            //    //entity.ToTable("Users");
+            //    //entity.HasIndex(e => e.Email)
+            //    //    .IsUnique();
+            //});
 
             modelBuilder.Entity<WorkTime>(entity =>
             {
+<<<<<<< HEAD
                 entity.ToTable("WorkTimes");
                 entity.Property(e => e.Id);
                 entity.Property(e => e.UserId);
@@ -54,6 +46,11 @@ namespace MyBlazorApp.Server.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+=======
+                //entity.ToTable("WorkTimes");
+                entity.HasIndex(e => new { e.UserId, e.Day })
+                    .IsUnique();   
+>>>>>>> origin/master
              });
         }
     }

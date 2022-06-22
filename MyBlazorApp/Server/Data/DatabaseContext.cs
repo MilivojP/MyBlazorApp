@@ -25,7 +25,7 @@ namespace MyBlazorApp.Server.Data
 
             modelBuilder.Entity<WorkTime>(entity =>
             {
-<<<<<<< HEAD
+
                 entity.ToTable("WorkTimes");
                 entity.Property(e => e.Id);
                 entity.Property(e => e.UserId);
@@ -46,11 +46,11 @@ namespace MyBlazorApp.Server.Data
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-=======
+
                 //entity.ToTable("WorkTimes");
                 entity.HasIndex(e => new { e.UserId, e.Day })
                     .IsUnique();   
->>>>>>> origin/master
+
              });
         }
     }

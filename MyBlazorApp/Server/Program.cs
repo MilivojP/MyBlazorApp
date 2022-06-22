@@ -9,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<DatabaseContext>
     (options =>
-    //    options.UseInMemoryDatabase("Journal"));
+   //     options.UseInMemoryDatabase("Journal"));
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();

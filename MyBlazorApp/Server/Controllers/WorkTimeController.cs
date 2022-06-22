@@ -37,10 +37,19 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost]
-
-        public void Post([FromBody] NewWorkTimeDto workTime)
+        public ActionResult Post([FromBody] NewWorkTimeDto workTime)
         {
-            _workTimeServices.AddWorkTime(workTime);
+            try
+            {
+                _workTimeServices.AddWorkTime(workTime);
+                return Ok(ModelState);
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("day", ex.Message);
+                return BadRequest(ModelState);
+            }
+            
         }
 
         [HttpPut]

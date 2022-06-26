@@ -1,0 +1,82 @@
+﻿@page "/vacation/add"
+@using MyBlazorApp.Client.Validation
+@using MyBlazorApp.Shared.Models
+@using System.Net
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Add Vacation</h1>
+<hr />
+<EditForm Model="@vacation" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <CustomValidation @ref="customValidation" />
+    <ValidationSummary/>
+        <div class="mb-3">
+        <label for="DateFrom" class="form-label">DateFrom</label>
+        <div class="col-md-4">
+            <InputDate @bind-Value="vacation.DateFrom"/>
+        </div>
+        <ValidationMessage For="@(() => vacation.DateFrom)" />
+    </div>
+    <div class="mb-3">
+        <label for="DateTo" class="form-label">DateTo</label>
+        <div class="col-md-4">
+            <InputDate @bind-Value="vacation.DateTo"/>
+        </div>
+        <ValidationMessage For="@(() => vacation.DateTo)" />
+    </div>
+    <div class="mb-3">
+        <label for="TotalDays" class="form-label">TotalDays</label>
+        <div class="col-md-4">
+            <input type="numm" @bind="vacation.TotalDays"></input>
+        </div>
+        <ValidationMessage For="@(() => vacation.TotalDays)" />   
+    </div>
+    <div class="mb-3">
+        <label for="Satus" class="form-label">Status</label>
+        <div class="col-md-4">
+            <input type="checkbox" @bind="vacation.Status">
+                <option value="true"></option>
+                <option value="false"></option>
+            </input>
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+  
+    protected NewVacationDto vacation = new();
+    private CustomValidation? customValidation;
+    
+    //protected override async Task OnParametersSetAsync()
+    //{
+
+    //}
+
+    protected async Task Save()
+    {
+        customValidation?.ClearErrors();
+
+        var response = await Http.PostAsJsonAsync("api/vacation", vacation);
+
+        var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
+
+        if (response.StatusCode == HttpStatusCode.BadRequest && content.Any())
+        {
+            customValidation?.DisplayErrors(content);
+        }
+        else
+        {
+            Cancel();
+        }
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/vacationlist");
+    }
+}

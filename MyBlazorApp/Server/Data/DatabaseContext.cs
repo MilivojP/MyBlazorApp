@@ -8,6 +8,7 @@ namespace MyBlazorApp.Server.Data
     {
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkTime> WorkTimes { get; set; }
+        public virtual DbSet<Vacation> Vacations { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
@@ -52,6 +53,16 @@ namespace MyBlazorApp.Server.Data
                     .IsUnique();   
 
              });
+            modelBuilder.Entity<Vacation>(entity=>
+            {
+                entity.ToTable ("Vacations");
+                entity.Property (e => e.Id);
+                entity.Property(e => e.UserId);
+                entity.Property(e=> e.DateFrom)
+                    .HasConversion<DateOnlyConverter,DateOnlyComparer>();
+                entity.Property(e => e.DateTo)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
         }
     }
 }

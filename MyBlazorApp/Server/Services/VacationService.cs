@@ -37,7 +37,7 @@ namespace MyBlazorApp.Server.Services
         //To Add new vacation record
         public void AddVacation(NewVacationDto vacation)
         {
-            if (_dbContext.Vacations.Any(x => x.UserId == vacation.UserId))
+            if (_dbContext.Vacations.Any(x => x.Id == vacation.Id))
             {
                 throw new Exception("Vacation with this Id already exists!");
             }

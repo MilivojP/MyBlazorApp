@@ -18,8 +18,6 @@ namespace MyBlazorApp.Shared.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateTo { get; set; }
         
-        public int TotalDays { get; set; }
-        
         public bool Status { get; set; }
         
         public string Descrtiption { get; set; }
@@ -41,8 +39,6 @@ namespace MyBlazorApp.Shared.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateTo { get; set; } = DateTime.UtcNow.Date;
 
-        public int TotalDays { get; set; }=30;   
-
         public bool Status { get; set; }
 
         public string Descrtiption { get; set; }
@@ -63,8 +59,6 @@ namespace MyBlazorApp.Shared.Models
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateTo { get; set; }
-
-        public int TotalDays { get; set; }
 
         public bool Status { get; set; }
 

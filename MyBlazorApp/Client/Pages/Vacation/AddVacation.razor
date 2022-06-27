@@ -7,7 +7,7 @@
 
 <h1>Add Vacation</h1>
 <hr />
-<EditForm Model="@vacation" OnValidSubmit="Save">
+<EditForm Model="@vacation" OnValidSubmit="SaveVacation">
     <DataAnnotationsValidator />
     <CustomValidation @ref="customValidation" />
     <ValidationSummary/>
@@ -24,13 +24,6 @@
             <InputDate @bind-Value="vacation.DateTo"/>
         </div>
         <ValidationMessage For="@(() => vacation.DateTo)" />
-    </div>
-    <div class="mb-3">
-        <label for="TotalDays" class="form-label">TotalDays</label>
-        <div class="col-md-4">
-            <input type="numm" @bind="vacation.TotalDays"></input>
-        </div>
-        <ValidationMessage For="@(() => vacation.TotalDays)" />   
     </div>
     <div class="mb-3">
         <label for="Satus" class="form-label">Status</label>
@@ -57,7 +50,7 @@
 
     //}
 
-    protected async Task Save()
+    protected async Task SaveVacation()
     {
         customValidation?.ClearErrors();
 

@@ -10,8 +10,8 @@ namespace MyBlazorApp.Server.Interfaces
 
         public void UpdateVacation(ExistingVacationDto vacation);
 
-        public ExistingVacationDto GetVacation(int Id);
+        public ExistingVacationDto GetVacation(int id);
 
-        public void DeleteVacation(int Id);
+        public void DeleteVacation(int id);
     }
 }

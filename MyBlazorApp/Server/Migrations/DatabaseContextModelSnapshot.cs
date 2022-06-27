@@ -54,7 +54,7 @@ namespace MyBlazorApp.Server.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("MyBlazorApp.Server.Entities.WorkTime", b =>

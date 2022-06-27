@@ -12,6 +12,7 @@ namespace MyBlazorApp.Server.Entities
 
         [Required]
         public int UserId { get; set; }
+        public virtual User User { get; set; }
 
         [Required]
         public DateOnly DateFrom { get; set; }
@@ -19,8 +20,6 @@ namespace MyBlazorApp.Server.Entities
         [Required]
         public DateOnly DateTo { get; set; }
 
-        [Required]
-        public int TotalDays { get; set; }  
 
         [Required]
         public bool Status { get; set; }    

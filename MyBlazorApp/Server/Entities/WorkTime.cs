@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBlazorApp.Server.Entities
 {
-    [Table("WorkTime")]
+    [Table("WorkTimes")]
     public class WorkTime
     {
         [Key]
@@ -12,6 +12,7 @@ namespace MyBlazorApp.Server.Entities
 
         [Required]
         public int UserId { get; set; }
+        public virtual User User { get; set; }
 
         [Required]
         public DateOnly Day { get; set; }
@@ -24,6 +25,8 @@ namespace MyBlazorApp.Server.Entities
 
         [Required]
         public TimeSpan BreakTime { get; set; }
+
+        public TimeSpan TotalWork { get; set; }
 
         [MaxLength(255)]
         [Unicode]

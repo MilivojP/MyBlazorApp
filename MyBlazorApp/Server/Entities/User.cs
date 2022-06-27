@@ -26,5 +26,11 @@ namespace MyBlazorApp.Server.Entities
 
         [Required]
         public bool IsAdmin { get; set; }
+
+        public virtual ICollection<WorkTime> WorkTimes { get; set; }
+        public virtual ICollection<Vacation> Vacations { get; set; }
+        public virtual ICollection<UserVacationBudget> UserVacationBudgets { get; set; }
+
+
     }
 }

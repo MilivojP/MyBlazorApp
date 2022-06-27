@@ -9,6 +9,7 @@ namespace MyBlazorApp.Server.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<WorkTime> WorkTimes { get; set; }
         public virtual DbSet<Vacation> Vacations { get; set; }
+        public virtual DbSet<UserVacationBudget> UserVacationsBudget { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
@@ -26,7 +27,6 @@ namespace MyBlazorApp.Server.Data
 
             modelBuilder.Entity<WorkTime>(entity =>
             {
-
                 entity.ToTable("WorkTimes");
                 entity.Property(e => e.Id);
                 entity.Property(e => e.UserId);
@@ -51,17 +51,22 @@ namespace MyBlazorApp.Server.Data
                 //entity.ToTable("WorkTimes");
                 entity.HasIndex(e => new { e.UserId, e.Day })
                     .IsUnique();   
-
+                
              });
             modelBuilder.Entity<Vacation>(entity=>
             {
-                entity.ToTable ("Vacations");
-                entity.Property (e => e.Id);
+                entity.Property(e => e.Id);
                 entity.Property(e => e.UserId);
                 entity.Property(e=> e.DateFrom)
                     .HasConversion<DateOnlyConverter,DateOnlyComparer>();
                 entity.Property(e => e.DateTo)
                     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
+
+            modelBuilder.Entity<UserVacationBudget>(entity =>
+            {
+                entity.HasIndex(e => new { e.UserId, e.Year })
+                    .IsUnique();
             });
         }
     }

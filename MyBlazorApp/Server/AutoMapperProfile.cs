@@ -14,6 +14,11 @@ namespace MyBlazorApp.Server
             CreateMap<TimeOnly, DateTime>().ConvertUsing<TimeOnlyToDateTimeConverter>();
             CreateMap<DateTime, TimeOnly>().ConvertUsing<DateTimeToTimeOnlyConverter>();
 
+            // UserVacationBudget:
+            CreateMap<UserVacationBudget, UserVacationBudgetDto>();
+            CreateMap<UserVacationBudgetDto,UserVacationBudget>()
+                .ForMember(x => x.Id, o => o.Ignore()); 
+            
             // Vacation
             CreateMap<Vacation, VacationDto>();
             CreateMap<NewVacationDto, Vacation>()

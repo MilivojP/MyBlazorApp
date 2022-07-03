@@ -16,8 +16,7 @@ namespace MyBlazorApp.Server.Entities
         [Required]
         public short Year { get; set; }
 
-        [Required]
-        public int TotalDays { get;  set; }
+        public int TotalDays { get ;  set; }
 
     }
 }

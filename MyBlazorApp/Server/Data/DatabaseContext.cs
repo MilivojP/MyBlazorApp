@@ -1,5 +1,4 @@
-﻿using MyBlazorApp.Shared.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using MyBlazorApp.Server.Entities;
 
 namespace MyBlazorApp.Server.Data
@@ -18,45 +17,23 @@ namespace MyBlazorApp.Server.Data
        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<User>(entity =>
-            //{
-            //    //entity.ToTable("Users");
-            //    //entity.HasIndex(e => e.Email)
-            //    //    .IsUnique();
-            //});
-
             modelBuilder.Entity<WorkTime>(entity =>
             {
-                entity.ToTable("WorkTimes");
-                entity.Property(e => e.Id);
-                entity.Property(e => e.UserId);
                 entity.Property(e => e.Day)
                     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
                 entity.Property(e => e.StartTime)
-                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
                 entity.Property(e => e.EndTime)
-                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>()
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-                entity.Property(e => e.BreakTime)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-                entity.Property(e => e.Notes)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
+                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
+                entity.Property(e => e.TotalWork)
+                    .HasComputedColumnSql("DATEDIFF(\"hour\",DATEDIFF(\"hour\",EndTime,StartTime),BreakTime)");
 
-
-                //entity.ToTable("WorkTimes");
                 entity.HasIndex(e => new { e.UserId, e.Day })
-                    .IsUnique();   
-                
+                    .IsUnique();  
              });
+
             modelBuilder.Entity<Vacation>(entity=>
             {
-                entity.Property(e => e.Id);
-                entity.Property(e => e.UserId);
                 entity.Property(e=> e.DateFrom)
                     .HasConversion<DateOnlyConverter,DateOnlyComparer>();
                 entity.Property(e => e.DateTo)
@@ -67,7 +44,7 @@ namespace MyBlazorApp.Server.Data
             {
                 entity.HasIndex(e => new { e.UserId, e.Year })
                     .IsUnique();
-            });
+             });
         }
     }
 }

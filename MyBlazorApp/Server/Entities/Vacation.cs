@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBlazorApp.Server.Entities
 {
-    [Table("Vacation")]
+    [Table("Vacations")]
     public class Vacation
     {
         [Key]
@@ -20,13 +20,15 @@ namespace MyBlazorApp.Server.Entities
         [Required]
         public DateOnly DateTo { get; set; }
 
-
+        // TODO: use Enum for defining statii
         [Required]
-        public bool Status { get; set; }    
+        public bool Status { get; set; }
+
+        // it will be calculated
+        public byte TotalDays { get; set; }
 
         [MaxLength(255)]
         [Unicode]
-        public string Descrtiption { get; set; }   
-
+        public string Notes { get; set; }   
     }
 }

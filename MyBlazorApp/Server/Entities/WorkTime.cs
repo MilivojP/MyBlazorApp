@@ -26,7 +26,8 @@ namespace MyBlazorApp.Server.Entities
         [Required]
         public TimeSpan BreakTime { get; set; }
 
-        public TimeSpan TotalWork { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        public TimeSpan TotalWork { get; private set; } 
 
         [MaxLength(255)]
         [Unicode]

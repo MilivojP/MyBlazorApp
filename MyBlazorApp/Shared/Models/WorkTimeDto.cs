@@ -25,7 +25,14 @@ namespace MyBlazorApp.Shared.Models
         public TimeSpan BreakTime { get; set; }
         
         public DateTime? Work { get; private set; }
-        
+
+        public DateTime? TotalWork 
+        { get
+            {
+                return this.Work+BreakTime;
+            }
+        }
+
         public string? Notes { get; set; }
     }
 

@@ -62,9 +62,14 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                var data = _mapper.Map<User>(user);
 
+                // (1) 
+                var data = _dbContext.Users.Single(x => x.Id == user.Id);
+                _mapper.Map(user, data);
                 _dbContext.Users.Update(data);
+
+                // (2)
+                //var data2 = _mapper.Map<User>(user);
 
                 //_dbContext.Entry(user).State = EntityState.Modified;
                 _dbContext.SaveChanges();

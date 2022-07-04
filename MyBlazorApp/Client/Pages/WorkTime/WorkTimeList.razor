@@ -41,6 +41,7 @@ else
                 <th>EndTime</th>
                 <th>Work</th>
                 <th>BreakTime</th>
+                <th>TotalWork</th>
                 <th>Notes</th>
             </tr>
         </thead>
@@ -53,6 +54,7 @@ else
                     <td>@WorkTime.EndTime.ToShortTimeString()</td>
                     <td>@WorkTime.Work=@WorkTime.EndTime.Subtract(@WorkTime.StartTime)</td>
                     <td>@WorkTime.BreakTime</td>
+                    @*<td>@WorkTime.TotalWork=(@WorkTime.Work +@WorkTime.BreakTime.TotalHours)</td>*@
                     <td>@WorkTime.Notes</td>
                     <td>
                         <a href='/worktime/edit/@WorkTime.Id' class="btn btn-outline-dark" role="button">

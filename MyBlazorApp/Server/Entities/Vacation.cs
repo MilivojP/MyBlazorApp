@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBlazorApp.Server.Entities
 {
-    [Table("WorkTimes")]
-    public class WorkTime
+    [Table("Vacations")]
+    public class Vacation
     {
         [Key]
         public int Id { get; set; }
@@ -15,22 +15,20 @@ namespace MyBlazorApp.Server.Entities
         public virtual User User { get; set; }
 
         [Required]
-        public DateOnly Day { get; set; }
+        public DateOnly DateFrom { get; set; }
 
         [Required]
-        public TimeOnly StartTime { get; set; }
+        public DateOnly DateTo { get; set; }
 
+        // TODO: use Enum for defining statii
         [Required]
-        public TimeOnly EndTime { get; set; }
+        public bool Status { get; set; }
 
-        [Required]
-        public TimeSpan BreakTime { get; set; }
-
-        [DatabaseGenerated(DatabaseGeneratedOption.Computed)]
-        public TimeSpan TotalWork { get; private set; } 
+        // it will be calculated
+        public byte TotalDays { get; set; }
 
         [MaxLength(255)]
         [Unicode]
-        public string? Notes { get; set; }
+        public string Notes { get; set; }   
     }
 }

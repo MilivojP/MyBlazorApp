@@ -13,15 +13,26 @@ namespace MyBlazorApp.Server
 
             CreateMap<TimeOnly, DateTime>().ConvertUsing<TimeOnlyToDateTimeConverter>();
             CreateMap<DateTime, TimeOnly>().ConvertUsing<DateTimeToTimeOnlyConverter>();
-           
+
+            // UserVacationBudget:
+            CreateMap<UserVacationBudget, UserVacationBudgetDto>();
+            CreateMap<UserVacationBudgetDto,UserVacationBudget>()
+                .ForMember(x => x.Id, o => o.Ignore()); 
+            
+            // Vacation
+            CreateMap<Vacation, VacationDto>();
+            CreateMap<NewVacationDto, Vacation>()
+                .ForMember(x => x.Id, o => o.Ignore())
+                .ForMember(x => x.UserId, o => o.Ignore());
+            CreateMap<ExistingVacationDto, Vacation>();
+            CreateMap<Vacation, ExistingVacationDto>();
+
             // WorkTime
             CreateMap<WorkTime, WorkTimeDto>();
             CreateMap<NewWorkTimeDto, WorkTime>()
                 .ForMember(x => x.Id, o => o.Ignore())
                 .ForMember(x => x.UserId, o => o.Ignore());
             CreateMap<ExistingWorkTimeDto, WorkTime>();
-                //.ForMember(x => x.Id, o => o.Ignore());
-                //.ForMember(x => x.UserId, o => o.Ignore()); 
             CreateMap<WorkTime, ExistingWorkTimeDto>();
 
             // Users:
@@ -30,6 +41,7 @@ namespace MyBlazorApp.Server
                 .ForMember(x => x.Id, o => o.Ignore());
             CreateMap<ExistingUserDto, User>()
                 .ForMember(x => x.Password, o => o.Ignore());
+                                
             CreateMap<User, ExistingUserDto>();
         }
     }

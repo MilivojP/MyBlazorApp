@@ -1,0 +1,72 @@
+﻿@page "/vacationlist"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+
+<h1>Vacation</h1>
+<p></p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/vacation/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add Vacation
+        </a>
+    </div>
+</div>
+
+<br />
+
+@if (vacationList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>DateFrom</th>
+                <th>DateTo</th>
+                <th>Status</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Vacation in vacationList)
+            {
+                <tr>
+                    <td>@Vacation.DateFrom.ToShortDateString()</td>
+                    <td>@Vacation.DateTo.ToShortDateString()</td>
+                    <td>@Vacation.Status</td>
+                    <td>@Vacation.Descrtiption</td>
+                    <td>
+                        <a href='/vacation/edit/@Vacation.Id' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/vacation/delete/@Vacation.Id' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+@code {
+    protected List<VacationDto> vacationList = new();
+    protected List<VacationDto> searchDay = new();
+    protected string SearchString { get; set; }= string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetVacations();
+    }
+    protected async Task GetVacations()
+    {
+        vacationList = await Http.GetFromJsonAsync<List<VacationDto>>("api/vacation");
+        //searchDay = vacationList;
+    }
+  
+
+}

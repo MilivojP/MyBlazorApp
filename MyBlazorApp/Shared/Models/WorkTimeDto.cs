@@ -26,12 +26,7 @@ namespace MyBlazorApp.Shared.Models
         
         public DateTime? Work { get; private set; }
 
-        public DateTime? TotalWork 
-        { get
-            {
-                return this.Work+BreakTime;
-            }
-        }
+        public TimeSpan TotalWork { get; private set; }
 
         public string? Notes { get; set; }
     }
@@ -55,6 +50,7 @@ namespace MyBlazorApp.Shared.Models
         public DateTime EndTime { get; set; }= new DateTime(1, 1, 1, 16, 0, 0, 0);
         public TimeSpan BreakTime { get; set; } = TimeSpan.FromMinutes(30.0);
         public TimeSpan? Work { get; private set; }
+        public TimeSpan? TotalWork { get;private set; }
         public string? Notes { get; set; }
     }
 
@@ -77,6 +73,7 @@ namespace MyBlazorApp.Shared.Models
         public DateTime EndTime { get; set; }
         public TimeSpan BreakTime { get; set; }
         public TimeSpan? Work { get; private set; }
+        public TimeSpan? TotalWork { get; private set; }
         public string? Notes { get; set; }
     }
     public class DateGreaterThanAttribute : ValidationAttribute

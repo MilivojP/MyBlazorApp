@@ -20,7 +20,7 @@ namespace MyBlazorApp.Shared.Models
         
         public bool Status { get; set; }
         
-        public string Descrtiption { get; set; }
+        public string Notes { get; set; }
     }
 
     /// <summary>
@@ -41,7 +41,7 @@ namespace MyBlazorApp.Shared.Models
 
         public bool Status { get; set; }
 
-        public string Descrtiption { get; set; }
+        public string Notes { get; set; }
     }
 
     /// <summary>
@@ -62,6 +62,6 @@ namespace MyBlazorApp.Shared.Models
 
         public bool Status { get; set; }
 
-        public string Descrtiption { get; set; }
+        public string Notes { get; set; }
     }
 }

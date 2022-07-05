@@ -41,7 +41,9 @@ namespace MyBlazorApp.Server.Services
             {
                 throw new Exception("Vacation with this Id already exists!");
             }
-
+            // TODO: Calculate weekends
+            // TODO: Calculate Holidays
+            // TODO: check if another vacation exists in the same period for that user
             try
             {
                 var data = _mapper.Map<Vacation>(vacation);

@@ -41,7 +41,6 @@
 </EditForm>
 
 @code {
-  
     protected NewVacationDto vacation = new();
     private CustomValidation? customValidation;
     
@@ -54,7 +53,7 @@
     {
         customValidation?.ClearErrors();
 
-        var response = await Http.PostAsJsonAsync("api/vacation", vacation);
+        var response = await Http.PostAsJsonAsync("api/Vacation", vacation);
 
         var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
 

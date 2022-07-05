@@ -31,26 +31,6 @@ namespace MyBlazorApp.Server.Services
                 throw ex;
             }
         }
-        public void AddUserVacationBudget(UserVacationBudgetDto user)
-        {
-            if (_dbContext.UserVacationsBudget.Any(x => x.Year== user.Year))
-            {
-                throw new Exception("User with vacation for this year already exists!");
-            }
-
-            try
-            {
-                var data = _mapper.Map<UserVacationBudget>(user);
-                _dbContext.UserVacationsBudget.Add(data);
-                _dbContext.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("User with vacation for this year already exists!");
-                throw ex;
-            }
-        }
-
         public UserVacationBudgetDto GetUserVacationBudgetDto(int id)
         {
             try
@@ -72,7 +52,28 @@ namespace MyBlazorApp.Server.Services
                 throw ex;
             }
         }
+        public void AddUserVacationBudget(UserVacationBudgetDto user)
+        {
+            //var data = _dbContext.Vacations.Single(x => x.UserId == user.Id);
+            //_mapper.Map(user, data);
 
+            if (_dbContext.UserVacationsBudget.Any(x => x.Year== user.Year))
+            {
+                throw new Exception("User with vacation for this year already exists!");
+            }
+
+            try
+            {
+                var data = _mapper.Map<UserVacationBudget>(user);
+                _dbContext.UserVacationsBudget.Add(data);
+                _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("User with vacation for this year already exists!");
+                throw ex;
+            }
+        }
 
         public void UpdateUserVacationBudget(UserVacationBudgetDto user)
         {

@@ -6,27 +6,26 @@ namespace MyBlazorApp.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VacationControler : ControllerBase
+    public class HolidayController : ControllerBase
     {
-        private readonly IVacationService _vacationServices;
-
-        public VacationControler(IVacationService vacationServices)
+        private readonly IHolidayService _holidayServices;
+        public HolidayController(IHolidayService holidayServices)
         {
-            _vacationServices = vacationServices;
+            _holidayServices = holidayServices;
         }
 
         [HttpGet]
-        public ActionResult<List<VacationDto>> GetAll()
+        public ActionResult<List<HolidayDto>> GetAll()
         {
-            return Ok(_vacationServices.GetVacations());
+            return Ok(_holidayServices.GetHolidays());
         }
 
 
         [HttpGet("{Id}")]
 
-        public ActionResult<ExistingVacationDto> Get(int id)
+        public ActionResult<HolidayDto> Get(int id)
         {
-            var Id = _vacationServices.GetVacation(id);
+            var Id = _holidayServices.GetHoliday(id);
             if (Id != null)
             {
                 return Ok(Id);
@@ -38,31 +37,31 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] NewVacationDto vacation)
+        public ActionResult Post([FromBody] HolidayDto holiday)
         {
             try
             {
-                _vacationServices.AddVacation(vacation);
+                _holidayServices.AddHoliday(holiday);
                 return Ok(ModelState);
             }
             catch (Exception ex)
             {
-                ModelState.AddModelError("vacation", ex.Message);
+                ModelState.AddModelError("holiday", ex.Message);
                 return BadRequest(ModelState);
             }
             
         }
 
         [HttpPut]
-        public void Put(ExistingVacationDto vacation)
+        public void Put(HolidayDto holiday)
         {
-            _vacationServices.UpdateVacation(vacation);
+            _holidayServices.UpdateHoliday(holiday);
         }
 
         [HttpDelete("{Id}")]
         public IActionResult Delete(int Id)
         {
-            _vacationServices.DeleteVacation(Id);
+            _holidayServices.DeleteHoliday(Id);
             return Ok();
         }
     }

@@ -1,38 +1,29 @@
-﻿@page "/vacation/add"
+﻿@page "/holiday/add"
 @using MyBlazorApp.Client.Validation
 @using MyBlazorApp.Shared.Models
 @using System.Net
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<h1>Add Vacation</h1>
+<h1>Add Holiday</h1>
 <hr />
-<EditForm Model="@vacation" OnValidSubmit="Save">
+<EditForm Model="@holiday" OnValidSubmit="SaveHoliday">
     <DataAnnotationsValidator />
     <CustomValidation @ref="customValidation" />
     <ValidationSummary/>
-        <div class="mb-3">
-        <label for="DateFrom" class="form-label">DateFrom</label>
+    <div class="mb-3">
+        <label for="Holiday Date" class="form-label">Holiday Date</label>
         <div class="col-md-4">
-            <InputDate @bind-Value="vacation.DateFrom"/>
+            <InputDate @bind-Value="holiday.HolidayDate" />
         </div>
-        <ValidationMessage For="@(() => vacation.DateFrom)" />
+        <ValidationMessage For="@(() => holiday.HolidayDate)" />
     </div>
     <div class="mb-3">
-        <label for="DateTo" class="form-label">DateTo</label>
+        <label for="Holiday Name" class="form-label">Holiday Name</label>
         <div class="col-md-4">
-            <InputDate @bind-Value="vacation.DateTo"/>
-        <ValidationMessage For="@(() => vacation.DateTo)" />
+            <InputText class="form-control" @bind-Value="holiday.HolidayName" />
         </div>
-    </div>
-    <div class="mb-3">
-        <label for="Satus" class="form-label">Status</label>
-        <div class="col-md-4">
-            <input type="checkbox" @bind="vacation.Status">
-                <option value="true"></option>
-                <option value="false"></option>
-            </input>
-        </div>
+        <ValidationMessage For="@(() => holiday.HolidayName)" />
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -41,14 +32,14 @@
 </EditForm>
 
 @code {
-    protected NewVacationDto vacation = new();
+    protected HolidayDto holiday = new();
     private CustomValidation? customValidation;
-    
-    protected async Task Save()
+
+    protected async Task SaveHoliday()
     {
         customValidation?.ClearErrors();
 
-        var response = await Http.PostAsJsonAsync("api/vacation", vacation);
+        var response = await Http.PostAsJsonAsync("api/holiday", holiday);
 
         var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
 
@@ -64,6 +55,7 @@
 
     public void Cancel()
     {
-        NavigationManager.NavigateTo("/vacationlist");
+        NavigationManager.NavigateTo("/holidaylist");
     }
 }
+

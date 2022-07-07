@@ -9,6 +9,7 @@ namespace MyBlazorApp.Server.Data
         public virtual DbSet<WorkTime> WorkTimes { get; set; }
         public virtual DbSet<Vacation> Vacations { get; set; }
         public virtual DbSet<UserVacationBudget> UserVacationsBudget { get; set; }
+        public virtual DbSet<Holiday> Holidays { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)

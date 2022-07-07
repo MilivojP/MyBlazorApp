@@ -27,7 +27,7 @@ else
                 <th>DateFrom</th>
                 <th>DateTo</th>
                 <th>Status</th>
-                <th>Description</th>
+                <th>Notes</th>
             </tr>
         </thead>
         <tbody>
@@ -55,8 +55,8 @@ else
 
 @code {
     protected List<VacationDto> vacationList = new();
-    protected List<VacationDto> searchDay = new();
-    protected string SearchString { get; set; }= string.Empty;
+    //protected List<VacationDto> searchDay = new();
+    //protected string SearchString { get; set; }= string.Empty;
 
     protected override async Task OnInitializedAsync()
     {

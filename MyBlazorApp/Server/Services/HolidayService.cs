@@ -6,26 +6,25 @@ using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.Server.Services
 {
-    public class VacationService : IVacationService
-
+    public class HolidayService : IHolidayService
     {
         private readonly IMapper _mapper;
         readonly DatabaseContext _dbContext;
 
-        public VacationService(IMapper mapper, DatabaseContext dbContext)
+        public HolidayService(IMapper mapper, DatabaseContext dbContext)
         {
             _mapper = mapper;
             _dbContext = dbContext;
         }
 
-        //To Get all vacation details
-        public List<VacationDto> GetVacations()
+        //To Get all holiday details
+        public List<HolidayDto> GetHolidays()
         {
             try
             {
-                var data = _dbContext.Vacations.OrderBy(x => x.UserId).ToList();
+                var data = _dbContext.Holidays.OrderBy(x=>x.HolidayDate).ToList();
 
-                return _mapper.Map<List<VacationDto>>(data);
+                return _mapper.Map<List<HolidayDto>>(data);
             }
             catch (Exception ex)
             {
@@ -34,21 +33,19 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //To Add new vacation record
-        public void AddVacation(NewVacationDto vacation)
+        //To Add new holiday record
+        public void AddHoliday(HolidayDto holiday)
         {
-            if (_dbContext.Vacations.Any(x => x.UserId == vacation.UserId && x.DateFrom == DateOnly.FromDateTime(vacation.DateFrom)))
+            if (_dbContext.Holidays.Any(x =>x.HolidayDate == DateOnly.FromDateTime(holiday.HolidayDate)))
             {
-                throw new Exception("Vacation with this UserId and DateFrom already exists!");
+                throw new Exception("The holiday on that day has already been entered!");
             }
-            // TODO: Calculate weekends
-            // TODO: Calculate Holidays
-            // TODO: check if another vacation exists in the same period for that user
+
             try
             {
-                var data = _mapper.Map<Vacation>(vacation);
+                var data = _mapper.Map<Holiday>(holiday);
 
-                _dbContext.Vacations.Add(data);
+                _dbContext.Holidays.Add(data);
 
                 _dbContext.SaveChanges();
             }
@@ -59,15 +56,17 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //To Update the records vacation
-        public void UpdateVacation(ExistingVacationDto Id)
+        //To Update the records holiday
+        public void UpdateHoliday(HolidayDto holiday)
         {
             try
             {
-                // TODO: get worktime from data store and then update
-                var data = _mapper.Map<Vacation>(Id);
+                // TODO: get holiday from data store and then update
+                var data = _dbContext.Holidays.Single(x => x.Id == holiday.Id);
+                //var data = _mapper.Map<Holiday>(holiday);
+                _mapper.Map(holiday, data);
 
-                _dbContext.Vacations.Update(data);
+                _dbContext.Holidays.Update(data);
 
                 _dbContext.SaveChanges();
             }
@@ -78,16 +77,17 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //Get the details of a particular vacation
-        public ExistingVacationDto GetVacation(int id)
-        {
+        //Get the details of a particular holiday
+
+        public HolidayDto GetHoliday (int id)
+        {   
             try
             {
-                var data = _dbContext.Vacations.Find(id);
+                var data = _dbContext.Holidays.Find(id);
 
                 if (data != null)
                 {
-                    return _mapper.Map<ExistingVacationDto>(data);
+                    return _mapper.Map<HolidayDto>(data);
                 }
                 else
                 {
@@ -101,15 +101,15 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //To Delete the record of a particular vacation
-        public void DeleteVacation(int id)
+        //To Delete the record of a particular holiday
+        public void DeleteHoliday (int id)
         {
             try
             {
-                var data = _dbContext.Vacations.Find(id);
+                var data = _dbContext.Holidays.Find(id);
                 if (data != null)
                 {
-                    _dbContext.Vacations.Remove(data);
+                    _dbContext.Holidays.Remove(data);
 
                     _dbContext.SaveChanges();
                 }

@@ -43,6 +43,12 @@ namespace MyBlazorApp.Server
                 .ForMember(x => x.Password, o => o.Ignore());
                                 
             CreateMap<User, ExistingUserDto>();
+
+            //Holidays:
+            CreateMap<Holiday, HolidayDto>();
+            CreateMap<HolidayDto, Holiday>()
+                .ForMember(x =>x.Id, o =>o.Ignore());
+
         }
     }
 

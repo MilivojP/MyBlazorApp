@@ -46,6 +46,12 @@ namespace MyBlazorApp.Server.Data
                 entity.HasIndex(e => new { e.UserId, e.Year })
                     .IsUnique();
              });
+
+            modelBuilder.Entity<Holiday>(entity =>
+            {
+                entity.Property(e => e.HolidayDate)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+            });
         }
     }
 }

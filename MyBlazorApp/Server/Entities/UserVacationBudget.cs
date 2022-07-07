@@ -17,6 +17,5 @@ namespace MyBlazorApp.Server.Entities
         public short Year { get; set; }
 
         public int TotalDays { get ;  set; }
-
     }
 }

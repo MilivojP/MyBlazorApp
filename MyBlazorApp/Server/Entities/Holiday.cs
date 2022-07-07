@@ -8,10 +8,10 @@ namespace MyBlazorApp.Server.Entities
         public int Id{ get; set; }
 
         [Required]
-        public DateOnly HolidayDate{ get; set; }
+        public DateOnly HolidayDate { get; set; }
         
         [Required]
         [MaxLength(50)]
-        public string HolidayName{ get; set; }  
+        public string HolidayName { get; set; }  
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace MyBlazorApp.Server.Data
+namespace MyBlazorApp.Shared.Converters
 {
 
     public class TimeOnlyConverter : ValueConverter<TimeOnly, TimeSpan>

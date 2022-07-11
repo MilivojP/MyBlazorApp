@@ -47,10 +47,10 @@
 </EditForm>
 
 @code {
-  
+
     protected NewWorkTimeDto work = new();
     private CustomValidation? customValidation;
-    
+
     //protected override async Task OnParametersSetAsync()
     //{
 
@@ -59,6 +59,8 @@
     protected async Task SaveWork()
     {
         customValidation?.ClearErrors();
+
+        work.UserId = 1; // TODO: change later!!
 
         var response = await Http.PostAsJsonAsync("api/worktime", work);
 

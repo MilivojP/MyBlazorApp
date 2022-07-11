@@ -22,16 +22,14 @@ namespace MyBlazorApp.Server
             // Vacation
             CreateMap<Vacation, VacationDto>();
             CreateMap<NewVacationDto, Vacation>()
-                .ForMember(x => x.Id, o => o.Ignore())
-                .ForMember(x => x.UserId, o => o.Ignore());
+                .ForMember(x => x.Id, o => o.Ignore());
             CreateMap<ExistingVacationDto, Vacation>();
             CreateMap<Vacation, ExistingVacationDto>();
 
             // WorkTime
             CreateMap<WorkTime, WorkTimeDto>();
             CreateMap<NewWorkTimeDto, WorkTime>()
-                .ForMember(x => x.Id, o => o.Ignore())
-                .ForMember(x => x.UserId, o => o.Ignore());
+                .ForMember(x => x.Id, o => o.Ignore());
             CreateMap<ExistingWorkTimeDto, WorkTime>();
             CreateMap<WorkTime, ExistingWorkTimeDto>();
 
@@ -52,8 +50,7 @@ namespace MyBlazorApp.Server
             //SickLeave:
             CreateMap<SickLeave, SickLeaveDto>();
             CreateMap<SickLeaveDto, SickLeave>()
-                .ForMember(x => x.Id, o => o.Ignore())
-                .ForMember(x => x.UserId, o => o.Ignore());
+                .ForMember(x => x.Id, o => o.Ignore());
         }
     }
 

@@ -45,7 +45,9 @@
     {
         customValidation?.ClearErrors();
 
-            var response = await Http.PostAsJsonAsync("api/uservacationbudget", uservacationbudget);
+        uservacationbudget.UserId = 1; // TODO: change later!!
+
+        var response = await Http.PostAsJsonAsync("api/uservacationbudget", uservacationbudget);
 
         var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
 

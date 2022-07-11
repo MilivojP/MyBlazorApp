@@ -46,6 +46,8 @@
     {
         customValidation?.ClearErrors();
 
+        sickleave.UserId = 1; // TODO: change later!!
+
         var response = await Http.PostAsJsonAsync("api/sickleave", sickleave);
 
         var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();

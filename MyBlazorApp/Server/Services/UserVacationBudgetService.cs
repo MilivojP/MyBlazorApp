@@ -56,10 +56,11 @@ namespace MyBlazorApp.Server.Services
             //var data = _dbContext.Vacations.Single(x => x.UserId == user.Id);
             //_mapper.Map(user, data);
 
-            if (_dbContext.UserVacationsBudgets.Any(x => x.UserId == budget.UserId &&  x.Year== budget.Year))
+            if (_dbContext.UserVacationsBudgets.Any(x => x.UserId == budget.UserId && x.Year == budget.Year))
             {
                 throw new Exception("User with vacation for this year already exists!");
             }
+
             try
             {
                 var data = _mapper.Map<UserVacationBudget>(budget);
@@ -75,6 +76,8 @@ namespace MyBlazorApp.Server.Services
 
         public void UpdateUserVacationBudget(UserVacationBudgetDto Day)
         {
+            // TODO: check existence of user budget (by id OR: user id + year)
+
             try
             {
                 // (1) 

@@ -55,7 +55,7 @@ namespace MyBlazorApp.Server.Controllers
         [HttpPut]
         public void Put(SickLeaveDto sickLeave)
         {
-            _sickLeaves.UpdateSickeLeave(sickLeave);
+            _sickLeaves.UpdateSickLeave(sickLeave);
         }
 
         [HttpDelete("{Id}")]

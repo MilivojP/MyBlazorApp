@@ -17,7 +17,6 @@ namespace MyBlazorApp.Server.Services
             _dbContext = dbContext;
         }
 
-
         public List<SickLeaveDto> GetSickLeaves()
         {
             try
@@ -32,27 +31,12 @@ namespace MyBlazorApp.Server.Services
                 throw ex;
             }
         }
-        //To Get all sickleave details
-        //public List<SickLeaveDto> GetSixckLeaves()
-        //{
-        //    try
-        //    {
-        //        var data = _dbContext.SickLeaves.OrderBy(x=>x.UserId).ThenByDescending(x=>x.StartDate).ToList();
-
-        //        return _mapper.Map<List<SickLeaveDto>>(data);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex);
-        //        throw ex;
-        //    }
-        //}
 
         public void AddSickLeave(SickLeaveDto sick)
         {
             if (_dbContext.SickLeaves.Any(x => x.UserId == sick.UserId && x.StartDate == DateOnly.FromDateTime(sick.StartDate)))
             {
-                throw new Exception("SickeLeave with this UserId and tihs StartDate already exists!");
+                throw new InvalidOperationException("SickLeave with this UserId and tihs StartDate already exists!");
             }
 
             try
@@ -70,7 +54,7 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        public void UpdateSickeLeave(SickLeaveDto sick)
+        public void UpdateSickLeave(SickLeaveDto sick)
         {
             try
             {
@@ -111,7 +95,7 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Delete the record of a particular sickleave
-        public void DeleteSickLeave (int id)
+        public void DeleteSickLeave(int id)
         {
             try
             {

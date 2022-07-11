@@ -8,7 +8,7 @@ namespace MyBlazorApp.Server.Interfaces
 
         public void AddSickLeave(SickLeaveDto sick);
 
-        public void UpdateSickeLeave(SickLeaveDto sick);
+        public void UpdateSickLeave(SickLeaveDto sick);
 
         public SickLeaveDto GetSickLeave(int Id);
 

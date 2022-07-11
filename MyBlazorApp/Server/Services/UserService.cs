@@ -20,7 +20,6 @@ namespace MyBlazorApp.Server.Services
         //To Get all user details
         public List<UserDto> GetUsers()
         {
-            //_dbContext.Users.OrderBy(e => e.UserName);
             try
             {
                 var data = _dbContext.Users.OrderBy(x=>x.UserName).ToList();
@@ -51,10 +50,8 @@ namespace MyBlazorApp.Server.Services
             catch (Exception ex)
             {
                 Console.WriteLine("Email is alredy exists! Please input new email!");
-                //Console.WriteLine(ex);
                 throw ex;
-            }
-                                   
+            }   
         }
 
         //To Update the records of a particluar user
@@ -62,16 +59,15 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-
-                // (1) 
+                // (1 variant) 
                 var data = _dbContext.Users.Single(x => x.Id == user.Id);
                 _mapper.Map(user, data);
                 _dbContext.Users.Update(data);
 
-                // (2)
+                // (2 variant)
                 //var data2 = _mapper.Map<User>(user);
-
                 //_dbContext.Entry(user).State = EntityState.Modified;
+
                 _dbContext.SaveChanges();
             }
             catch (Exception ex)
@@ -82,7 +78,6 @@ namespace MyBlazorApp.Server.Services
         }
 
         //Get the details of a particular user
-
         public ExistingUserDto GetUser(int id)
         {
             try
@@ -128,6 +123,5 @@ namespace MyBlazorApp.Server.Services
                 throw ex;
             }
         }
-       
     }
 }

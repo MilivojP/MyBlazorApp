@@ -22,7 +22,7 @@ namespace MyBlazorApp.Server.Services
         {
             try
             {
-                var data = _dbContext.Holidays.OrderBy(x=>x.HolidayDate).ToList();
+                var data = _dbContext.Holidays.OrderBy(x => x.HolidayDate).ToList();
 
                 return _mapper.Map<List<HolidayDto>>(data);
             }
@@ -36,7 +36,7 @@ namespace MyBlazorApp.Server.Services
         //To Add new holiday record
         public void AddHoliday(HolidayDto holiday)
         {
-            if (_dbContext.Holidays.Any(x =>x.HolidayDate == DateOnly.FromDateTime(holiday.HolidayDate)))
+            if (_dbContext.Holidays.Any(x => x.HolidayDate == DateOnly.FromDateTime(holiday.HolidayDate)))
             {
                 throw new Exception("The holiday on that day has already been entered!");
             }
@@ -59,11 +59,16 @@ namespace MyBlazorApp.Server.Services
         //To Update the records holiday
         public void UpdateHoliday(HolidayDto holiday)
         {
+            if (holiday is null)
+            {
+                throw new ArgumentNullException("Parameter 'holiday' is null.");
+            }
+
+            // TODO: check existence
             try
             {
-                // TODO: get holiday from data store and then update
                 var data = _dbContext.Holidays.Single(x => x.Id == holiday.Id);
-                //var data = _mapper.Map<Holiday>(holiday);
+
                 _mapper.Map(holiday, data);
 
                 _dbContext.Holidays.Update(data);
@@ -73,13 +78,12 @@ namespace MyBlazorApp.Server.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                throw ex;
+                throw new InvalidOperationException(ex.Message);
             }
         }
 
         //Get the details of a particular holiday
-
-        public HolidayDto GetHoliday (int id)
+        public HolidayDto GetHoliday(int id)
         {   
             try
             {
@@ -91,7 +95,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"Holiday with id {id} not found.");
                 }
             }
             catch (Exception ex)
@@ -102,7 +106,7 @@ namespace MyBlazorApp.Server.Services
         }
 
         //To Delete the record of a particular holiday
-        public void DeleteHoliday (int id)
+        public void DeleteHoliday(int id)
         {
             try
             {

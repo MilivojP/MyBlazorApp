@@ -54,6 +54,7 @@ namespace MyBlazorApp.Server.Data
                 entity.Property(e => e.HolidayDate)
                     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
             });
+
             modelBuilder.Entity<SickLeave>(entity =>
             {
                 entity.Property(e => e.StartDate)

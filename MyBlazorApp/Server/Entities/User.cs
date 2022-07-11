@@ -30,6 +30,6 @@ namespace MyBlazorApp.Server.Entities
         public virtual ICollection<WorkTime> WorkTimes { get; set; }
         public virtual ICollection<Vacation> Vacations { get; set; }
         public virtual ICollection<UserVacationBudget> UserVacationBudgets { get; set; }
-        public virtual ICollection<SickLeave> GetSickLeaves { get; set; }
+        public virtual ICollection<SickLeave> SickLeaves { get; set; }
     }
 }

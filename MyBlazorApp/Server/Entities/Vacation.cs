@@ -20,9 +20,8 @@ namespace MyBlazorApp.Server.Entities
         [Required]
         public DateOnly DateTo { get; set; }
 
-        // TODO: use Enum for defining statii
         [Required]
-        public bool Status { get; set; }
+        public VacationStatus Status { get; set; }
 
         // it will be calculated
         public byte TotalDays { get; set; }

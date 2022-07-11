@@ -12,8 +12,7 @@ namespace MyBlazorApp.Server.Entities
         public virtual User User { get; set; }  
 
         [Required]
-        [MaxLength(50)]
-        public string LeaveType { get; set; }
+        public SickLeaveType LeaveType { get; set; }
 
         [Required]
         public DateOnly StartDate { get; set; }

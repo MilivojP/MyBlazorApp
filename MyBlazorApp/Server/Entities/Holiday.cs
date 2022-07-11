@@ -5,7 +5,7 @@ namespace MyBlazorApp.Server.Entities
     public class Holiday
     {
         [Key]
-        public int Id{ get; set; }
+        public int Id { get; set; }
 
         [Required]
         public DateOnly HolidayDate { get; set; }

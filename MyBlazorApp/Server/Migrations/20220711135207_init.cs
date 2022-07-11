@@ -5,10 +5,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyBlazorApp.Server.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Holidays",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    HolidayDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    HolidayName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Holidays", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -26,6 +40,28 @@ namespace MyBlazorApp.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "SickLeaves",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    LeaveType = table.Column<byte>(type: "tinyint", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SickLeaves", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SickLeaves_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UserVacationsBudget",
                 columns: table => new
                 {
@@ -33,7 +69,7 @@ namespace MyBlazorApp.Server.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     Year = table.Column<short>(type: "smallint", nullable: false),
-                    TotalDays = table.Column<int>(type: "int", nullable: false)
+                    TotalDays = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -55,7 +91,7 @@ namespace MyBlazorApp.Server.Migrations
                     UserId = table.Column<int>(type: "int", nullable: false),
                     DateFrom = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateTo = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    Status = table.Column<byte>(type: "tinyint", nullable: false),
                     TotalDays = table.Column<byte>(type: "tinyint", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
@@ -96,6 +132,11 @@ namespace MyBlazorApp.Server.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_SickLeaves_UserId",
+                table: "SickLeaves",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
@@ -121,6 +162,12 @@ namespace MyBlazorApp.Server.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Holidays");
+
+            migrationBuilder.DropTable(
+                name: "SickLeaves");
+
             migrationBuilder.DropTable(
                 name: "UserVacationsBudget");
 

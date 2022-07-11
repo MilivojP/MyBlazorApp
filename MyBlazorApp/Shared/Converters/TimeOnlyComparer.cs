@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
 
-namespace MyBlazorApp.Server.Data
+namespace MyBlazorApp.Shared.Converters
 {
     public class TimeOnlyComparer : ValueComparer<TimeOnly>
     {

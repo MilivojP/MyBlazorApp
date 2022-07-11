@@ -1,0 +1,98 @@
+﻿@page "/uservacationbudgetlist"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+
+<h1>User VacationBudget</h1>
+<p></p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/uservacationbudget/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add User VacationBudget
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search by year"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterYear" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+<br />
+
+@if (vacationbudgetList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>Year</th>
+                <th>TotalDays</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var userVacationBudget in vacationbudgetList)
+            {
+                <tr>
+                    <td>@userVacationBudget.Year </td>
+                    <td>@userVacationBudget.TotalDays</td>
+                    <td>
+                        <a href='/uservacationbudget/edit/@userVacationBudget.Id' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/uservacationbudget/delete/@userVacationBudget.Id' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+@code {
+    protected List<UserVacationBudgetDto> vacationbudgetList = new();
+    protected List<UserVacationBudgetDto> searchYear = new();
+    protected string SearchString { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetWorkTimes();
+    }
+    protected async Task GetWorkTimes()
+    {
+        vacationbudgetList = await Http.GetFromJsonAsync<List<UserVacationBudgetDto>>("api/uservacationbudget");
+        searchYear = vacationbudgetList;
+    }
+    protected void FilterYear()
+   {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            vacationbudgetList = searchYear
+                .Where(w => w.Year.ToString() == SearchString)
+                .ToList();
+        }
+        else
+        {
+            vacationbudgetList = searchYear;
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        vacationbudgetList = searchYear;
+    }
+
+}

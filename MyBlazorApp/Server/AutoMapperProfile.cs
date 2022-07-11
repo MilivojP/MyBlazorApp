@@ -49,6 +49,11 @@ namespace MyBlazorApp.Server
             CreateMap<HolidayDto, Holiday>()
                 .ForMember(x =>x.Id, o =>o.Ignore());
 
+            //SickLeave:
+            CreateMap<SickLeave, SickLeaveDto>();
+            CreateMap<SickLeaveDto, SickLeave>()
+                .ForMember(x => x.Id, o => o.Ignore())
+                .ForMember(x => x.UserId, o => o.Ignore());
         }
     }
 

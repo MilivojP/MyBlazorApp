@@ -1,0 +1,101 @@
+﻿@page "/sickleavelist"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+
+<h1>SickLeave</h1>
+<p></p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/sickleave/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add SickLeave
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search by type"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterType" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@if (sickleaveList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>Type</th>
+                <th>StartDate</th>
+                <th>EndDate</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sickleave in sickleaveList)
+            {
+                <tr>
+                    <td>@sickleave.LeaveType</td>
+                    <td>@sickleave.StartDate.ToString("d",System.Globalization.CultureInfo.GetCultureInfo("en-GB"))</td>
+                    <td>@sickleave.EndDate.ToString("d",System.Globalization.CultureInfo.GetCultureInfo("en-GB"))</td>
+                    <td>
+                        <a href='/sickleave/edit/@sickleave.Id' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/sickleave/delete/@sickleave.Id' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+@code {
+    protected List<SickLeaveDto> sickleaveList = new();
+    protected List<SickLeaveDto> searchType = new();
+    protected string SearchString { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllHolidays();
+    }
+
+    protected async Task GetAllHolidays()
+    {
+        sickleaveList = await Http.GetFromJsonAsync<List<SickLeaveDto>>("api/sickleave");
+        searchType = sickleaveList;
+    }
+
+    protected void FilterType()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            sickleaveList = searchType
+                .Where(w => w.LeaveType.ToString() == SearchString)
+                .ToList();
+        }
+        else
+        {
+            sickleaveList= searchType;
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        sickleaveList = searchType;
+    }
+
+}
+

@@ -8,26 +8,26 @@ namespace MyBlazorApp.Server.Controllers
     [ApiController]
     public class UserVacationBudgetController : ControllerBase
     {
-        private readonly IUserVacationBudgetService _userVacationBudget;
+        private readonly IUserVacationBudgetService _userVacationBudgets;
 
         public UserVacationBudgetController (IUserVacationBudgetService userVacationBudgetService)
         {
-            _userVacationBudget= userVacationBudgetService;
+            _userVacationBudgets= userVacationBudgetService;
         }
 
         [HttpGet]
         public ActionResult<List<UserVacationBudgetDto>> GetAll()
         {
-            return Ok(_userVacationBudget.GetUserVacationsBudget());
+            return Ok(_userVacationBudgets.GetUserVacationsBudget());
         }
 
         [HttpGet("{id}")]
         public ActionResult<UserVacationBudgetDto> Get(int id)
         {
-            var user = _userVacationBudget.GetUserVacationBudgetDto(id);
-            if (user != null)
+            var Id = _userVacationBudgets.GetUserVacationBudgetDto(id);
+            if (Id != null)
             {
-                return Ok(user);
+                return Ok(Id);
             }
             else
             {
@@ -36,11 +36,11 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] UserVacationBudgetDto user)
+        public ActionResult Post([FromBody] UserVacationBudgetDto budget)
         {
             try
             {
-                _userVacationBudget.AddUserVacationBudget(user);
+                _userVacationBudgets.AddUserVacationBudget(budget);
                 return Ok(ModelState);
             }
             catch (Exception ex)
@@ -51,15 +51,15 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPut]
-        public void Put(UserVacationBudgetDto user)
+        public void Put(UserVacationBudgetDto budget)
         {
-            _userVacationBudget.UpdateUserVacationBudget(user);
+            _userVacationBudgets.UpdateUserVacationBudget(budget);
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        [HttpDelete("{Id}")]
+        public IActionResult Delete(int Id)
         {
-            _userVacationBudget.DeleteUserVacationBudgetDto(id);
+            _userVacationBudgets.DeleteUserVacationBudgetDto(Id);
             return Ok();
         }
 

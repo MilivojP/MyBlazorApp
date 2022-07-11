@@ -1,0 +1,68 @@
+﻿@page "/sickleave/add"
+@using MyBlazorApp.Client.Validation
+@using MyBlazorApp.Shared.Models
+@using System.Net
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Add SickLeave</h1>
+<hr />
+<EditForm Model="@sickleave" OnValidSubmit="SaveSickLeave">
+    <DataAnnotationsValidator />
+    <CustomValidation @ref="customValidation" />
+    <ValidationSummary/>
+    <div class="mb-3">
+        <label for="SickLeave type" class="form-label">SickLeave type</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="sickleave.LeaveType" />
+        </div>
+        <ValidationMessage For="@(() => sickleave.LeaveType)" />
+    </div>
+    <div class="mb-3">
+        <label for="Start Date" class="form-label">Start Date</label>
+        <div class="col-md-4">
+            <InputDate @bind-Value="sickleave.StartDate" />
+        </div>
+        <ValidationMessage For="@(() => sickleave.StartDate)" />
+    </div>
+    <div class="mb-3">
+        <label for="End Date" class="form-label">End Date</label>
+        <div class="col-md-4">
+            <InputDate @bind-Value="sickleave.EndDate" />
+        </div>
+        <ValidationMessage For="@(() => sickleave.EndDate)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    protected SickLeaveDto sickleave = new();
+    private CustomValidation? customValidation;
+
+    protected async Task SaveSickLeave()
+    {
+        customValidation?.ClearErrors();
+
+        var response = await Http.PostAsJsonAsync("api/sickleave", sickleave);
+
+        var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
+
+        if (response.StatusCode == HttpStatusCode.BadRequest && content.Any())
+        {
+            customValidation?.DisplayErrors(content);
+        }
+        else
+        {
+            Cancel();
+        }
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/sickleavelist");
+    }
+}
+

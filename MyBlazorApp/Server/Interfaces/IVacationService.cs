@@ -8,7 +8,7 @@ namespace MyBlazorApp.Server.Interfaces
 
         public void AddVacation(NewVacationDto vacation);
 
-        public void UpdateVacation(ExistingVacationDto vacation);
+        public void UpdateVacation(ExistingVacationDto Day);
 
         public ExistingVacationDto GetVacation(int Id);
 

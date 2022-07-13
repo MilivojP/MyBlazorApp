@@ -1,6 +1,7 @@
 ﻿@page "/sickleave/add"
 @using MyBlazorApp.Client.Validation
 @using MyBlazorApp.Shared.Models
+@using Syncfusion.Blazor.DropDowns
 @using System.Net
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
@@ -11,10 +12,17 @@
     <DataAnnotationsValidator />
     <CustomValidation @ref="customValidation" />
     <ValidationSummary/>
-    <div class="mb-3">
-        <label for="SickLeave type" class="form-label">SickLeave type</label>
+    <div class="form-group">
+        <label for="body">Select SickLaveType: </label>
         <div class="col-md-4">
-            <InputText class="form-control" @bind-Value="sickleave.LeaveType" />
+            <InputSelect @bind-Value="@sickleave.LeaveType" >
+          
+                @foreach (var sicktype in Enum.GetValues(typeof(SickLeaveType)))
+                {
+            
+                    <option value="@sicktype">@sicktype</option>
+                }
+            </InputSelect>
         </div>
         <ValidationMessage For="@(() => sickleave.LeaveType)" />
     </div>
@@ -66,5 +74,6 @@
     {
         NavigationManager.NavigateTo("/sickleavelist");
     }
+
 }
 

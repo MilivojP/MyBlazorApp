@@ -22,6 +22,7 @@ namespace MyBlazorApp.Server.Services
             try
             {
                 var data = _dbContext.SickLeaves.OrderBy(x => x.UserId).ThenByDescending(x => x.StartDate).ToList();
+                
 
                 return _mapper.Map<List<SickLeaveDto>>(data);
             }

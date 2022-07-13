@@ -9,7 +9,7 @@ namespace MyBlazorApp.Shared.Models
         public int UserId { get; set; }
 
         [Required]
-        public string LeaveType { get; set; }
+        public SickLeaveType LeaveType { get; set; }
 
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
@@ -20,4 +20,5 @@ namespace MyBlazorApp.Shared.Models
         public DateTime EndDate { get; set; }
 
     }
+
 }

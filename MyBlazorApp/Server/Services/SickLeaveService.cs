@@ -6,26 +6,24 @@ using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.Server.Services
 {
-    public class VacationService : IVacationService
-
+    public class SickLeaveService : ISickLeaveService
     {
         private readonly IMapper _mapper;
         readonly DatabaseContext _dbContext;
 
-        public VacationService(IMapper mapper, DatabaseContext dbContext)
+        public SickLeaveService(IMapper mapper, DatabaseContext dbContext)
         {
             _mapper = mapper;
             _dbContext = dbContext;
         }
 
-        //To Get all vacation details
-        public List<VacationDto> GetVacations()
+        public List<SickLeaveDto> GetSickLeaves()
         {
             try
             {
-                var data = _dbContext.Vacations.OrderBy(x => x.UserId).ToList();
+                var data = _dbContext.SickLeaves.OrderBy(x => x.UserId).ThenByDescending(x => x.StartDate).ToList();
 
-                return _mapper.Map<List<VacationDto>>(data);
+                return _mapper.Map<List<SickLeaveDto>>(data);
             }
             catch (Exception ex)
             {
@@ -34,21 +32,18 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //To Add new vacation record
-        public void AddVacation(NewVacationDto vacation)
+        public void AddSickLeave(SickLeaveDto sick)
         {
-            if (_dbContext.Vacations.Any(x => x.UserId == vacation.UserId && x.DateFrom == DateOnly.FromDateTime(vacation.DateFrom)))
+            if (_dbContext.SickLeaves.Any(x => x.UserId == sick.UserId && x.StartDate == DateOnly.FromDateTime(sick.StartDate)))
             {
-                throw new Exception("Vacation with this UserId and DateFrom already exists!");
+                throw new InvalidOperationException("SickLeave with this UserId and tihs StartDate already exists!");
             }
-            // TODO: Calculate weekends
-            // TODO: Calculate Holidays
-            // TODO: check if another vacation exists in the same period for that user
+
             try
             {
-                var data = _mapper.Map<Vacation>(vacation);
+                var data = _mapper.Map<SickLeave>(sick);
 
-                _dbContext.Vacations.Add(data);
+                _dbContext.SickLeaves.Add(data);
 
                 _dbContext.SaveChanges();
             }
@@ -59,16 +54,14 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //To Update the records vacation
-        public void UpdateVacation(ExistingVacationDto Id)
+        public void UpdateSickLeave(SickLeaveDto sick)
         {
             try
             {
-                // TODO: get worktime from data store and then update
-                var data = _mapper.Map<Vacation>(Id);
-
-                _dbContext.Vacations.Update(data);
-
+                // TODO: get sickleave from data store and then update
+                var data = _dbContext.SickLeaves.Single(x => x.Id == sick.Id);
+                _mapper.Map(sick, data);
+                _dbContext.SickLeaves.Update(data);
                 _dbContext.SaveChanges();
             }
             catch (Exception ex)
@@ -78,16 +71,16 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //Get the details of a particular vacation
-        public ExistingVacationDto GetVacation(int id)
+        //Get the details of a particular sickleave
+        public SickLeaveDto GetSickLeave(int id)
         {
             try
             {
-                var data = _dbContext.Vacations.Find(id);
+                var data = _dbContext.SickLeaves.Find(id);
 
                 if (data != null)
                 {
-                    return _mapper.Map<ExistingVacationDto>(data);
+                    return _mapper.Map<SickLeaveDto>(data);
                 }
                 else
                 {
@@ -101,15 +94,15 @@ namespace MyBlazorApp.Server.Services
             }
         }
 
-        //To Delete the record of a particular vacation
-        public void DeleteVacation(int id)
+        //To Delete the record of a particular sickleave
+        public void DeleteSickLeave(int id)
         {
             try
             {
-                var data = _dbContext.Vacations.Find(id);
+                var data = _dbContext.SickLeaves.Find(id);
                 if (data != null)
                 {
-                    _dbContext.Vacations.Remove(data);
+                    _dbContext.SickLeaves.Remove(data);
 
                     _dbContext.SaveChanges();
                 }

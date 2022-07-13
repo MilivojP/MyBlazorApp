@@ -1,0 +1,53 @@
+﻿@page "/holiday/edit/{Id:int}"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Edit Holiday</h1>
+<hr />
+<EditForm Model="@holiday" OnValidSubmit="SaveHoliday">
+    <DataAnnotationsValidator />
+    <ValidationSummary/>
+    <div class="mb-3">
+        <label for="HolidayDate" class="form-label">HolidayDate</label>
+        <div class="col-md-4">
+            <label class="form-control">@holiday.HolidayDate.ToString("d",System.Globalization.CultureInfo.GetCultureInfo("en-GB"))</label>
+        </div>
+        <ValidationMessage For="@(() => holiday.HolidayDate)" />
+    </div>
+    <div class="mb-3">
+        <label for="HolidayName" class="form-label">HolidayName</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="holiday.HolidayName" />
+        </div>
+        <ValidationMessage For="@(() => holiday.HolidayName)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    protected HolidayDto holiday= new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        holiday = await Http.GetFromJsonAsync<HolidayDto>("api/Holiday/" + Id);
+    }
+
+    protected async Task SaveHoliday()
+    {
+        await Http.PutAsJsonAsync("api/Holiday", holiday);
+        Cancel();
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/holidaylist");
+    }
+}
+

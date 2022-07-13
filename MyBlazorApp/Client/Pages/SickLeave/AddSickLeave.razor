@@ -1,38 +1,36 @@
-﻿@page "/vacation/add"
+﻿@page "/sickleave/add"
 @using MyBlazorApp.Client.Validation
 @using MyBlazorApp.Shared.Models
 @using System.Net
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<h1>Add Vacation</h1>
+<h1>Add SickLeave</h1>
 <hr />
-<EditForm Model="@vacation" OnValidSubmit="Save">
+<EditForm Model="@sickleave" OnValidSubmit="SaveSickLeave">
     <DataAnnotationsValidator />
     <CustomValidation @ref="customValidation" />
     <ValidationSummary/>
-        <div class="mb-3">
-        <label for="DateFrom" class="form-label">DateFrom</label>
+    <div class="mb-3">
+        <label for="SickLeave type" class="form-label">SickLeave type</label>
         <div class="col-md-4">
-            <InputDate @bind-Value="vacation.DateFrom"/>
+            <InputText class="form-control" @bind-Value="sickleave.LeaveType" />
         </div>
-        <ValidationMessage For="@(() => vacation.DateFrom)" />
+        <ValidationMessage For="@(() => sickleave.LeaveType)" />
     </div>
     <div class="mb-3">
-        <label for="DateTo" class="form-label">DateTo</label>
+        <label for="Start Date" class="form-label">Start Date</label>
         <div class="col-md-4">
-            <InputDate @bind-Value="vacation.DateTo"/>
-        <ValidationMessage For="@(() => vacation.DateTo)" />
+            <InputDate @bind-Value="sickleave.StartDate" />
         </div>
+        <ValidationMessage For="@(() => sickleave.StartDate)" />
     </div>
     <div class="mb-3">
-        <label for="Satus" class="form-label">Status</label>
+        <label for="End Date" class="form-label">End Date</label>
         <div class="col-md-4">
-            <input type="checkbox" @bind="vacation.Status">
-                <option value="true"></option>
-                <option value="false"></option>
-            </input>
+            <InputDate @bind-Value="sickleave.EndDate" />
         </div>
+        <ValidationMessage For="@(() => sickleave.EndDate)" />
     </div>
     <div class="form-group">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -41,16 +39,16 @@
 </EditForm>
 
 @code {
-    protected NewVacationDto vacation = new();
+    protected SickLeaveDto sickleave = new();
     private CustomValidation? customValidation;
-    
-    protected async Task Save()
+
+    protected async Task SaveSickLeave()
     {
         customValidation?.ClearErrors();
 
-        vacation.UserId = 1; // TODO: change later!!
+        sickleave.UserId = 1; // TODO: change later!!
 
-        var response = await Http.PostAsJsonAsync("api/vacation", vacation);
+        var response = await Http.PostAsJsonAsync("api/sickleave", sickleave);
 
         var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
 
@@ -66,6 +64,7 @@
 
     public void Cancel()
     {
-        NavigationManager.NavigateTo("/vacationlist");
+        NavigationManager.NavigateTo("/sickleavelist");
     }
 }
+

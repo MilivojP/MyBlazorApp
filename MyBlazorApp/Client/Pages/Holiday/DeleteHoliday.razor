@@ -1,0 +1,50 @@
+﻿@page "/holiday/delete/{Id:int}"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h2>Delete Holiday</h2>
+<br />
+<div class="form-group">
+    <h4>Do you want to delete this holiday?</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Holiday Date</td>
+                <td>@holiday.HolidayDate</td>
+            </tr>
+            <tr>
+                <td>Holiday Name</td>
+                <td>@holiday.HolidayName</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <input type="submit" value="Delete" @onclick="(async () => await RemoveHoliday(holiday.Id))" class="btn btn-danger" />
+    <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    HolidayDto holiday = new HolidayDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        holiday = await Http.GetFromJsonAsync<HolidayDto>("/api/holiday/" +Convert.ToInt32(Id));
+    }
+
+    protected async Task RemoveHoliday(int Id)
+    {
+        await Http.DeleteAsync("api/holiday/" + Id);
+        NavigationManager.NavigateTo("/holidaylist");
+    }
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("/holidaylist");
+    }
+}
+

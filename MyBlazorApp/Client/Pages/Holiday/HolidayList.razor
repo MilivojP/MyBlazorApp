@@ -1,0 +1,99 @@
+﻿@page "/holidaylist"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+
+<h1>Holiday</h1>
+<p></p>
+<div class="row">
+    <div class="col-md-6">
+        <a href='/holiday/add' class="btn btn-primary" role="button">
+            <i class="fas fa-user-plus"></i>
+            Add Holiday
+        </a>
+    </div>
+    <div class="input-group col">
+        <input type="text" class="form-control" placeholder="Search by day"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterDay" />
+        @if (SearchString.Length > 0)
+        {
+            <div class="input-group-append">
+                <button class="btn btn-danger" @onclick="ResetSearch">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+<br />
+@if (holidayList == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table table-striped align-middle table-bordered">
+        <thead class="table-success">
+            <tr>
+                <th>HolidayDate</th>
+                <th>HolidayName</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var holiday in holidayList)
+            {
+                <tr>
+                    <td>@holiday.HolidayDate.ToString("d",System.Globalization.CultureInfo.GetCultureInfo("en-GB"))</td>
+                    <td>@holiday.HolidayName</td>
+                    <td>
+                        <a href='/holiday/edit/@holiday.Id' class="btn btn-outline-dark" role="button">
+                            Edit
+                        </a>
+                        <a href='/holiday/delete/@holiday.Id' class="btn btn-outline-danger" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+@code {
+    protected List<HolidayDto> holidayList = new();
+    protected List<HolidayDto> searchDay = new();
+    protected string SearchString { get; set; } = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetAllHolidays();
+    }
+
+    protected async Task GetAllHolidays()
+    {
+        holidayList = await Http.GetFromJsonAsync<List<HolidayDto>>("api/holiday");
+        searchDay = holidayList;
+    }
+
+    protected void FilterDay()
+    {
+        if (!string.IsNullOrEmpty(SearchString))
+        {
+            holidayList = searchDay
+                .Where(w => w.HolidayDate.ToShortDateString() == SearchString)
+                .ToList();
+        }
+        else
+        {
+            holidayList= searchDay;
+        }
+    }
+
+    public void ResetSearch()
+    {
+        SearchString = string.Empty;
+        holidayList = searchDay;
+    }
+
+}
+

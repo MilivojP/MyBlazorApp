@@ -1,0 +1,68 @@
+﻿@page "/uservacationbudget/add"
+@using MyBlazorApp.Client.Validation
+@using MyBlazorApp.Shared.Models
+@using System.Net
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Add User VacationBudget</h1>
+<hr />
+<EditForm Model="@uservacationbudget" OnValidSubmit="SaveBudget">
+    <DataAnnotationsValidator />
+    <CustomValidation @ref="customValidation" />
+    <ValidationSummary/>
+    <div class="mb-3">
+        <label for="Year" class="form-label">Year</label>
+        <div class="col-md-4">
+            <input type="text" @bind="uservacationbudget.Year"/>
+        <ValidationMessage For="@(() => uservacationbudget.Year)" />
+        </div>
+    </div>
+        <div class="mb-3">
+        <label for="TotalDays" class="form-label">TotalDays</label>
+        <div class="col-md-4">
+            <input type="number" @bind="uservacationbudget.TotalDays"></input>
+        </div>
+        <ValidationMessage For="@(() => uservacationbudget.TotalDays)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+  
+    protected UserVacationBudgetDto uservacationbudget = new();
+    private CustomValidation? customValidation;
+    
+    //protected override async Task OnParametersSetAsync()
+    //{
+
+    //}
+
+    protected async Task SaveBudget()
+    {
+        customValidation?.ClearErrors();
+
+        uservacationbudget.UserId = 1; // TODO: change later!!
+
+        var response = await Http.PostAsJsonAsync("api/uservacationbudget", uservacationbudget);
+
+        var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
+
+        if (response.StatusCode == HttpStatusCode.BadRequest && content.Any())
+        {
+            customValidation?.DisplayErrors(content);
+        }
+        else
+        {
+            Cancel();
+        }
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/uservacationbudgetlist");
+    }
+}

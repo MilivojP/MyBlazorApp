@@ -9,12 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<DatabaseContext>
     (options =>
-   //    options.UseInMemoryDatabase("Journal"));
+      //options.UseInMemoryDatabase("Journal"));
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IWorkTimeService, WorkTimeService>();
 builder.Services.AddScoped<IVacationService,VacationService>();
+builder.Services.AddScoped<IHolidayService, HolidayService>();
+builder.Services.AddScoped<IUserVacationBudgetService, UserVacationBudgetService>();
+builder.Services.AddScoped<ISickLeaveService, SickLeaveService>();
 
 //builder.Services.AddScoped<UserDto>();
 //builder.Services.AddScoped<WorkTimeDto>();
@@ -23,6 +26,8 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -46,6 +51,15 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(o =>
+    {
+        o.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    });
+}
 
 app.MapRazorPages();
 app.MapControllers();

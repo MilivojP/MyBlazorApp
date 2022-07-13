@@ -6,12 +6,12 @@ namespace MyBlazorApp.Server.Interfaces
     {
         public List<UserVacationBudgetDto> GetUserVacationsBudget();
 
-        public void AddUserVacationBudget(UserVacationBudgetDto user);
+        public void AddUserVacationBudget(UserVacationBudgetDto Id);
 
         public void UpdateUserVacationBudget(UserVacationBudgetDto user);
 
-        public UserVacationBudgetDto GetUserVacationBudgetDto(int id);
+        public UserVacationBudgetDto GetUserVacationBudgetDto(int Id);
 
-        public void DeleteUserVacationBudgetDto(int id);
+        public void DeleteUserVacationBudgetDto(int Id);
     }
 }

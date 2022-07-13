@@ -1,0 +1,49 @@
+﻿@page "/uservacationbudget/edit/{Id:int}"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Edit Work Time</h1>
+<hr />
+<EditForm Model="@uservacationbudget" OnValidSubmit="SaveBudget">
+    <DataAnnotationsValidator />
+    <div class="mb-3">
+        <label for="Year" class="form-label">Year</label>
+        <div class="col-md-4">
+            <label class="form-control">@uservacationbudget.Year</label>
+        </div>
+    </div>
+        <div class="mb-3">
+        <label for="TotalDays" class="form-label">TotalDays</label>
+        <div class="col-md-4">
+            <input type="numaber" @bind="uservacationbudget.TotalDays"></input>
+        </div>
+        <ValidationMessage For="@(() =>uservacationbudget.TotalDays)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    protected UserVacationBudgetDto uservacationbudget = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        uservacationbudget = await Http.GetFromJsonAsync<UserVacationBudgetDto>("api/uservacationbudget/" + Id);
+    }
+    protected async Task SaveBudget()
+    {
+        {
+            await Http.PutAsJsonAsync("api/uservacationbudget", uservacationbudget);
+            Cancel();
+        }
+        
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/uservacationbudgetlist");
+    }
+}

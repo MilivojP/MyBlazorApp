@@ -194,7 +194,7 @@ namespace MyBlazorApp.Server.Migrations
                     b.Property<int>("TotalWork")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int")
-                        .HasComputedColumnSql("DATEDIFF(MINUTE,DATEDIFF(MINUTE,EndTime,StartTime),BreakTime)+30");
+                        .HasComputedColumnSql("DATEDIFF(MINUTE,StartTime,EndTime)-DATEPART(MINUTE,BreakTime)+30");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

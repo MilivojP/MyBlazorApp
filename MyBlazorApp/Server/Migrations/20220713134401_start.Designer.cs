@@ -12,8 +12,8 @@ using MyBlazorApp.Server.Data;
 namespace MyBlazorApp.Server.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220713111004_init")]
-    partial class init
+    [Migration("20220713134401_start")]
+    partial class start
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -196,7 +196,7 @@ namespace MyBlazorApp.Server.Migrations
                     b.Property<int>("TotalWork")
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("int")
-                        .HasComputedColumnSql("DATEDIFF(MINUTE,DATEDIFF(MINUTE,EndTime,StartTime),BreakTime)+30");
+                        .HasComputedColumnSql("DATEDIFF(MINUTE,StartTime,EndTime)-DATEPART(MINUTE,BreakTime)+30");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

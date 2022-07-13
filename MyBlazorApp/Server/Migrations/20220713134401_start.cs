@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace MyBlazorApp.Server.Migrations
 {
-    public partial class init : Migration
+    public partial class start : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -117,7 +117,7 @@ namespace MyBlazorApp.Server.Migrations
                     StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     BreakTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    TotalWork = table.Column<int>(type: "int", nullable: false, computedColumnSql: "DATEDIFF(MINUTE,DATEDIFF(MINUTE,EndTime,StartTime),BreakTime)+30"),
+                    TotalWork = table.Column<int>(type: "int", nullable: false, computedColumnSql: "DATEDIFF(MINUTE,StartTime,EndTime)-DATEPART(MINUTE,BreakTime)+30"),
                     Notes = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>

@@ -6,11 +6,11 @@ namespace MyBlazorApp.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class VacationControler : ControllerBase
+    public class VacationController : ControllerBase
     {
         private readonly IVacationService _vacationServices;
 
-        public VacationControler(IVacationService vacationServices)
+        public VacationController(IVacationService vacationServices)
         {
             _vacationServices = vacationServices;
         }

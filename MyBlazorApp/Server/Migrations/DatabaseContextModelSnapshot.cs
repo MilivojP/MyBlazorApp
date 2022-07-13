@@ -191,10 +191,10 @@ namespace MyBlazorApp.Server.Migrations
                     b.Property<TimeSpan>("StartTime")
                         .HasColumnType("time");
 
-                    b.Property<TimeSpan>("TotalWork")
+                    b.Property<int>("TotalWork")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("time")
-                        .HasComputedColumnSql("DATEDIFF(\"hour\",DATEDIFF(\"hour\",EndTime,StartTime),BreakTime)");
+                        .HasColumnType("int")
+                        .HasComputedColumnSql("DATEDIFF(MINUTE,DATEDIFF(MINUTE,EndTime,StartTime),BreakTime)+30");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");

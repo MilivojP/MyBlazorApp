@@ -29,7 +29,7 @@ namespace MyBlazorApp.Server.Data
                 entity.Property(e => e.EndTime)
                     .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
                 entity.Property(e => e.TotalWork)
-                    .HasComputedColumnSql("DATEDIFF(\"hour\",DATEDIFF(\"hour\",EndTime,StartTime),BreakTime)");
+                    .HasComputedColumnSql("DATEDIFF(MINUTE,DATEDIFF(MINUTE,EndTime,StartTime),BreakTime)+30");
 
                 entity.HasIndex(e => new { e.UserId, e.Day })
                     .IsUnique();  

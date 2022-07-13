@@ -117,7 +117,7 @@ namespace MyBlazorApp.Server.Migrations
                     StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
                     BreakTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    TotalWork = table.Column<TimeSpan>(type: "time", nullable: false, computedColumnSql: "DATEDIFF(\"hour\",DATEDIFF(\"hour\",EndTime,StartTime),BreakTime)"),
+                    TotalWork = table.Column<int>(type: "int", nullable: false, computedColumnSql: "DATEDIFF(MINUTE,DATEDIFF(MINUTE,EndTime,StartTime),BreakTime)+30"),
                     Notes = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>

@@ -18,8 +18,7 @@ namespace MyBlazorApp.Shared.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateTo { get; set; }
         
-        public bool Status { get; set; }
-        
+        public VacationStatus Status { get; set; }       
         public string Notes { get; set; }
     }
 
@@ -39,7 +38,7 @@ namespace MyBlazorApp.Shared.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateTo { get; set; } = DateTime.UtcNow.Date;
 
-        public bool Status { get; set; }
+        public VacationStatus Status { get; set; } = VacationStatus.Requested;
 
         public string Notes { get; set; }
     }
@@ -60,7 +59,7 @@ namespace MyBlazorApp.Shared.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime DateTo { get; set; }
 
-        public bool Status { get; set; }
+        public VacationStatus Status { get; set; }
 
         public string Notes { get; set; }
     }

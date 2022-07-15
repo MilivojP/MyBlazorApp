@@ -28,6 +28,6 @@ namespace MyBlazorApp.Server.Entities
 
         [MaxLength(255)]
         [Unicode]
-        public string Notes { get; set; }   
+        public string? Notes { get; set; }   
     }
 }

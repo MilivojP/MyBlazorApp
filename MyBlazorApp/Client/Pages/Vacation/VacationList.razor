@@ -6,7 +6,7 @@
 <p></p>
 <div class="row">
     <div class="col-md-6">
-        <a href='/vacation/add' class="btn btn-primary" role="button">
+        <a href='/vacation/request' class="btn btn-primary" role="button">
             <i class="fas fa-user-plus"></i>
             Add Vacation
         </a>
@@ -39,11 +39,11 @@ else
                     <td>@Vacation.Status</td>
                     <td>@Vacation.Notes</td>
                     <td>
-                        <a href='/vacation/edit/@Vacation.Id' class="btn btn-outline-dark" role="button">
-                            Edit
+                        <a href='/vacation/approved/@Vacation.Id' class="btn btn-outline-dark" role="button">
+                            Approwed
                         </a>
-                        <a href='/vacation/delete/@Vacation.Id' class="btn btn-outline-danger" role="button">
-                            Delete
+                        <a href='/vacation/rejected/@Vacation.Id' class="btn btn-outline-danger" role="button">
+                            Rejected
                         </a>
                     </td>
                 </tr>

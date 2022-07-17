@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyBlazorApp.Shared.Enumerations;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBlazorApp.Shared.Models
 {

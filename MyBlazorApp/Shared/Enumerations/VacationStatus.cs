@@ -1,4 +1,4 @@
-﻿namespace MyBlazorApp.Shared.Models
+﻿namespace MyBlazorApp.Shared.Enumerations
 {
     public enum VacationStatus : byte
     {

@@ -9,6 +9,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.Client", "MyBla
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.Shared", "MyBlazorApp\Shared\MyBlazorApp.Shared.csproj", "{8E97C21C-711C-44E5-8BB1-F7A792EDE872}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{D3E96E7A-D111-4CD3-877E-DCF60DF6ADB8}"
+	ProjectSection(SolutionItems) = preProject
+		Journal01-Entity-Diagram.drawio = Journal01-Entity-Diagram.drawio
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

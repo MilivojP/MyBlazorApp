@@ -19,7 +19,7 @@ namespace MyBlazorApp.Shared.Models
         public DateTime DateTo { get; set; }
         
         public VacationStatus Status { get; set; }       
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
     }
 
     /// <summary>
@@ -40,7 +40,7 @@ namespace MyBlazorApp.Shared.Models
 
         public VacationStatus Status { get; set; } = VacationStatus.Requested;
 
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
     }
 
     /// <summary>
@@ -61,6 +61,6 @@ namespace MyBlazorApp.Shared.Models
 
         public VacationStatus Status { get; set; }
 
-        public string Notes { get; set; }
+        public string? Notes { get; set; }
     }
 }

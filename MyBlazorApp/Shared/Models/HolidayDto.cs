@@ -10,6 +10,7 @@ namespace MyBlazorApp.Shared.Models
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
         public DateTime HolidayDate { get; set; }
 
+
         [Required]
         public string HolidayName { get; set; }
     }

@@ -57,6 +57,10 @@ namespace MyBlazorApp.Server.Services
         //To Update the records of a particluar user
         public void UpdateUser(ExistingUserDto user)
         {
+            if (user is null)
+            {
+                throw new ArgumentNullException("Parameter 'user' is null.");
+            }
             try
             {
                 // (1 variant) 
@@ -73,7 +77,7 @@ namespace MyBlazorApp.Server.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                throw ex;
+                throw new InvalidOperationException(ex.Message);
             }
         }
 
@@ -90,7 +94,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"User with id {id} not found.");
                 }
             }
             catch (Exception ex)
@@ -114,7 +118,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"User with id {id} not found.");
                 }
             }
             catch (Exception ex)

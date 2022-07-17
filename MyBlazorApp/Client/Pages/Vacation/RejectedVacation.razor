@@ -1,0 +1,51 @@
+﻿@page "/vacation/rejected/{Id:int}"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Approwed Vacation</h1>
+<hr />
+<EditForm Model="@vacation" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+        <div class="mb-3">
+        <label for="DateFrom" class="form-label">DateFrom</label>
+        <div class="col-md-4">
+            <InputDate @bind-Value="vacation.DateFrom"/>
+        </div>
+        <ValidationMessage For="@(() => vacation.DateFrom)" />
+    </div>
+    <div class="mb-3">
+        <label for="DateTo" class="form-label">DateTo</label>
+        <div class="col-md-4">
+            <InputDate @bind-Value="vacation.DateTo"/>
+        <ValidationMessage For="@(() => vacation.DateTo)" />
+        </div>
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    protected ExistingVacationDto vacation = new();
+    protected override async Task OnParametersSetAsync()
+    {
+        vacation = await Http.GetFromJsonAsync<ExistingVacationDto>("api/vacation/" + Id);
+    }
+    protected async Task Save()
+    {
+        vacation.Status = VacationStatus.Rejected; 
+        {
+            await Http.PutAsJsonAsync("api/vacation", vacation);
+            Cancel();
+        }
+        
+    }
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/vacationlist");
+    }
+}

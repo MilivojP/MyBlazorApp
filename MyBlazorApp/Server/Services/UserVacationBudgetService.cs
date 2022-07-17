@@ -42,7 +42,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"WorkTime with id {id} not found.");
                 }
             }
             catch (Exception ex)
@@ -77,7 +77,10 @@ namespace MyBlazorApp.Server.Services
         public void UpdateUserVacationBudget(UserVacationBudgetDto Day)
         {
             // TODO: check existence of user budget (by id OR: user id + year)
-
+            if (Day is null)
+            {
+                throw new ArgumentNullException("Parameter 'Day' is null.");
+            }
             try
             {
                 // (1) 
@@ -89,7 +92,7 @@ namespace MyBlazorApp.Server.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                throw ex;
+                throw new InvalidOperationException(ex.Message);
             }
         }
 
@@ -106,7 +109,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"WorkTime with id {id} not found.");
                 }
             }
             catch (Exception ex)

@@ -57,6 +57,10 @@ namespace MyBlazorApp.Server.Services
 
         public void UpdateSickLeave(SickLeaveDto sick)
         {
+            if (sick is null)
+            {
+                throw new ArgumentNullException("Parameter 'sick' is null.");
+            }
             try
             {
                 // TODO: get sickleave from data store and then update
@@ -68,7 +72,8 @@ namespace MyBlazorApp.Server.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                throw ex;
+                throw new InvalidOperationException(ex.Message);
+                //throw ex;
             }
         }
 
@@ -85,7 +90,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"SickLeave with id {id} not found."); //ArgumentNullException();
                 }
             }
             catch (Exception ex)
@@ -109,7 +114,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"SickLeave with id {id} not found.");  //ArgumentNullException();
                 }
             }
             catch (Exception ex)

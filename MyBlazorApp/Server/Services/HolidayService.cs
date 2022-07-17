@@ -119,7 +119,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"Holiday with id {id} not found.");
                 }
             }
             catch (Exception ex)

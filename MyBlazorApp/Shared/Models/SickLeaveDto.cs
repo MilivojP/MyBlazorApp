@@ -10,7 +10,7 @@ namespace MyBlazorApp.Shared.Models
         public int UserId { get; set; }
 
         [Required]
-        public SickLeaveType LeaveType { get; set; }
+        public SickLeaveType LeaveType { get; set; } = SickLeaveType.SickLeaveUpTo3Days;
 
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]

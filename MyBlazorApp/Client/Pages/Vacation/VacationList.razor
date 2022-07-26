@@ -39,12 +39,25 @@ else
                     <td>@Vacation.Status</td>
                     <td>@Vacation.Notes</td>
                     <td>
-                        <a href='/vacation/approwed/@Vacation.Id' class="btn btn-outline-dark" role="button">
-                            Approwed
-                        </a>
-                        <a href='/vacation/rejected/@Vacation.Id' class="btn btn-outline-danger" role="button">
-                            Rejected
-                        </a>
+                        @if (@Vacation.Status==MyBlazorApp.Shared.Enumerations.VacationStatus.Requested)
+                        {
+                            <a href='/vacation/approwed/@Vacation.Id' class="btn btn-outline-dark" role="button">
+                                Approv
+                            </a>
+                            <a href='/vacation/rejected/@Vacation.Id' class="btn btn-outline-danger" role="button">
+                                Reject
+                            </a>
+                        }
+                        else
+                        {
+                            <a href='/vacation/approwed/@Vacation.Id' class="btn btn-outline-dark" role="button" hidden="hidden">
+                                Approv
+                            </a>
+                            <a href='/vacation/rejected/@Vacation.Id' class="btn btn-outline-danger" role="button" hidden="hidden">
+                                Reject
+                            </a>                            
+                        }
+
                     </td>
                 </tr>
             }

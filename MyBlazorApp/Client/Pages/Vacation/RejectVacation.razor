@@ -1,10 +1,10 @@
-﻿@page "/vacation/rejected/{Id:int}"
+﻿@page "/vacation/reject/{Id:int}"
 @using MyBlazorApp.Shared.Models
 @using MyBlazorApp.Shared.Enumerations
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
-<h1>Approwed Vacation</h1>
+<h1>Reject Vacation</h1>
 <hr />
 <EditForm Model="@vacation" OnValidSubmit="Save">
     <DataAnnotationsValidator />

@@ -10,11 +10,13 @@ namespace MyBlazorApp.Server.Services
     {
         private readonly IMapper _mapper;
         readonly DatabaseContext _dbContext;
+        private readonly ICalendarService _calendarService;
 
-        public WorkTimeService(IMapper mapper, DatabaseContext dbContext)
+        public WorkTimeService(IMapper mapper, DatabaseContext dbContext, ICalendarService calendarService)
         {
             _mapper = mapper;
             _dbContext = dbContext;
+            _calendarService = calendarService;
         }
 
         //To Get all worktime details
@@ -36,7 +38,8 @@ namespace MyBlazorApp.Server.Services
         //To Add new worktime record
         public void AddWorkTime(NewWorkTimeDto workTime)
         {
-            if (_dbContext.WorkTimes.Any(x => x.UserId == workTime.UserId && x.Day == DateOnly.FromDateTime(workTime.Day)))
+            //if (_dbContext.WorkTimes.Any(x => x.UserId == workTime.UserId && x.Day == DateOnly.FromDateTime(workTime.Day)))
+            if (!_calendarService.IsOverlapping(DateOnly.FromDateTime(workTime.StartTime), DateOnly.FromDateTime(workTime.EndTime)))
             {
                 throw new Exception("WorkTime with this UserId and tihs Day already exists!");
             }

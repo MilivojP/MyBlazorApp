@@ -11,11 +11,13 @@ namespace MyBlazorApp.Server.Services
     {
         private readonly IMapper _mapper;
         readonly DatabaseContext _dbContext;
+        private readonly ICalendarService _calendarService;
 
-        public VacationService(IMapper mapper, DatabaseContext dbContext)
+        public VacationService(IMapper mapper, DatabaseContext dbContext, ICalendarService calendarService)
         {
             _mapper = mapper;
             _dbContext = dbContext;
+            _calendarService = calendarService;
         }
 
         //To Get all vacation details
@@ -36,9 +38,11 @@ namespace MyBlazorApp.Server.Services
         //To Add new vacation record
         public void AddVacation(NewVacationDto vacation)
         {
-            if (_dbContext.Vacations.Any(x => x.UserId == vacation.UserId && x.DateFrom == DateOnly.FromDateTime(vacation.DateFrom)))
+            //if (_dbContext.Vacations.Any(x => x.UserId == vacation.UserId && x.DateFrom == DateOnly.FromDateTime(vacation.DateFrom)))
+            if (!_calendarService.IsOverlapping(DateOnly.FromDateTime(vacation.DateFrom), DateOnly.FromDateTime(vacation.DateTo)))
             {
-                throw new Exception("Vacation with this UserId and DateFrom already exists!");
+                //throw new Exception("Vacation with this UserId and DateFrom already exists!");
+                throw new Exception("Vacation for this UserId is not possible!");
             }
             // TODO: Calculate weekends
             // TODO: Calculate Holidays

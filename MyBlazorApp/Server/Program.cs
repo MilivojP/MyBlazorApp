@@ -18,6 +18,7 @@ builder.Services.AddScoped<IVacationService,VacationService>();
 builder.Services.AddScoped<IHolidayService, HolidayService>();
 builder.Services.AddScoped<IUserVacationBudgetService, UserVacationBudgetService>();
 builder.Services.AddScoped<ISickLeaveService, SickLeaveService>();
+builder.Services.AddScoped<ICalendarService, CalendarService>();
 
 //builder.Services.AddScoped<UserDto>();
 //builder.Services.AddScoped<WorkTimeDto>();

@@ -10,11 +10,13 @@ namespace MyBlazorApp.Server.Services
     {
         private readonly IMapper _mapper;
         readonly DatabaseContext _dbContext;
+        private readonly ICalendarService _calendarService;
 
-        public SickLeaveService(IMapper mapper, DatabaseContext dbContext)
+        public SickLeaveService(IMapper mapper, DatabaseContext dbContext, ICalendarService calendarService)
         {
             _mapper = mapper;
             _dbContext = dbContext;
+            _calendarService = calendarService;
         }
 
         public List<SickLeaveDto> GetSickLeaves()
@@ -22,8 +24,6 @@ namespace MyBlazorApp.Server.Services
             try
             {
                 var data = _dbContext.SickLeaves.OrderBy(x => x.UserId).ThenByDescending(x => x.StartDate).ToList();
-                
-
                 return _mapper.Map<List<SickLeaveDto>>(data);
             }
             catch (Exception ex)
@@ -35,11 +35,11 @@ namespace MyBlazorApp.Server.Services
 
         public void AddSickLeave(SickLeaveDto sick)
         {
-            if (_dbContext.SickLeaves.Any(x => x.UserId == sick.UserId && x.StartDate == DateOnly.FromDateTime(sick.StartDate)))
+            //if (_dbContext.SickLeaves.Any(x => x.UserId == sick.UserId && x.StartDate == DateOnly.FromDateTime(sick.StartDate)))
+            if (!_calendarService.IsOverlapping(DateOnly.FromDateTime(sick.StartDate), DateOnly.FromDateTime(sick.EndDate)))
             {
                 throw new InvalidOperationException("SickLeave with this UserId and tihs StartDate already exists!");
             }
-
             try
             {
                 var data = _mapper.Map<SickLeave>(sick);

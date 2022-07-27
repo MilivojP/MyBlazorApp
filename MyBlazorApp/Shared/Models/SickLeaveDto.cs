@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using MyBlazorApp.Shared.Enumerations;
+using System.ComponentModel.DataAnnotations;
 
 namespace MyBlazorApp.Shared.Models
 {
@@ -9,15 +10,16 @@ namespace MyBlazorApp.Shared.Models
         public int UserId { get; set; }
 
         [Required]
-        public string LeaveType { get; set; }
+        public SickLeaveType LeaveType { get; set; } = SickLeaveType.SickLeaveUpTo3Days;
 
 
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime StartDate { get; set; }
+        public DateTime StartDate { get; set; } = DateTime.Now;
 
-        
+
         [DataType(DataType.Date), DisplayFormat(DataFormatString = "{dd/mm/yyyy}", ApplyFormatInEditMode = true)]
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate { get; set; } = DateTime.Now; 
 
     }
+
 }

@@ -24,7 +24,6 @@ namespace MyBlazorApp.Server.Services
             try
             {
                 var data = _dbContext.Vacations.OrderBy(x => x.UserId).ToList();
-
                 return _mapper.Map<List<VacationDto>>(data);
             }
             catch (Exception ex)
@@ -47,9 +46,7 @@ namespace MyBlazorApp.Server.Services
             try
             {
                 var data = _mapper.Map<Vacation>(vacation);
-
                 _dbContext.Vacations.Add(data);
-
                 _dbContext.SaveChanges();
             }
             catch (Exception ex)
@@ -66,9 +63,7 @@ namespace MyBlazorApp.Server.Services
             {
                 // TODO: get worktime from data store and then update
                 var data = _mapper.Map<Vacation>(Id);
-
                 _dbContext.Vacations.Update(data);
-
                 _dbContext.SaveChanges();
             }
             catch (Exception ex)
@@ -91,7 +86,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"Vacation with id {id} not found."); 
                 }
             }
             catch (Exception ex)
@@ -110,12 +105,11 @@ namespace MyBlazorApp.Server.Services
                 if (data != null)
                 {
                     _dbContext.Vacations.Remove(data);
-
                     _dbContext.SaveChanges();
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"Vacation with id {id} not found.");
                 }
             }
             catch (Exception ex)

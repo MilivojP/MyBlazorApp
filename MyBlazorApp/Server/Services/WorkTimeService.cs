@@ -59,6 +59,10 @@ namespace MyBlazorApp.Server.Services
         //To Update the records worktime
         public void UpdateWorkTime(ExistingWorkTimeDto Day)
         {
+            if (Day is null)
+            {
+                throw new ArgumentNullException("Parameter 'Day' is null.");
+            }
             try
             {
                 // TODO: get worktime from data store and then update
@@ -71,7 +75,7 @@ namespace MyBlazorApp.Server.Services
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
-                throw ex;
+                throw new InvalidOperationException(ex.Message);
             }
         }
 
@@ -88,7 +92,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"WorkTime with id {id} not found.");
                 }
             }
             catch (Exception ex)
@@ -112,7 +116,7 @@ namespace MyBlazorApp.Server.Services
                 }
                 else
                 {
-                    throw new ArgumentNullException();
+                    throw new KeyNotFoundException($"WorkTime with id {id} not found.");
                 }
             }
             catch (Exception ex)

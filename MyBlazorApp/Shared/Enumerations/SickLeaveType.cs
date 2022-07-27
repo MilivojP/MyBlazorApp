@@ -1,4 +1,4 @@
-﻿namespace MyBlazorApp.Server.Entities
+﻿namespace MyBlazorApp.Shared.Enumerations
 {
     public enum SickLeaveType : byte
     {

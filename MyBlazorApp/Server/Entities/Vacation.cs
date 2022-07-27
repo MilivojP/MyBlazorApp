@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MyBlazorApp.Shared.Enumerations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,6 +29,6 @@ namespace MyBlazorApp.Server.Entities
 
         [MaxLength(255)]
         [Unicode]
-        public string Notes { get; set; }   
+        public string? Notes { get; set; }   
     }
 }

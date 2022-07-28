@@ -9,7 +9,7 @@ namespace MyBlazorApp.Server.Services
     public class SickLeaveService : ISickLeaveService
     {
         private readonly IMapper _mapper;
-        readonly DatabaseContext _dbContext;
+        private readonly DatabaseContext _dbContext;
         private readonly ICalendarService _calendarService;
 
         public SickLeaveService(IMapper mapper, DatabaseContext dbContext, ICalendarService calendarService)
@@ -36,7 +36,7 @@ namespace MyBlazorApp.Server.Services
         public void AddSickLeave(SickLeaveDto sick)
         {
             //if (_dbContext.SickLeaves.Any(x => x.UserId == sick.UserId && x.StartDate == DateOnly.FromDateTime(sick.StartDate)))
-            if (!_calendarService.IsOverlapping(DateOnly.FromDateTime(sick.StartDate), DateOnly.FromDateTime(sick.EndDate)))
+            if (_calendarService.IsOverlapping(DateOnly.FromDateTime(sick.StartDate), DateOnly.FromDateTime(sick.EndDate)))
             {
                 throw new InvalidOperationException("SickLeave with this UserId and tihs StartDate already exists!");
             }

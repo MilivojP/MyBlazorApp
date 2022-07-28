@@ -10,7 +10,7 @@ namespace MyBlazorApp.Server.Services
 
     {
         private readonly IMapper _mapper;
-        readonly DatabaseContext _dbContext;
+        private readonly DatabaseContext _dbContext;
         private readonly ICalendarService _calendarService;
 
         public VacationService(IMapper mapper, DatabaseContext dbContext, ICalendarService calendarService)
@@ -39,7 +39,7 @@ namespace MyBlazorApp.Server.Services
         public void AddVacation(NewVacationDto vacation)
         {
             //if (_dbContext.Vacations.Any(x => x.UserId == vacation.UserId && x.DateFrom == DateOnly.FromDateTime(vacation.DateFrom)))
-            if (!_calendarService.IsOverlapping(DateOnly.FromDateTime(vacation.DateFrom), DateOnly.FromDateTime(vacation.DateTo)))
+            if (_calendarService.IsOverlapping(DateOnly.FromDateTime(vacation.DateFrom), DateOnly.FromDateTime(vacation.DateTo)))
             {
                 //throw new Exception("Vacation with this UserId and DateFrom already exists!");
                 throw new Exception("Vacation for this UserId is not possible!");

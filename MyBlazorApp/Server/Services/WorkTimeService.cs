@@ -9,7 +9,7 @@ namespace MyBlazorApp.Server.Services
     public class WorkTimeService : IWorkTimeService
     {
         private readonly IMapper _mapper;
-        readonly DatabaseContext _dbContext;
+        private readonly DatabaseContext _dbContext;
         private readonly ICalendarService _calendarService;
 
         public WorkTimeService(IMapper mapper, DatabaseContext dbContext, ICalendarService calendarService)
@@ -39,7 +39,7 @@ namespace MyBlazorApp.Server.Services
         public void AddWorkTime(NewWorkTimeDto workTime)
         {
             //if (_dbContext.WorkTimes.Any(x => x.UserId == workTime.UserId && x.Day == DateOnly.FromDateTime(workTime.Day)))
-            if (!_calendarService.IsOverlapping(DateOnly.FromDateTime(workTime.StartTime), DateOnly.FromDateTime(workTime.EndTime)))
+            if (_calendarService.IsOverlapping(DateOnly.FromDateTime(workTime.StartTime), DateOnly.FromDateTime(workTime.EndTime)))
             {
                 throw new Exception("WorkTime with this UserId and tihs Day already exists!");
             }

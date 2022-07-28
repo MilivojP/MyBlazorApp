@@ -5,9 +5,8 @@ namespace MyBlazorApp.Server.Services
 {
     public class CalendarService : ICalendarService
     {
-        readonly DatabaseContext _dbContext;
+        private readonly DatabaseContext _dbContext;
         
-
         public bool IsOverlapping(DateOnly dateFrom, DateOnly dateTo )
         {
             //TODO check WorkTime

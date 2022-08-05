@@ -24,4 +24,8 @@
     <ProjectReference Include="..\Shared\MyBlazorApp.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+  </ItemGroup>
+
 </Project>

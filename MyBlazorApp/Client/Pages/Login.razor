@@ -1,83 +1,54 @@
 ﻿@page "/login"
+@using MyBlazorApp.Shared.Auth
 @using MyBlazorApp.Shared.Models
+@using MyBlazorApp.Client.Validation
 @using System.Net
 @inject HttpClient Http
 
+@inject IJSRuntime jsr
 @inject NavigationManager NavigationManager
 
 <h1>Login</h1>
 
-@if (ShowErrors)
-{
-    <div class="alert alert-danger" role="alert">
-        <p>@Error</p>
-    </div>
-}
+<p>@message</p>
 
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">Please enter your details</h5>
-        <EditForm Model="loginModel" OnValidSubmit="HandleLogin">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
-
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <InputText Id="email" Class="form-control" @bind-Value="loginModel.Email" />
-                <ValidationMessage For="@(() => loginModel.Email)" />
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <InputText Id="password" type="password" Class="form-control" @bind-Value="loginModel.Password" />
-                <ValidationMessage For="@(() => loginModel.Password)" />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </EditForm>
+<EditForm Model="user" OnValidSubmit="OnValid" style="max-width:500px;">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="mb-2">
+        <InputText class="form-control" @bind-Value="user.Email" placeholder="Enter Email" />
+        <ValidationMessage For="@(() => user.Email)" />
     </div>
-</div>
+    <div class="mb-2">
+        <InputText type="password" Class="form-control" @bind-Value="user.Password" placeholder="Enter Password" />
+        <ValidationMessage For="@(() => user.Password)" />
+    </div>
+     <button class="btn btn-secondary" disabled="@isDisabled">LogIn</button>
+</EditForm>
 
 @code {
+    private LoginUser user = new LoginUser();
+    string message = string.Empty;
+    bool isDisabled = false;
 
-    private UserDto loginModel = new UserDto();
-    
-    private bool ShowErrors;
-    private string Error = "";
-
-    private async Task HandleLogin()
+    private async Task OnValid()
     {
-        ShowErrors = false;
-
-        //var result = await AuthService.Login(loginModel);
-        var result = await Http.PostAsJsonAsync("api/Auth/Login", loginModel);
-        var content = await result.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
-
-        if (result!=null)
+        isDisabled = true;
+        
+        using (var msg = await Http.PostAsJsonAsync<LoginUser>("/api/login", user, System.Threading.CancellationToken.None))
         {
-            NavigationManager.NavigateTo("/");
-            
+ 
+            if (msg.IsSuccessStatusCode)
+            {
+                Token result = await msg.Content.ReadFromJsonAsync<Token>();
+                message = result.message;
+                isDisabled = false;
+				if (result.Sucess)
+					await jsr.InvokeVoidAsync("localStorage.setItem", "user", $"{result.AccessToken};{result.RefreshToken}").ConfigureAwait(false);
+       
+            }
+        
         }
-        else
-        {
-           // Error = result.StatusCode(KeyNotFoundException);
-            ShowErrors = true;
-        }
+ 
     }
-    
-    //    protected async Task SaveUser()
-    //{
-    //    customValidation?.ClearErrors();
-
-    //    var response = await Http.PostAsJsonAsync("api/User", user);
-
-    //    var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
-
-    //    if (response.StatusCode == HttpStatusCode.BadRequest && content.Any())
-    //    {
-    //        customValidation?.DisplayErrors(content);
-    //    }
-    //    else
-    //    {
-    //        Cancel();
-    //    }
-    //}
 }

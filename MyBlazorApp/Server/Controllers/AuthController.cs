@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBlazorApp.Server.Interfaces;
+using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.Server.Controllers
 {
@@ -18,9 +19,10 @@ namespace MyBlazorApp.Server.Controllers
 
         [AllowAnonymous]
         [HttpPost, Route("login")]
-        public IActionResult Login(string email, string password)
+        //public IActionResult Login(string email, string password)
+        public IActionResult Login([FromBody] LoginUser loginUser)
         {
-            var token = _authService.Login(email, password);
+            var token = _authService.Login(loginUser.Email, loginUser.Password);
 
             if (token == null)
             {

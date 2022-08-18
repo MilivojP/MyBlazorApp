@@ -4,13 +4,10 @@
 @using MyBlazorApp.Client.Validation
 @using System.Net
 @inject HttpClient Http
-
 @inject IJSRuntime jsr
 @inject NavigationManager NavigationManager
 
 <h1>Login</h1>
-
-<p>@message</p>
 
 <EditForm Model="user" OnValidSubmit="OnValid" style="max-width:500px;">
     <DataAnnotationsValidator />
@@ -28,27 +25,22 @@
 
 @code {
     private LoginUser user = new LoginUser();
-    string message = string.Empty;
     bool isDisabled = false;
 
     private async Task OnValid()
     {
+
         isDisabled = true;
         
-        using (var msg = await Http.PostAsJsonAsync<LoginUser>("/api/login", user, System.Threading.CancellationToken.None))
+        using (var msg = await Http.PostAsJsonAsync<LoginUser>("/api/Auth/login", user, System.Threading.CancellationToken.None))
         {
- 
-            if (msg.IsSuccessStatusCode)
+             if (msg.IsSuccessStatusCode)
             {
                 Token result = await msg.Content.ReadFromJsonAsync<Token>();
-                message = result.message;
                 isDisabled = false;
-				if (result.Sucess)
-					await jsr.InvokeVoidAsync("localStorage.setItem", "user", $"{result.AccessToken};{result.RefreshToken}").ConfigureAwait(false);
+				await jsr.InvokeVoidAsync("localStorage.setItem", "user", $"{result.AccessToken};{result.RefreshToken}").ConfigureAwait(false);
        
-            }
-        
-        }
- 
+            }        
+        } 
     }
 }

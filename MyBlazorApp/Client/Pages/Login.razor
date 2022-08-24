@@ -31,15 +31,15 @@
     {
 
         isDisabled = true;
-        
+
         using (var msg = await Http.PostAsJsonAsync<LoginUser>("/api/Auth/login", user, System.Threading.CancellationToken.None))
         {
-             if (msg.IsSuccessStatusCode)
+            if (msg.IsSuccessStatusCode)
             {
                 Token result = await msg.Content.ReadFromJsonAsync<Token>();
                 isDisabled = false;
-				await jsr.InvokeVoidAsync("localStorage.setItem", "user", $"{result.AccessToken};{result.RefreshToken}").ConfigureAwait(false);
-       
+                await jsr.InvokeVoidAsync("localStorage.setItem", "user", $"{result.AccessToken};{result.RefreshToken}").ConfigureAwait(false);
+                NavigationManager.NavigateTo("/");       
             }        
         } 
     }

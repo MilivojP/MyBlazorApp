@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using MyBlazorApp.Client;
+using System.Net.Http;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -15,6 +16,9 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 
 //builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("MyApp.ServerAPI"));
-builder.Services.AddAuthorizationCore();
+//builder.Services.AddAuthorizationCore();
 builder.Services.AddApiAuthorization();
+builder.Services.AddOidcAuthentication(options => {
+    builder.Configuration.Bind("Local", options.ProviderOptions);
+});
 await builder.Build().RunAsync();

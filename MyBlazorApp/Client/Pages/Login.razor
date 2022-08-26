@@ -24,21 +24,20 @@
 </EditForm>
 
 @code {
-    private LoginUser user = new LoginUser();
+    private LoginDto user = new LoginDto();
     bool isDisabled = false;
 
     private async Task OnValid()
     {
-
         isDisabled = true;
 
-        using (var msg = await Http.PostAsJsonAsync<LoginUser>("/api/Auth/login", user, System.Threading.CancellationToken.None))
+        using (var msg = await Http.PostAsJsonAsync<LoginDto>("/api/Auth/login", user, System.Threading.CancellationToken.None))
         {
             if (msg.IsSuccessStatusCode)
             {
                 Token result = await msg.Content.ReadFromJsonAsync<Token>();
                 isDisabled = false;
-                await jsr.InvokeVoidAsync("localStorage.setItem", "user", $"{result.AccessToken};{result.RefreshToken}").ConfigureAwait(false);
+                //await jsr.InvokeVoidAsync("localStorage.setItem", "user", $"{result.AccessToken};{result.RefreshToken}").ConfigureAwait(false);
                 NavigationManager.NavigateTo("/");       
             }        
         } 

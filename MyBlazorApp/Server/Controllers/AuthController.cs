@@ -19,10 +19,9 @@ namespace MyBlazorApp.Server.Controllers
 
         [AllowAnonymous]
         [HttpPost, Route("login")]
-        //public IActionResult Login(string email, string password)
-        public IActionResult Login([FromBody] LoginUser loginUser)
+        public IActionResult Login([FromBody] LoginDto login)
         {
-            var token = _authService.Login(loginUser.Email, loginUser.Password);
+            var token = _authService.Login(login.Email, login.Password);
 
             if (token == null)
             {

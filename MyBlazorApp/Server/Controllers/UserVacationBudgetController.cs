@@ -1,9 +1,11 @@
 ﻿using MyBlazorApp.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using MyBlazorApp.Server.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MyBlazorApp.Server.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class UserVacationBudgetController : ControllerBase

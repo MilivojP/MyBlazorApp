@@ -5,7 +5,6 @@ using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.Server.Controllers
 {
-
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]

@@ -32,13 +32,15 @@ namespace MyBlazorApp.Server.Services
             var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
             var tokenExpiry = DateTime.UtcNow.AddMinutes(10);
 
+            var role = user.IsAdmin ? "Administrator" : "User";
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, user.IsAdmin.ToString())
+                    new Claim(ClaimTypes.Role, role)
                 }),
                 Expires = tokenExpiry,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
@@ -50,7 +52,7 @@ namespace MyBlazorApp.Server.Services
             return new Token { 
                 Username = user.UserName,
                 Email = user.Email,
-                IsAdmin = user.IsAdmin,
+                Role = role,
                 ExpiresIn = (int)tokenExpiry.Subtract(DateTime.UtcNow).TotalSeconds,
                 AccessToken = token 
             };

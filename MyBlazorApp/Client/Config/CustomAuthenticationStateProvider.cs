@@ -30,7 +30,7 @@ namespace MyBlazorApp.Client.Config
                 { 
                     new Claim(ClaimTypes.Name, token.Username),
                     new Claim(ClaimTypes.Email, token.Email),
-                    new Claim(ClaimTypes.Role, token.IsAdmin.ToString())              
+                    new Claim(ClaimTypes.Role, token.Role)              
                 }, "JwtAuth"));
 
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
@@ -51,7 +51,7 @@ namespace MyBlazorApp.Client.Config
                 {
                     new Claim(ClaimTypes.Name, token.Username),
                     new Claim(ClaimTypes.Email, token.Email),
-                    new Claim(ClaimTypes.Role, token.IsAdmin.ToString())
+                    new Claim(ClaimTypes.Role, token.Role)
                 }));
 
                 token.ExpiryTimeStamp = DateTime.UtcNow.AddSeconds(token.ExpiresIn);

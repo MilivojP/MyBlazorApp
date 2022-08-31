@@ -11,7 +11,7 @@
             <AuthorizeView>
                 <Authorized>
                     Hello, @context.User.Identity.Name!
-                    <a href="/logout">Log out</a>
+                    <a @onclick="Logout" href="javascript:void(0)">Log out</a>
                 </Authorized>
                 <NotAuthorized>
                     Hello, guest!

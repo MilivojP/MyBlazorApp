@@ -49,6 +49,7 @@ namespace MyBlazorApp.Server.Services
 
             return new Token { 
                 Username = user.UserName,
+                Email = user.Email,
                 IsAdmin = user.IsAdmin,
                 ExpiresIn = (int)tokenExpiry.Subtract(DateTime.UtcNow).TotalSeconds,
                 AccessToken = token 

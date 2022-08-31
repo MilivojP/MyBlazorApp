@@ -4,42 +4,50 @@
 @using MyBlazorApp.Client.Validation
 @using System.Net
 @inject HttpClient Http
-@inject IJSRuntime jsr
+@inject IJSRuntime js
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider authStateProvider
 
 <h1>Login</h1>
 
-<EditForm Model="user" OnValidSubmit="OnValid" style="max-width:500px;">
+<EditForm Model="loginRequest" OnValidSubmit="OnValidSubmit" style="max-width:500px;">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="mb-2">
-        <InputText class="form-control" @bind-Value="user.Email" placeholder="Enter Email" />
-        <ValidationMessage For="@(() => user.Email)" />
+        <InputText class="form-control" @bind-Value="loginRequest.Email" placeholder="Enter Email" />
+        <ValidationMessage For="@(() => loginRequest.Email)" />
     </div>
     <div class="mb-2">
-        <InputText type="password" Class="form-control" @bind-Value="user.Password" placeholder="Enter Password" />
-        <ValidationMessage For="@(() => user.Password)" />
+        <InputText type="password" Class="form-control" @bind-Value="loginRequest.Password" placeholder="Enter Password" />
+        <ValidationMessage For="@(() => loginRequest.Password)" />
     </div>
      <button class="btn btn-secondary" disabled="@isDisabled">LogIn</button>
 </EditForm>
 
 @code {
-    private LoginDto user = new LoginDto();
+    private LoginDto loginRequest = new LoginDto();
     bool isDisabled = false;
 
-    private async Task OnValid()
+    private async Task OnValidSubmit()
     {
         isDisabled = true;
 
-        using (var msg = await Http.PostAsJsonAsync<LoginDto>("/api/Auth/login", user, System.Threading.CancellationToken.None))
+        var response = await Http.PostAsJsonAsync<LoginDto>("/api/Auth/login", loginRequest);
+
+        if (response.IsSuccessStatusCode)
         {
-            if (msg.IsSuccessStatusCode)
-            {
-                Token result = await msg.Content.ReadFromJsonAsync<Token>();
-                isDisabled = false;
-                //await jsr.InvokeVoidAsync("localStorage.setItem", "user", $"{result.AccessToken};{result.RefreshToken}").ConfigureAwait(false);
-                NavigationManager.NavigateTo("/");       
-            }        
-        } 
+            var token = await response.Content.ReadFromJsonAsync<Token>();
+            isDisabled = false;
+
+            var authProvider = (CustomAuthenticationStateProvider)authStateProvider;
+            await authProvider.UpdateAuthenticationState(token);
+
+            NavigationManager.NavigateTo("/", true);       
+        }
+        else if (response.StatusCode == HttpStatusCode.Unauthorized)
+        {
+            await js.InvokeVoidAsync("alert", "Invalid user name or password!");
+            return;
+        }
     }
 }

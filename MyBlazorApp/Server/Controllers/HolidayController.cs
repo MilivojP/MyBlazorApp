@@ -5,8 +5,7 @@ using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.Server.Controllers
 {
-
-  //  [Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class HolidayController : ControllerBase

@@ -1,6 +1,12 @@
 ﻿@page "/userlist"
 @using MyBlazorApp.Shared.Models
+@using System.Net.Http.Headers
+
 @inject HttpClient Http
+@inject AuthenticationStateProvider authStateProvider
+@inject NavigationManager navManager
+
+@attribute [Authorize(Roles = "Administrator,User")]
 
 <h1>Users</h1>
 <p></p>
@@ -68,7 +74,17 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await GetAllUsers();
+        var authProvider = (CustomAuthenticationStateProvider)authStateProvider;
+        var token = await authProvider.GetToken();
+        if (!string.IsNullOrWhiteSpace(token))
+        {
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", token);
+            await GetAllUsers();
+        }
+        else
+        {
+            navManager.NavigateTo("/login");
+        }
     }
 
     protected async Task GetAllUsers()

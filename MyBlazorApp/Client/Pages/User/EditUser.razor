@@ -2,6 +2,7 @@
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
 
 <h1>Edit User</h1>
 <hr />

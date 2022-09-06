@@ -2,6 +2,7 @@
 @using MyBlazorApp.Shared.Models
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
 
 <h2>Delete User</h2>
 <br />

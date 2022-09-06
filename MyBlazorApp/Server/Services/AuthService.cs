@@ -30,21 +30,32 @@ namespace MyBlazorApp.Server.Services
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenKey = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]);
-            
+            var tokenExpiry = DateTime.UtcNow.AddMinutes(10);
+
+            var role = user.IsAdmin ? "Administrator" : "User";
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
-                    new Claim(ClaimTypes.Email, user.Email)
+                    new Claim(ClaimTypes.Email, user.Email),
+                    new Claim(ClaimTypes.Role, role)
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(10),
+                Expires = tokenExpiry,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            
-            return new Token { AccessToken = tokenHandler.WriteToken(token) };
+            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+            var token = tokenHandler.WriteToken(securityToken);
+
+            return new Token { 
+                Username = user.UserName,
+                Email = user.Email,
+                Role = role,
+                ExpiresIn = (int)tokenExpiry.Subtract(DateTime.UtcNow).TotalSeconds,
+                AccessToken = token 
+            };
         }
     }
 }

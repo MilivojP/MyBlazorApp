@@ -3,6 +3,7 @@
 @using MyBlazorApp.Shared.Enumerations
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@attribute [Authorize(Roles ="Administrator")]
 
 <h1>Approwed Vacation</h1>
 <hr />

@@ -14,9 +14,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Diagrams", "Diagrams", "{D3
 		Journal01-Entity-Diagram.drawio = Journal01-Entity-Diagram.drawio
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBlazorApp.DAL", "MyBlazorApp.DAL\MyBlazorApp.DAL.csproj", "{FDB605A6-FFF7-4F5C-89F9-D7A4A41CC5A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.DAL", "MyBlazorApp.DAL\MyBlazorApp.DAL.csproj", "{FDB605A6-FFF7-4F5C-89F9-D7A4A41CC5A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyBlazorApp.BL", "MyBlazorApp.BL\MyBlazorApp.BL.csproj", "{50631469-4F8F-4C6F-96E3-ABB232FF5818}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyBlazorApp.BL", "MyBlazorApp.BL\MyBlazorApp.BL.csproj", "{50631469-4F8F-4C6F-96E3-ABB232FF5818}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{A20F9E60-A3AA-44F9-8D77-FDE30FBF8275}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{15568638-FC59-4D6B-8BD0-BA72F5604500}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{094AFB25-4BE4-414C-99FA-EA550603434B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +53,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3ADF622D-AA7C-4137-A3FE-61EB2CC6A8B8} = {A20F9E60-A3AA-44F9-8D77-FDE30FBF8275}
+		{C2D55F74-B12B-4F9E-9B49-619EB2341524} = {15568638-FC59-4D6B-8BD0-BA72F5604500}
+		{8E97C21C-711C-44E5-8BB1-F7A792EDE872} = {094AFB25-4BE4-414C-99FA-EA550603434B}
+		{FDB605A6-FFF7-4F5C-89F9-D7A4A41CC5A4} = {A20F9E60-A3AA-44F9-8D77-FDE30FBF8275}
+		{50631469-4F8F-4C6F-96E3-ABB232FF5818} = {A20F9E60-A3AA-44F9-8D77-FDE30FBF8275}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4E601E8-DCDD-42BD-8583-134088A1DAF0}

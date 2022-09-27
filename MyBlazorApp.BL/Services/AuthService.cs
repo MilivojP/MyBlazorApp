@@ -1,4 +1,5 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
 using MyBlazorApp.Server.Data;
 using MyBlazorApp.Server.Interfaces;
 using MyBlazorApp.Shared.Auth;

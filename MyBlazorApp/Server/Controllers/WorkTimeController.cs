@@ -11,11 +11,13 @@ namespace MyBlazorApp.Server.Controllers
     public class WorkTimeController : ControllerBase
     {
         private readonly IWorkTimeService _workTimeServices;
+    
         public WorkTimeController(IWorkTimeService workTimeServices)
         {
             _workTimeServices = workTimeServices;
-        }
 
+        }
+    
         [HttpGet]
         public ActionResult<List<WorkTimeDto>> GetAll()
         {
@@ -28,6 +30,7 @@ namespace MyBlazorApp.Server.Controllers
         public ActionResult<ExistingWorkTimeDto> Get(int id)
         {
             var Id = _workTimeServices.GetWorkTime(id);
+            
             if (Id != null)
             {
                 return Ok(Id);

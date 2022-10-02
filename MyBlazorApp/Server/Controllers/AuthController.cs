@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MyBlazorApp.Server.Interfaces;
 using MyBlazorApp.Shared.Models;
+using System.Security.Claims;
 
 namespace MyBlazorApp.Server.Controllers
 {
@@ -37,6 +38,15 @@ namespace MyBlazorApp.Server.Controllers
         public IActionResult Logout()
         {
             return Ok();
+        }
+
+        [AllowAnonymous]
+        [HttpGet, Route("id")]
+        public ActionResult<int> GetCurrentUserId()
+        {
+            var z = HttpContext.User.Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value;
+
+            return int.Parse(z);
         }
     }
 }

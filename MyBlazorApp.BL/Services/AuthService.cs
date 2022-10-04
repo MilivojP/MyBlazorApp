@@ -41,7 +41,8 @@ namespace MyBlazorApp.Server.Services
                 {
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(ClaimTypes.Email, user.Email),
-                    new Claim(ClaimTypes.Role, role)
+                    new Claim(ClaimTypes.Role, role),
+                    new Claim(ClaimTypes.NameIdentifier, (string)user.Id.ToString())
                 }),
                 Expires = tokenExpiry,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
@@ -51,6 +52,7 @@ namespace MyBlazorApp.Server.Services
             var token = tokenHandler.WriteToken(securityToken);
 
             return new Token { 
+                UserId = user.Id, 
                 Username = user.UserName,
                 Email = user.Email,
                 Role = role,

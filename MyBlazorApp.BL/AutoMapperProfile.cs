@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MyBlazorApp.DAL.Entities;
 using MyBlazorApp.Server.Entities;
 using MyBlazorApp.Shared.Models;
 
@@ -51,6 +52,13 @@ namespace MyBlazorApp.Server
             CreateMap<SickLeave, SickLeaveDto>();
             CreateMap<SickLeaveDto, SickLeave>()
                 .ForMember(x => x.Id, o => o.Ignore());
+
+            // Project
+            CreateMap<Project, ProjectDto>();
+            CreateMap<NewProjectDto, Project>()
+                .ForMember(x => x.Id, o => o.Ignore());
+            CreateMap<ExistingProjectDto, Project>();
+            CreateMap<Project, ExistingProjectDto>();
         }
     }
 

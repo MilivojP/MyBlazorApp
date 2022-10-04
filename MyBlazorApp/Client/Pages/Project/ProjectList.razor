@@ -1,22 +1,22 @@
-﻿@page "/worktimelist"
+﻿@page "/projectlist"
 @using MyBlazorApp.Shared.Models
 @using System.Security.Claims
 @inject HttpClient Http
 @inject AuthenticationStateProvider authStateProvider
-@attribute [Authorize(Roles = "Administrator,User")]
+@attribute [Authorize(Roles = "Administrator")]
 
-<h1>Work Time</h1>
+<h1>Project</h1>
 <p></p>
 <div class="row">
     <div class="col-md-6">
-        <a href='/worktime/add' class="btn btn-primary" role="button">
+        <a href='/project/add' class="btn btn-primary" role="button">
             <i class="fas fa-user-plus"></i>
-            Add Work Time
+            Add Project
         </a>
     </div>
     <div class="input-group col">
-        <input type="text" class="form-control" placeholder="Search by day"
-               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterDay" />
+        <input type="text" class="form-control" placeholder="Search by ID"
+               @bind="SearchString" @bind:event="oninput" @onkeyup="FilterID" />
         @if (SearchString.Length > 0)
         {
             <div class="input-group-append">
@@ -30,7 +30,7 @@
 
 <br />
 
-@if (workList == null)
+@if (projectList == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -39,33 +39,29 @@ else
     <table class="table table-striped align-middle table-bordered">
         <thead class="table-success">
             <tr>
-                <th>Day</th>
+                <th>ProjectName</th>
                 <th>StartTime</th>
                 <th>EndTime</th>
-                <th>Work</th>
-                <th>BreakTime</th>
                 <th>TotalWork</th>
                 <th>Notes</th>
                 <th>UserId</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var WorkTime in workList)
+            @foreach (var Project in projectList)
             {
                 <tr>
-                    <td>@WorkTime.Day.ToString("d",System.Globalization.CultureInfo.GetCultureInfo("en-GB")) </td>
-                    <td>@WorkTime.StartTime.ToShortTimeString()</td>
-                    <td>@WorkTime.EndTime.ToShortTimeString()</td>
-                    <td>@WorkTime.EndTime.Subtract(@WorkTime.StartTime)</td>
-                    <td>@WorkTime.BreakTime</td>
-                    <td>@TimeSpan.FromMinutes(@WorkTime.TotalWork)</td>               
-                    <td>@WorkTime.Notes</td>
-                    <td>@WorkTime.UserId</td>
+                    <td>@Project.ProjectName </td>
+                    <td>@Project.StartTime</td>
+                    <td>@Project.EndTime</td>
+                    <td>@TimeSpan.FromMinutes(@Project.TotalWork)</td>               
+                    <td>@Project.Notes</td>
+                    <td>@Project.UserId</td>
                     <td>
-                        <a href='/worktime/edit/@WorkTime.Id' class="btn btn-outline-dark" role="button">
+                        <a href='/project/edit/@Project.Id' class="btn btn-outline-dark" role="button">
                             Edit
                         </a>
-                        <a href='/worktime/delete/@WorkTime.Id' class="btn btn-outline-danger" role="button">
+                        <a href='/project/delete/@Project.Id' class="btn btn-outline-danger" role="button">
                             Delete
                         </a>
                     </td>
@@ -77,8 +73,8 @@ else
 }
 
 @code {
-    protected List<WorkTimeDto> workList = new();
-    protected List<WorkTimeDto> searchDay = new();
+    protected List<ProjectDto> projectList = new();
+    protected List<ProjectDto> searchID = new();
     protected string SearchString { get; set; }= string.Empty;
 
     private int UserId;
@@ -99,7 +95,7 @@ else
             var x = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             UserId = int.Parse(x);
-            workList = await Http.GetFromJsonAsync<List<WorkTimeDto>>("api/worktime");
+            projectList = await Http.GetFromJsonAsync<List<ProjectDto>>("api/project");
         }
      
     }
@@ -112,24 +108,24 @@ else
     //    workList = await Http.GetFromJsonAsync<List<WorkTimeDto>>("api/worktime");
     //    searchDay = workList;
     //}
-    protected void FilterDay()
+    protected void FilterID()
     {
         if (!string.IsNullOrEmpty(SearchString))
         {
-            workList = searchDay
-                .Where(w => w.Day.ToShortDateString() == SearchString)
+            projectList = searchID
+                .Where(w => w.ProjectName.ToString() == SearchString)
                 .ToList();
         }
         else
         {
-            workList = searchDay;
+            projectList = searchID;
         }
     }
 
     public void ResetSearch()
     {
         SearchString = string.Empty;
-        workList = searchDay;
+        projectList = searchID;
     }
 
 }

@@ -27,10 +27,11 @@ namespace MyBlazorApp.Client.Config
                 }
 
                 var claimsPrincipal = new ClaimsPrincipal(new ClaimsIdentity(new List<Claim> 
-                { 
+                {
                     new Claim(ClaimTypes.Name, token.Username),
                     new Claim(ClaimTypes.Email, token.Email),
-                    new Claim(ClaimTypes.Role, token.Role)              
+                    new Claim(ClaimTypes.Role, token.Role),
+                    new Claim(ClaimTypes.NameIdentifier, (string)token.UserId.ToString())
                 }, "JwtAuth"));
 
                 return await Task.FromResult(new AuthenticationState(claimsPrincipal));
@@ -51,7 +52,8 @@ namespace MyBlazorApp.Client.Config
                 {
                     new Claim(ClaimTypes.Name, token.Username),
                     new Claim(ClaimTypes.Email, token.Email),
-                    new Claim(ClaimTypes.Role, token.Role)
+                    new Claim(ClaimTypes.Role, token.Role),
+                    new Claim(ClaimTypes.NameIdentifier, (string)token.UserId.ToString())
                 }));
 
                 token.ExpiryTimeStamp = DateTime.UtcNow.AddSeconds(token.ExpiresIn);

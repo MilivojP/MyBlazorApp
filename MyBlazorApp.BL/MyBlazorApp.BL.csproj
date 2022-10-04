@@ -13,7 +13,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyBlazorApp.DAL\MyBlazorApp.DAL.csproj" />
-    <ProjectReference Include="..\MyBlazorApp\Shared\MyBlazorApp.Shared.csproj" />
   </ItemGroup>
 
 </Project>

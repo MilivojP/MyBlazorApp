@@ -3,7 +3,7 @@ using MyBlazorApp.Shared.Enumerations;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MyBlazorApp.Server.Entities
+namespace MyBlazorApp.DAL.Entities
 {
     [Table("Vacations")]
     public class Vacation

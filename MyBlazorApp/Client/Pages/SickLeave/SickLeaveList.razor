@@ -1,6 +1,10 @@
 ﻿@page "/sickleavelist"
 @using MyBlazorApp.Shared.Models
+@using System.Security.Claims
 @inject HttpClient Http
+@inject AuthenticationStateProvider authStateProvider
+@attribute [Authorize(Roles = "Administrator,User")]
+
 
 <h1>SickLeave</h1>
 <p></p>
@@ -66,16 +70,38 @@ else
     protected List<SickLeaveDto> searchType = new();
     protected string SearchString { get; set; } = string.Empty;
 
+    private int UserId;
+
     protected override async Task OnInitializedAsync()
     {
-        await GetAllHolidays();
+        await GetUserData();
     }
-
-    protected async Task GetAllHolidays()
+    protected async Task GetUserData()
     {
-        sickleaveList = await Http.GetFromJsonAsync<List<SickLeaveDto>>("api/sickleave");
-        searchType = sickleaveList;
+
+        var authState = await authStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var x = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            UserId = int.Parse(x);
+            sickleaveList = await Http.GetFromJsonAsync<List<SickLeaveDto>>("api/sickleave");
+        }
+     
     }
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    await GetAllHolidays();
+    //}
+
+    //protected async Task GetAllHolidays()
+    //{
+    //    sickleaveList = await Http.GetFromJsonAsync<List<SickLeaveDto>>("api/sickleave");
+    //    searchType = sickleaveList;
+    //}
 
     protected void FilterType()
     {

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using MyBlazorApp.BL.Interfaces;
 using MyBlazorApp.DAL.Entities;
-using MyBlazorApp.Server.Data;
+using MyBlazorApp.DAL.Data;
 using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.BL.Services
@@ -17,11 +17,11 @@ namespace MyBlazorApp.BL.Services
             _dbContext = databaseContex;
         }
         
-        public void AddProject(NewProjectDto project)
+        public void AddProject(ProjectDto project)
         {
-            if (_dbContext.Projects.Any(x => x.UserId == project.UserId && x.ProjectId == project.ProjectId))
+            if (_dbContext.Projects.Any(x => x.Id == project.Id))
             {
-                throw new Exception("WorkTime with this UserId and tihs Day already exists!");
+                throw new Exception("Project with this Id already exists!");
             }
 
             try
@@ -62,7 +62,7 @@ namespace MyBlazorApp.BL.Services
             }
         }
 
-        public ExistingProjectDto GetProject(int id)
+        public ProjectDto GetProject(int id)
         {
             try
             {
@@ -70,7 +70,7 @@ namespace MyBlazorApp.BL.Services
 
                 if (data != null)
                 {
-                    return _mapper.Map<ExistingProjectDto>(data);
+                    return _mapper.Map<ProjectDto>(data);
                 }
                 else
                 {
@@ -88,7 +88,7 @@ namespace MyBlazorApp.BL.Services
         {
             try
             {
-                var data = _dbContext.Projects.OrderBy(x => x.UserId).ThenByDescending(x => x.ProjectId).ToList();
+                var data = _dbContext.Projects.OrderBy(x => x.Id).ToList();
 
                 return _mapper.Map<List<ProjectDto>>(data);
             }
@@ -99,16 +99,16 @@ namespace MyBlazorApp.BL.Services
             }
         }
 
-        public void UpdateProject(ExistingProjectDto ProjectId)
+        public void UpdateProject(ProjectDto Id)
         {
-            if (ProjectId is null)
+            if (Id is null)
             {
                 throw new ArgumentNullException("Parameter 'Id' is null.");
             }
             try
             {
                 // TODO: get worktime from data store and then update
-                var data = _mapper.Map<Project>(ProjectId);
+                var data = _mapper.Map<Project>(Id);
 
                 _dbContext.Projects.Update(data);
 

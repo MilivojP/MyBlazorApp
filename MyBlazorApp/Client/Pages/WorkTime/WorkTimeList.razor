@@ -99,7 +99,7 @@ else
             var x = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
 
             UserId = int.Parse(x);
-            workList = await Http.GetFromJsonAsync<List<WorkTimeDto>>("api/worktime");
+            workList = await Http.GetFromJsonAsync<List<WorkTimeDto>>("api/worktime" );
         }
      
     }

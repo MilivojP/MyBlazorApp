@@ -1,6 +1,6 @@
 ﻿using MyBlazorApp.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
-using MyBlazorApp.Server.Interfaces;
+using MyBlazorApp.BL.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
 namespace MyBlazorApp.Server.Controllers

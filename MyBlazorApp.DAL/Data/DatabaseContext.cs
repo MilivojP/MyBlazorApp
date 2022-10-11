@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MyBlazorApp.DAL.Entities;
-using MyBlazorApp.Server.Entities;
 using MyBlazorApp.Shared.Converters;
 
-namespace MyBlazorApp.Server.Data
+namespace MyBlazorApp.DAL.Data
 {
     public partial class DatabaseContext : DbContext
     {
@@ -14,6 +13,7 @@ namespace MyBlazorApp.Server.Data
         public virtual DbSet<Holiday> Holidays { get; set; }
         public virtual DbSet<SickLeave> SickLeaves { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
+        public virtual DbSet<ProjectTime> ProjectTime { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
@@ -64,19 +64,14 @@ namespace MyBlazorApp.Server.Data
                 entity.Property(e => e.EndDate)
                     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
             });
-
-            modelBuilder.Entity<Project>(entity =>
+            modelBuilder.Entity<ProjectTime>(entity =>
             {
-                entity.Property(e => e.StartTime)
-                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
-                entity.Property(e => e.EndTime)
-                    .HasConversion<TimeOnlyConverter, TimeOnlyComparer>();
-                entity.Property(e => e.TotalWork)
-                    .HasComputedColumnSql("DATEDIFF(MINUTE,StartTime,EndTime)");
-
-                entity.HasIndex(e => new { e.UserId, e.ProjectId })
+                entity.Property(e => e.Day)
+                    .HasConversion<DateOnlyConverter, DateOnlyComparer>();
+                entity.HasIndex(e => new { e.UserId, e.Day,e.ProjectId})
                     .IsUnique();
             });
+
         }
     }
 }

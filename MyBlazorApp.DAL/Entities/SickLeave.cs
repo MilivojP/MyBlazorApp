@@ -1,7 +1,7 @@
 ﻿using MyBlazorApp.Shared.Enumerations;
 using System.ComponentModel.DataAnnotations;
 
-namespace MyBlazorApp.Server.Entities
+namespace MyBlazorApp.DAL.Entities
 {
     public class SickLeave
     {

@@ -39,24 +39,16 @@ else
     <table class="table table-striped align-middle table-bordered">
         <thead class="table-success">
             <tr>
-                <th>ProjectName</th>
-                <th>StartTime</th>
-                <th>EndTime</th>
-                <th>TotalWork</th>
-                <th>Notes</th>
-                <th>UserId</th>
+                <th>Id</th>
+                <th>Name</th>
             </tr>
         </thead>
         <tbody>
             @foreach (var Project in projectList)
             {
                 <tr>
-                    <td>@Project.ProjectName </td>
-                    <td>@Project.StartTime</td>
-                    <td>@Project.EndTime</td>
-                    <td>@TimeSpan.FromMinutes(@Project.TotalWork)</td>               
-                    <td>@Project.Notes</td>
-                    <td>@Project.UserId</td>
+                    <td>@Project.Id</td>
+                    <td>@Project.Name </td>
                     <td>
                         <a href='/project/edit/@Project.Id' class="btn btn-outline-dark" role="button">
                             Edit
@@ -99,21 +91,13 @@ else
         }
      
     }
-    //protected override async Task OnInitializedAsync()
-    //{
-    //    await GetWorkTimes();
-    //}
-    //protected async Task GetWorkTimes()
-    //{
-    //    workList = await Http.GetFromJsonAsync<List<WorkTimeDto>>("api/worktime");
-    //    searchDay = workList;
-    //}
+
     protected void FilterID()
     {
         if (!string.IsNullOrEmpty(SearchString))
         {
             projectList = searchID
-                .Where(w => w.ProjectName.ToString() == SearchString)
+                .Where(w => w.Name.ToString() == SearchString)
                 .ToList();
         }
         else

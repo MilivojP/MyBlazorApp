@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MyBlazorApp.Server.Data;
-using MyBlazorApp.Server.Interfaces;
-using MyBlazorApp.Server.Services;
+using MyBlazorApp.BL.Interfaces;
+using MyBlazorApp.BL.Services;
+using MyBlazorApp.DAL.Data;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -53,6 +53,7 @@ builder.Services.AddScoped<IHolidayService, HolidayService>();
 builder.Services.AddScoped<IUserVacationBudgetService, UserVacationBudgetService>();
 builder.Services.AddScoped<ISickLeaveService, SickLeaveService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IProjectService, ProjectService>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

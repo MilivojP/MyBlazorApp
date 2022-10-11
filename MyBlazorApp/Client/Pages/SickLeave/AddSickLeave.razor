@@ -3,8 +3,10 @@
 @using MyBlazorApp.Shared.Models
 @using MyBlazorApp.Shared.Enumerations
 @using System.Net
+@using System.Security.Claims
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider authStateProvider
 
 <h1>Add SickLeave</h1>
 <hr />
@@ -49,12 +51,35 @@
 @code {
     protected SickLeaveDto sickleave = new();
     private CustomValidation? customValidation;
+    private int UserId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetUserData();
+    }
+    protected async Task GetUserData()
+    {
+
+        var authState = await authStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var x = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            UserId = int.Parse(x);
+          //  sickleave = await Http.GetFromJsonAsync<List<SickLeaveDto>>("api/sickleave");
+        }
+
+    }
 
     protected async Task SaveSickLeave()
     {
         customValidation?.ClearErrors();
 
         //sickleave.UserId = 1; // TODO: change later!!
+        sickleave.UserId = UserId;
 
         var response = await Http.PostAsJsonAsync("api/sickleave", sickleave);
 

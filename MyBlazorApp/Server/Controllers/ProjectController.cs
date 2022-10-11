@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyBlazorApp.BL.Interfaces;
-using MyBlazorApp.Server.Interfaces;
 using MyBlazorApp.Shared.Models;
 
 namespace MyBlazorApp.Server.Controllers
@@ -28,7 +27,7 @@ namespace MyBlazorApp.Server.Controllers
 
         [HttpGet("{Id}")]
 
-        public ActionResult<ExistingProjectDto> Get(int id)
+        public ActionResult<ProjectDto> Get(int id)
         {
             var Id = _projectService.GetProject(id);
             
@@ -43,7 +42,7 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] NewProjectDto project)
+        public ActionResult Post([FromBody] ProjectDto project)
         {
             try
             {
@@ -59,7 +58,7 @@ namespace MyBlazorApp.Server.Controllers
         }
 
         [HttpPut]
-        public void Put(ExistingProjectDto project)
+        public void Put(ProjectDto project)
         {
             _projectService.UpdateProject(project);
         }

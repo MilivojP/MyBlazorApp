@@ -3,8 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MyBlazorApp.DAL.Entities
 {
-    [Table("UserVacationsBudget")]
-    public class UserVacationBudget
+    [Table("ProjectsTime")]
+    public class ProjectTime
     {
         [Key]
         public int Id { get; set; }
@@ -14,8 +14,15 @@ namespace MyBlazorApp.DAL.Entities
         public virtual User User { get; set; }
 
         [Required]
-        public short Year { get; set; }
+        public DateOnly Day { get; set; }
 
-        public byte TotalDays { get; set; }
+        [Required]
+        public int ProjectId { get; set; }
+
+        public virtual Project Project { get; set; }
+
+        [Required]
+        public int TimeSpent { get; set; }
+
     }
 }

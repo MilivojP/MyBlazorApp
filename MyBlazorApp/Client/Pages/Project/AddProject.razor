@@ -1,0 +1,56 @@
+﻿@page "/project/add"
+@using MyBlazorApp.Client.Validation
+@using MyBlazorApp.Shared.Models
+@using MyBlazorApp.Shared.Enumerations
+@using System.Net
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<h1>Add Project</h1>
+<hr />
+<EditForm Model="@project" OnValidSubmit="SaveProject">
+    <DataAnnotationsValidator />
+    <CustomValidation @ref="customValidation" />
+    <ValidationSummary/>
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="project.Name" />
+        </div>
+        <ValidationMessage For="@(() => project.Name)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    protected ProjectDto project = new();
+    private CustomValidation? customValidation;
+
+    protected async Task SaveProject()
+    {
+        customValidation?.ClearErrors();
+
+        var response = await Http.PostAsJsonAsync("api/project", project);
+
+        var content = await response.Content.ReadFromJsonAsync<Dictionary<string, List<string>>>();
+
+        if (response.StatusCode == HttpStatusCode.BadRequest && content.Any())
+        {
+            customValidation?.DisplayErrors(content);
+        }
+        else
+        {
+            Cancel();
+        }
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/projectlist");
+    }
+
+}
+

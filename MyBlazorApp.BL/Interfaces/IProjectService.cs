@@ -6,11 +6,11 @@ namespace MyBlazorApp.BL.Interfaces
     {
         public List<ProjectDto> GetProjects();
 
-        public void AddProject(NewProjectDto Id);
+        public void AddProject(ProjectDto Id);
 
-        public void UpdateProject(ExistingProjectDto ProjectId);
+        public void UpdateProject(ProjectDto Id);
 
-        public ExistingProjectDto GetProject(int Id);
+        public ProjectDto GetProject(int Id);
 
         public void DeleteProject(int Id);
     }

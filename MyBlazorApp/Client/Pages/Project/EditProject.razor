@@ -1,0 +1,47 @@
+﻿@page "/project/edit/{Id:int}"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<h1>Edit Project</h1>
+<hr />
+<EditForm Model="@project" OnValidSubmit="SaveProject">
+    <DataAnnotationsValidator />
+    <ValidationSummary/>
+    <div class="mb-3">
+        <label for="Name" class="form-label">Name</label>
+        <div class="col-md-4">
+            <InputText class="form-control" @bind-Value="project.Name" />
+        </div>
+        <ValidationMessage For="@(() => project.Name)" />
+    </div>
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    protected ProjectDto project = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        project = await Http.GetFromJsonAsync<ProjectDto>("api/project/" + Id);
+    }
+
+    protected async Task SaveProject()
+    {
+        await Http.PutAsJsonAsync("api/project", project);
+        Cancel();
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/projectlist");
+    }
+}
+

@@ -1,6 +1,6 @@
 ﻿using MyBlazorApp.Shared.Models;
 
-namespace MyBlazorApp.Server.Interfaces
+namespace MyBlazorApp.BL.Interfaces
 {
     public interface IVacationService
     {

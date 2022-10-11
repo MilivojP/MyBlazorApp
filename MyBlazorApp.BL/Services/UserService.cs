@@ -1,10 +1,10 @@
-﻿using MyBlazorApp.Server.Interfaces;
+﻿using MyBlazorApp.BL.Interfaces;
 using MyBlazorApp.Shared.Models;
-using MyBlazorApp.Server.Data;
+using MyBlazorApp.DAL.Data;
 using AutoMapper;
-using MyBlazorApp.Server.Entities;
+using MyBlazorApp.DAL.Entities;
 
-namespace MyBlazorApp.Server.Services
+namespace MyBlazorApp.BL.Services
 {
     public class UserService : IUserService
     {

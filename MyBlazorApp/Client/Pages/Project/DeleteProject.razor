@@ -1,0 +1,53 @@
+﻿@page "/project/delete/{Id:int}"
+@using MyBlazorApp.Shared.Models
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@attribute [Authorize(Roles = "Administrator")]
+
+<h1>Delete Project</h1>
+<hr />
+<div class="form-group">
+    <h4>Do you want to delete this project?</h4>
+    <table class="table">
+        <tbody>
+            <tr>
+                <td>Name</td>
+                <td>@project.Name</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>@project.Name</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="form-group">
+    <input type="submit" value="Delete" @onclick="(async () => await RemoveProject(project.Id))" class="btn btn-danger" />
+    <input type="submit" value="Cancel" @onclick="(() => Cancel())" class="btn btn-warning" />
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    ProjectDto project = new ProjectDto();
+
+    protected override async Task OnInitializedAsync()
+    {
+        project = await Http.GetFromJsonAsync<ProjectDto>("/api/project/" +Convert.ToInt32(Id));
+    }
+
+    protected async Task RemoveProject(int Id)
+    {
+        await Http.DeleteAsync("api/project/" + Id);
+        NavigationManager.NavigateTo("/projectlist");
+        
+    }
+
+    public void Cancel()
+    {
+        NavigationManager.NavigateTo("/projectlist");
+    }
+
+}
+

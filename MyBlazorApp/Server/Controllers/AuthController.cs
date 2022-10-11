@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using MyBlazorApp.Server.Interfaces;
+using MyBlazorApp.BL.Interfaces;
 using MyBlazorApp.Shared.Models;
 using System.Security.Claims;
 

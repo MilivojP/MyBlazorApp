@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using MyBlazorApp.Server.Data;
-using MyBlazorApp.Server.Entities;
-using MyBlazorApp.Server.Interfaces;
+using MyBlazorApp.DAL.Data;
+using MyBlazorApp.DAL.Entities;
+using MyBlazorApp.BL.Interfaces;
 using MyBlazorApp.Shared.Models;
 
-namespace MyBlazorApp.Server.Services
+namespace MyBlazorApp.BL.Services
 {
     public class WorkTimeService : IWorkTimeService
     {

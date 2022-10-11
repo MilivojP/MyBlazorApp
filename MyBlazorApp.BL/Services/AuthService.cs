@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using MyBlazorApp.Server.Data;
-using MyBlazorApp.Server.Interfaces;
+using MyBlazorApp.DAL.Data;
+using MyBlazorApp.BL.Interfaces;
 using MyBlazorApp.Shared.Auth;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace MyBlazorApp.Server.Services
+namespace MyBlazorApp.BL.Services
 {
     public class AuthService : IAuthService
     {

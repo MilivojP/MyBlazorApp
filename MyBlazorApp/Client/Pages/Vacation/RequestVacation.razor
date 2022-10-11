@@ -2,8 +2,10 @@
 @using MyBlazorApp.Client.Validation
 @using MyBlazorApp.Shared.Models
 @using System.Net
+@using System.Security.Claims
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider authStateProvider
 
 <h1>Request Vacation</h1>
 <hr />
@@ -48,12 +50,35 @@
 @code {
     protected NewVacationDto vacation = new();
     private CustomValidation? customValidation;
-    
+    private int UserId;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetUserData();
+    }
+    protected async Task GetUserData()
+    {
+
+        var authState = await authStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var x = user.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)?.Value;
+
+            UserId = int.Parse(x);
+
+        }
+
+    }
+
     protected async Task Save()
     {
         customValidation?.ClearErrors();
 
         //vacation.UserId = 1; // TODO: change later!!
+        vacation.UserId = UserId;
 
         var response = await Http.PostAsJsonAsync("api/vacation", vacation);
 

@@ -5,15 +5,15 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyBlazorApp.Server.Data;
+using MyBlazorApp.DAL.Data;
 
 #nullable disable
 
-namespace MyBlazorApp.Server.Migrations
+namespace MyBlazorApp.DAL.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20220713134401_start")]
-    partial class start
+    [Migration("20221010172522_project")]
+    partial class project
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,7 +24,7 @@ namespace MyBlazorApp.Server.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.Holiday", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.Holiday", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,7 +45,54 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("Holidays");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.SickLeave", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Projects");
+                });
+
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.ProjectTime", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("Day")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TimeSpent")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId", "Day", "ProjectId")
+                        .IsUnique();
+
+                    b.ToTable("ProjectsTime");
+                });
+
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.SickLeave", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -72,7 +119,7 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("SickLeaves");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.User", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,7 +154,7 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.UserVacationBudget", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.UserVacationBudget", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -132,7 +179,7 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("UserVacationsBudget");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.Vacation", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.Vacation", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,7 +194,6 @@ namespace MyBlazorApp.Server.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Notes")
-                        .IsRequired()
                         .HasMaxLength(255)
                         .IsUnicode(true)
                         .HasColumnType("nvarchar(255)");
@@ -168,7 +214,7 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("Vacations");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.WorkTime", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.WorkTime", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -209,9 +255,28 @@ namespace MyBlazorApp.Server.Migrations
                     b.ToTable("WorkTimes");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.SickLeave", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.ProjectTime", b =>
                 {
-                    b.HasOne("MyBlazorApp.Server.Entities.User", "User")
+                    b.HasOne("MyBlazorApp.DAL.Entities.Project", "Project")
+                        .WithMany()
+                        .HasForeignKey("ProjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("MyBlazorApp.DAL.Entities.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Project");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.SickLeave", b =>
+                {
+                    b.HasOne("MyBlazorApp.DAL.Entities.User", "User")
                         .WithMany("SickLeaves")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -220,9 +285,9 @@ namespace MyBlazorApp.Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.UserVacationBudget", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.UserVacationBudget", b =>
                 {
-                    b.HasOne("MyBlazorApp.Server.Entities.User", "User")
+                    b.HasOne("MyBlazorApp.DAL.Entities.User", "User")
                         .WithMany("UserVacationBudgets")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -231,9 +296,9 @@ namespace MyBlazorApp.Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.Vacation", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.Vacation", b =>
                 {
-                    b.HasOne("MyBlazorApp.Server.Entities.User", "User")
+                    b.HasOne("MyBlazorApp.DAL.Entities.User", "User")
                         .WithMany("Vacations")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -242,9 +307,9 @@ namespace MyBlazorApp.Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.WorkTime", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.WorkTime", b =>
                 {
-                    b.HasOne("MyBlazorApp.Server.Entities.User", "User")
+                    b.HasOne("MyBlazorApp.DAL.Entities.User", "User")
                         .WithMany("WorkTimes")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -253,7 +318,7 @@ namespace MyBlazorApp.Server.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("MyBlazorApp.Server.Entities.User", b =>
+            modelBuilder.Entity("MyBlazorApp.DAL.Entities.User", b =>
                 {
                     b.Navigation("SickLeaves");
 

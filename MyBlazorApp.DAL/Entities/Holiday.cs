@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MyBlazorApp.Server.Entities
+namespace MyBlazorApp.DAL.Entities
 {
     public class Holiday
     {

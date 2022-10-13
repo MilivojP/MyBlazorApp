@@ -16,16 +16,17 @@ namespace MyBlazorApp.BL.Services
             _mapper = mapper;
             _dbContext = dbContext;
         }
-        public void AddProjectTimes(NewProjectTimeDto Id)
+
+        public void AddProjectTime(NewProjectTimeDto projectTime)
         {
-            if (_dbContext.ProjectTime.Any(x => x.UserId == Id.UserId && x.ProjectId == Id.ProjectId && x.Day == DateOnly.FromDateTime(Id.Day)))
+            if (_dbContext.ProjectsTime.Any(x => x.UserId == projectTime.UserId && x.ProjectId == projectTime.ProjectId && x.Day == DateOnly.FromDateTime(projectTime.Day)))
             {
                 throw new Exception("WorkTime with this UserId and tihs Day already exists!");
             }
 
             try
             {
-                var data = _mapper.Map<ProjectTime>(Id);
+                var data = _mapper.Map<ProjectsTime>(projectTime);
 
                 _dbContext.ProjectTime.Add(data);
 
@@ -38,11 +39,11 @@ namespace MyBlazorApp.BL.Services
             }
         }
 
-        public void DeleteProjectTime(int Id)
+        public void DeleteProjectTime(int projectTime)
         {
             try
             {
-                var data = _dbContext.ProjectTime.Find(Id);
+                var data = _dbContext.ProjectsTime.Find(projectTime);
                 if (data != null)
                 {
                     _dbContext.ProjectTime.Remove(data);
@@ -51,7 +52,7 @@ namespace MyBlazorApp.BL.Services
                 }
                 else
                 {
-                    throw new KeyNotFoundException($"ProjectTime with id {Id} not found.");
+                    throw new KeyNotFoundException($"ProjectTime with id {projectTime} not found.");
                 }
             }
             catch (Exception ex)
@@ -65,7 +66,7 @@ namespace MyBlazorApp.BL.Services
         {
             try
             {
-                var data = _dbContext.ProjectTime.OrderBy(x => x.UserId).ThenBy(x =>x.ProjectId).ThenByDescending(x => x.Day).ToList();
+                var data = _dbContext.ProjectsTime.OrderBy(x => x.UserId).ThenBy(x =>x.ProjectId).ThenByDescending(x => x.Day).ToList();
 
                 return _mapper.Map<List<ProjectTimeDto>>(data);
             }
@@ -76,16 +77,16 @@ namespace MyBlazorApp.BL.Services
             }
         }
 
-        public void UpdateProjectTime(ProjectTimeDto Id)
+        public void UpdateProjectTime(ProjectTimeDto projectTime)
         {
-            if (Id is null)
+            if (projectTime is null)
             {
                 throw new ArgumentNullException("Parameter 'Id' is null.");
             }
             try
             {
                 // TODO: get worktime from data store and then update
-                var data = _mapper.Map<ProjectTime>(Id);
+                var data = _mapper.Map<ProjectsTime>(projectTime);
 
                 _dbContext.ProjectTime.Update(data);
 
@@ -98,11 +99,11 @@ namespace MyBlazorApp.BL.Services
             }
         }
 
-        ProjectTimeDto IProjectTimeService.GetProjectTime(int Id)
+        ProjectTimeDto IProjectTimeService.GetProjectTime(int projectTime)
         {
             try
             {
-                var data = _dbContext.ProjectTime.Find(Id);
+                var data = _dbContext.ProjectsTime.Find(projectTime);
 
                 if (data != null)
                 {
@@ -110,7 +111,7 @@ namespace MyBlazorApp.BL.Services
                 }
                 else
                 {
-                    throw new KeyNotFoundException($"ProjectTime with id {Id} not found.");
+                    throw new KeyNotFoundException($"ProjectTime with id {projectTime} not found.");
                 }
             }
             catch (Exception ex)

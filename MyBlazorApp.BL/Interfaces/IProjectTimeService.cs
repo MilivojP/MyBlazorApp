@@ -6,12 +6,12 @@ namespace MyBlazorApp.BL.Interfaces
     {
         public List<ProjectTimeDto> GetProjectTimes();
 
-        public void AddProjectTimes(NewProjectTimeDto Id);
+        public void AddProjectTime(NewProjectTimeDto projectTime);
 
-        public void UpdateProjectTime(ProjectTimeDto Id);
+        public void UpdateProjectTime(ProjectTimeDto projectTime);
 
-        public ProjectTimeDto GetProjectTime(int Id);
+        public ProjectTimeDto GetProjectTime(int projectTime);
 
-        public void DeleteProjectTime(int Id);
+        public void DeleteProjectTime(int id);
     }
 }

@@ -13,7 +13,7 @@ namespace MyBlazorApp.DAL.Data
         public virtual DbSet<Holiday> Holidays { get; set; }
         public virtual DbSet<SickLeave> SickLeaves { get; set; }
         public virtual DbSet<Project> Projects { get; set; }
-        public virtual DbSet<ProjectTime> ProjectTime { get; set; }
+        public virtual DbSet<ProjectsTime> ProjectTime { get; set; }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options)
             : base(options)
@@ -64,7 +64,7 @@ namespace MyBlazorApp.DAL.Data
                 entity.Property(e => e.EndDate)
                     .HasConversion<DateOnlyConverter, DateOnlyComparer>();
             });
-            modelBuilder.Entity<ProjectTime>(entity =>
+            modelBuilder.Entity<ProjectsTime>(entity =>
             {
                 entity.Property(e => e.Day)
                     .HasConversion<DateOnlyConverter, DateOnlyComparer>();

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace MyBlazorApp.DAL.Entities
 {
     [Table("ProjectsTime")]
-    public class ProjectTime
+    public class ProjectsTime
     {
         [Key]
         public int Id { get; set; }

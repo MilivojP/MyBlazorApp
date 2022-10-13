@@ -58,10 +58,10 @@ namespace MyBlazorApp.Server
                 
             
             // ProjectTime
-            CreateMap<ProjectTime, ProjectTimeDto>();
-            CreateMap<NewProjectTimeDto, ProjectTime>()
+            CreateMap<ProjectsTime, ProjectTimeDto>();
+            CreateMap<NewProjectTimeDto, ProjectsTime>()
                 .ForMember(x => x.Id, o => o.Ignore());
-            CreateMap<ProjectTime, NewProjectTimeDto>();
+            CreateMap<ProjectsTime, NewProjectTimeDto>();
 
         }
     }

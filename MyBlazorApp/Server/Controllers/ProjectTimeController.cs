@@ -60,7 +60,7 @@ namespace MyBlazorApp.Server.Controllers
         [HttpPut]
         public void Put(ProjectTimeDto projectTime)
         {
-            _projectTimeServices.UpdateProjectTime(projectTime);
+            _projectTimeService.UpdateProjectTime(projectTime);
         }
 
         [HttpDelete("{Id}")]

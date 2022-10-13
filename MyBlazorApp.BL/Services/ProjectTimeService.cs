@@ -19,7 +19,7 @@ namespace MyBlazorApp.BL.Services
 
         public void AddProjectTime(NewProjectTimeDto projectTime)
         {
-            if (_dbContext.ProjectsTime.Any(x => x.UserId == projectTime.UserId && x.ProjectId == projectTime.ProjectId && x.Day == DateOnly.FromDateTime(projectTime.Day)))
+            if (_dbContext.ProjectTime.Any(x => x.UserId == projectTime.UserId && x.ProjectId == projectTime.ProjectId && x.Day == DateOnly.FromDateTime(projectTime.Day)))
             {
                 throw new Exception("WorkTime with this UserId and tihs Day already exists!");
             }
@@ -43,7 +43,7 @@ namespace MyBlazorApp.BL.Services
         {
             try
             {
-                var data = _dbContext.ProjectsTime.Find(projectTime);
+                var data = _dbContext.ProjectTime.Find(projectTime);
                 if (data != null)
                 {
                     _dbContext.ProjectTime.Remove(data);
@@ -66,7 +66,7 @@ namespace MyBlazorApp.BL.Services
         {
             try
             {
-                var data = _dbContext.ProjectsTime.OrderBy(x => x.UserId).ThenBy(x =>x.ProjectId).ThenByDescending(x => x.Day).ToList();
+                var data = _dbContext.ProjectTime.OrderBy(x => x.UserId).ThenBy(x =>x.ProjectId).ThenByDescending(x => x.Day).ToList();
 
                 return _mapper.Map<List<ProjectTimeDto>>(data);
             }
@@ -103,7 +103,7 @@ namespace MyBlazorApp.BL.Services
         {
             try
             {
-                var data = _dbContext.ProjectsTime.Find(projectTime);
+                var data = _dbContext.ProjectTime.Find(projectTime);
 
                 if (data != null)
                 {

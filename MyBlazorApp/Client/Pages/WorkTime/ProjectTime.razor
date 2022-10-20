@@ -1,0 +1,88 @@
+﻿@typeparam ProjectTime
+@using MyBlazorApp.Shared.Models
+
+<h3>ProjectTime</h3>
+
+
+<table class="table">
+    <thead class="table-active">
+        <tr>
+            <th>Day</th>
+            <th>Project</th>
+            <th>TimeSpent</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var projectTime in projectTimeList)
+        {
+            {
+                <tr>
+                    <td>@projectTime.Day</td>
+                    <td>@projectTime.ProjectId</td>
+                    <td>@projectTime.TimeSpent</td>
+                    <td>
+                        <button type="button" class="btn btn-link" @onclick="() => EnableEditing(false, instance)">
+                            <i class="fas fa-window-close" />
+                        </button>
+                        <button type="button" class="btn btn-link" @onclick="() => UpdateInstance(instance)">
+                            <i class="fas fa-check-square" />
+                        </button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+@*<EditForm Model="projectTime" OnValidSubmit="OnSaveClick">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    
+    <table border="0" oncancel="10">
+        <tr>
+            <td class="right">
+                <label for="ProjectId">Project Id :</label>
+            </td>
+            <td>
+                <InputDate id="Day" @bind-Value="projectTime.ProjectId" />
+                <ValidationMessage For="( () => projectTime.ProjectId)" />
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="Day">Day :</label>
+            </td>
+            <td>
+                <InputDate id="Day" @bind-Value="projectTime.Day" />
+                <ValidationMessage For="( () => projectTime.Day)" />
+            </td>
+        </tr>
+        <tr>
+            <td class="right">
+                <label for="TimeSpent">TimeSpent :</label>
+            </td>
+            <td>
+                <InputDate id="Time" @bind-Value="projectTime.TimeSpent" />
+                <ValidationMessage For="( () => projectTime.TimeSpent)" />
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">Save</button>
+                <button class="btn btn-light" @onclick="Cancel">Cancel</button>
+            </td>
+        </tr>
+    </table>
+    <ValidationSummary></ValidationSummary>
+</EditForm>*@
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    [Parameter]
+    public DateOnly Day { get; set; }
+
+    protected List<ProjectTimeDto> projectTimeList = new();
+
+}

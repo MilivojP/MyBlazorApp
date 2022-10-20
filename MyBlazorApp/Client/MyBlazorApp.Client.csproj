@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\WorkTime\ProjectTime.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.SessionStorage" Version="2.2.0" />
     <PackageReference Include="DateTimeExtensions" Version="5.5.4" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="6.0.5" />
@@ -25,6 +29,18 @@
   <ItemGroup>
     <ProjectReference Include="..\..\MyBlazorApp.BL\MyBlazorApp.BL.csproj" />
     <ProjectReference Include="..\Shared\MyBlazorApp.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Pages\WorkTime\ProjectTime.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Pages\WorkTime\ProjectTime.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\WorkTime\ProjectTime.razor" />
   </ItemGroup>
 
 </Project>

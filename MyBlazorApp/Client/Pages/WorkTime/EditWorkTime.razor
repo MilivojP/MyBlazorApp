@@ -1,5 +1,6 @@
 ﻿@page "/worktime/edit/{Id:int}"
 @using MyBlazorApp.Shared.Models
+@using MyBlazorApp.Client.Pages.WorkTime
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
@@ -39,6 +40,7 @@
         <button type="submit" class="btn btn-primary">Save</button>
         <button class="btn btn-light" @onclick="Cancel">Cancel</button>
     </div>
+    <ProjectTime></ProjectTime>
 </EditForm>
 
 @code {

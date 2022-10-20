@@ -74,36 +74,6 @@ else
         </tbody>
 
     </table>
-
-    <table class="table align-right table-bordered">
-        <thead class="table-active">
-            <tr>
-                <th>Day</th>
-                <th>Project</th>
-                <th>TimeSpent</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var projectTime in projectTimeList)
-            {
-                <tr>
-                   <td>@projectTime.Day</td>
-                   <td>@projectTime.ProjectId</td>
-                   <td>@projectTime.TimeSpent</td>
-                   <td>
-                        <a href='/projecttime/add/@projectTime.Id' class="btn btn-outline-success" role="button">
-                            Add
-                        </a>
-                        <a href='/projecttime/delete/@projectTime.Id' class="btn btn-outline-warning" role="button">
-                            Delete
-                        </a>
-                   </td>
-                </tr>
-
-            }
-        </tbody>
-
-    </table>
 }
 
 
@@ -111,7 +81,7 @@ else
     protected List<WorkTimeDto> workList = new();
     protected List<WorkTimeDto> searchDay = new();
     protected string SearchString { get; set; }= string.Empty;
-
+    
     private int UserId;
 
     protected override async Task OnInitializedAsync()
@@ -154,5 +124,5 @@ else
         SearchString = string.Empty;
         workList = searchDay;
     }
-    protected List<ProjectTimeDto> projectTimeList = new();
+
 }
